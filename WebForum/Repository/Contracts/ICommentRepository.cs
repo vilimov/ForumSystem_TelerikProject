@@ -1,6 +1,6 @@
 ﻿using WebForum.Models;
 
-namespace WebForum.Repository
+namespace WebForum.Repository.Contracts
 {
     public interface ICommentRepository
     {
