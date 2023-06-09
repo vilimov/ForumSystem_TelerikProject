@@ -32,6 +32,10 @@ namespace WebForum.Repository
             var user = this.users.Where(u => u.Id == id).FirstOrDefault();
             return user ?? throw new EntityNotFoundException($"User with id {id} does not exist");
         }
+        public User GetByUsername(string username)
+        {
+            return users.FirstOrDefault(u => u.Username == username);
+        }
         public User GetByEmail(string email)
         {
             var user = this.users.FirstOrDefault(u => u.Email == email);

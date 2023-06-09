@@ -5,6 +5,7 @@ namespace WebForum.Repository.Contracts
     public interface IUserRepository
     {
         User GetUserById(int id);
+        User GetByUsername(string username);
         List<User> GetAllUsers();
         User AddUser(User newUser);
         User CreateUser(User newUser);
