@@ -32,7 +32,9 @@ namespace WebForum.Repository
         }
         public Post CreatePost(Post newPost)
         {
-            throw new NotImplementedException();
+            newPost.Id = posts[posts.Count - 1].Id +1;
+            this.posts.Add(newPost);
+            return newPost;
         }
 
         public Post DeletePost(int id)

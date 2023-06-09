@@ -17,7 +17,15 @@ namespace WebForum.Services
 
         public Post CreatePost(Post post, User user)
         {
-            throw new NotImplementedException();
+            var postsByTitle = this.repository.GetPostByTitle(post.Title);
+            if (postsByTitle.Count > 0)
+            {
+                throw new DuplicateEntityException(DuplicateTitleErrorMessage);
+            }
+
+            post.Autor = user;
+            var createdPost = this.repository.CreatePost(post);
+            return createdPost;
         }
 
         public Post DeletePost(int id, User user)
