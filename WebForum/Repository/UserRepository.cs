@@ -80,11 +80,6 @@ namespace WebForum.Repository
             {
                 throw new EntityNotFoundException($"User with id {id} does not exist");
             }
-
-            if (updatedUser.Username != null)
-            {
-                userToUpdate.Username = updatedUser.Username;
-            }
             if (updatedUser.Email != null)
             {
                 userToUpdate.Email = updatedUser.Email;
