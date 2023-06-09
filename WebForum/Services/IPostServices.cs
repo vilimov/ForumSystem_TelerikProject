@@ -4,10 +4,10 @@ namespace WebForum.Services
 {
     public interface IPostServices
     {
-        Post CreatePost(int userId, Post newPost);
-        Post UpdatePost(int userId, Post updatedPost);
-        void DeletePost(int userId, int postId);
-        Post GetPost(int postId);
+        Post CreatePost(Post post, User user);
+        Post UpdatePost(int id, Post post, User user);
+        Post DeletePost(int id, User user);
+        Post GetPost(int id);
         IList<Post> GetAllPosts();
     }
 }

@@ -24,7 +24,7 @@ namespace WebForum.Models
         public int Likes { get; set; }
 
         [Required(ErrorMessage = "The {0} field is required")]
-        public User User { get; set; }
+        public User Autor { get; set; }
         public List<Comment> Comments { get; set; }
 
         //TODO Tags on posts

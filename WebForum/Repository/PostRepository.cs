@@ -18,16 +18,16 @@ namespace WebForum.Repository
                     new Post { Id = 1, Title = "This is post 1",
                                 Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non tincidunt lectus.",
                                 CreatedAt = DateTime.Now, Likes = 0,
-                                User = new User(1, "John", "Doe", "WinterIsComming@Yahoo.com", "JhonnyDoe", "123" ) },
+                                Autor = new User() },
                     new Post { Id = 2, Title = "This is post 2",
                                 Content = "Phasellus dictum neque ac lacus auctor, a facilisis nibh maximus. " +
                                 "Quisque a augue eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                                 CreatedAt = DateTime.Now, Likes = 0,
-                                User = new User(1, "John", "Doe", "WinterIsComming@Yahoo.com", "JhonnyDoe", "123" ) },
+                                Autor = new User() },
                     new Post { Id = 3, Title = "This is post 3",
                                 Content = "Nam massa purus, venenatis eu libero ac, scelerisque dictum est. In sed dapibus sem.",
                                 CreatedAt = DateTime.Now, Likes = 0,
-                                User = new User(1, "Jane", "Doe", "JaneD@Yahoo.com", "JJ", "456" ) },
+                                Autor = new User() },
                 };
         }
         public Post CreatePost(Post newPost)
@@ -56,8 +56,14 @@ namespace WebForum.Repository
 
         public List<Post> GetPostByUserId(int userId)
         {
-            var post = this.posts.Where(p => p.User.Id == userId).ToList();
+            var post = this.posts.Where(p => p.Autor.Id == userId).ToList();
             return post ?? throw new EntityNotFoundException($"Post with user id {userId}, not found");
+        }
+
+        public List<Post> GetPostByTitle(string title)
+        {
+            var post = this.posts.Where(p => p.Title == title).ToList();
+            return post ?? throw new EntityNotFoundException($"Post with title {title}, not found");
         }
 
         public Post UpdatePost(int id, Post post)
