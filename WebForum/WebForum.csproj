@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Models\QueryParameters\" />
+    <Folder Include="Services\Contracts\" />
   </ItemGroup>
 
 </Project>

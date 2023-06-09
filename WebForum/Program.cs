@@ -1,5 +1,6 @@
 using WebForum.Repository.Contracts;
 using WebForum.Repository;
+using WebForum.Services;
 
 namespace WebForum
 {
@@ -16,6 +17,12 @@ namespace WebForum
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // Repository
+            builder.Services.AddSingleton<ICommentRepository, CommentRepository>();
+
+            // Services
+            builder.Services.AddScoped<ICommentsServices, CommentsServices>();
+
             var app = builder.Build();
             //Test
             IUserRepository userRepository = new UserRepository();
@@ -25,6 +32,9 @@ namespace WebForum
             {
                 Console.WriteLine($"ID: {user.Id}, FirstName: {user.FirstName}, LastName: {user.LastName}, Email: {user.Email}, Username: {user.Username}");
             }
+            
+
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
