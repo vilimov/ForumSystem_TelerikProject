@@ -1,84 +1,38 @@
-﻿namespace WebForum.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebForum.Models
 {
     public class User
     {
-        private string firstName;
-        private string lastName;
-        private string email;
-        private string username;
-        public User(int id, string firstName, string lastName, string email, string username, string password)
-        {
-            Id = id;
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            Username = username;
-            Password = password;
-            Posts = new List<Post>();
-            Comments = new List<Comment>();
-        }
         public int Id { get; set; }
-        public string FirstName
-        {
-            get
-            {
-                return this.firstName;
-            }
-            set
-            {
-                // validator method
-                if (value.Length < 4 || value.Length > 32)
-                {
-                    throw new ArgumentException("First name must be between 4 and 32 symbols");
-                }
-                firstName = value;
-            }
-        }
-        public string LastName
-        {
-            get
-            {
-                return this.lastName;
-            }
-            set
-            {
-                // validator method
-                if (value.Length < 4 || value.Length > 32)
-                {
-                    throw new ArgumentException("Last name must be between 4 and 32 symbols");
-                }
-            }
-        }
-        public string Email
-        {
-            get
-            {
-                return this.email;
-            }
-            set
-            {
-                // Regex stuff?
-            }
-        }
-        public string Username
-        {
-            get
-            {
-                return this.username;
-            }
-            set
-            {
-                // validator method
-                if (value.Length < 4 || value.Length > 32)
-                {
-                    throw new ArgumentException("Username must be between 4 and 32 symbols");
-                }
-            }
-        }
-        public string Password { get; set; } // What validation? < & >
-        public string ProfileImage { get; set; }
+
+        [MinLength(1, ErrorMessage = "The {0} field must be at least {1} characters.")]
+        [MaxLength(50, ErrorMessage = "The {0} field must be less than {1} characters.")]
+        public string FirstName { get; set; }
+        
+        [MinLength(1, ErrorMessage = "The {0} field must be at least {1} characters.")]
+        [MaxLength(50, ErrorMessage = "The {0} field must be less than {1} characters.")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "The {0} field is required.")]
+        [RegularExpression(@"^([a-zA-Z0-9-.]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([a-zA-Z0-9-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$", ErrorMessage = "Please enter a valid e-mail address")]
+        public string Email { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be an empty.")]
+        [MinLength(5, ErrorMessage = "The {0} field must be at least {1} characters.")]
+        [MaxLength(20, ErrorMessage = "The {0} field must be less than {1} characters.")]
+        public string Username { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be an empty.")]
+        [MinLength(8, ErrorMessage = "The {0} field must be at least {1} characters.")]
+        public string Password { get; set; }
+
+        //[Required(ErrorMessage = "The {0} field is required.")]
         public bool IsAdmin { get; set; }
+
+        //[Required(ErrorMessage = "The {0} field is required.")]
         public bool IsBlocked { get; set; }
+
         public List<Post> Posts { get; set; }
         public List<Comment> Comments { get; set; }
     }
