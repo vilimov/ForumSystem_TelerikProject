@@ -18,13 +18,14 @@ namespace WebForum.Models
         [RegularExpression(@"^([a-zA-Z0-9-.]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([a-zA-Z0-9-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$", ErrorMessage = "Please enter a valid e-mail address")]
         public string Email { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be an empty.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be empty.")]
         [MinLength(5, ErrorMessage = "The {0} field must be at least {1} characters.")]
         [MaxLength(20, ErrorMessage = "The {0} field must be less than {1} characters.")]
         public string Username { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be an empty.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be empty.")]
         [MinLength(8, ErrorMessage = "The {0} field must be at least {1} characters.")]
+        [MaxLength(20, ErrorMessage = "The {0} field must be less than {1} characters.")]
         public string Password { get; set; }
 
         //[Required(ErrorMessage = "The {0} field is required.")]

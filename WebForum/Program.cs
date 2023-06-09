@@ -1,3 +1,6 @@
+using WebForum.Repository.Contracts;
+using WebForum.Repository;
+
 namespace WebForum
 {
     public class Program
@@ -14,7 +17,14 @@ namespace WebForum
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            //Test
+            IUserRepository userRepository = new UserRepository();
+            var users = userRepository.GetAllUsers();
 
+            foreach (var user in users)
+            {
+                Console.WriteLine($"ID: {user.Id}, FirstName: {user.FirstName}, LastName: {user.LastName}, Email: {user.Email}, Username: {user.Username}");
+            }
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
