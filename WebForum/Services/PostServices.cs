@@ -1,4 +1,5 @@
-﻿using WebForum.Helpers.Exceptions;
+﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using WebForum.Helpers.Exceptions;
 using WebForum.Models;
 using WebForum.Repository.Contracts;
 
@@ -24,7 +25,10 @@ namespace WebForum.Services
             }
 
             post.Autor = user;
+            post.CreatedAt = DateTime.Now;
+            post.Likes = 0;
             var createdPost = this.repository.CreatePost(post);
+
             return createdPost;
         }
 

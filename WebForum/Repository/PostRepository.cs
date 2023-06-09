@@ -9,30 +9,28 @@ namespace WebForum.Repository
     public class PostRepository : IPostRepository
     {
         private readonly List<Post> posts;
+        private int nextId = 0;
         //private readonly List<Comment> comments;
 
         public PostRepository()
         {
             posts = new List<Post>()
                 {
-                    new Post { Id = 1, Title = "This is post 1",
-                                Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non tincidunt lectus.",
-                                CreatedAt = DateTime.Now, Likes = 0,
-                                Autor = new User() },
-                    new Post { Id = 2, Title = "This is post 2",
+                    new Post {Title = "This is post 1",
+                                Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non tincidunt lectus."
+                                },
+                    new Post {Title = "This is post 2",
                                 Content = "Phasellus dictum neque ac lacus auctor, a facilisis nibh maximus. " +
-                                "Quisque a augue eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                                CreatedAt = DateTime.Now, Likes = 0,
-                                Autor = new User() },
-                    new Post { Id = 3, Title = "This is post 3",
-                                Content = "Nam massa purus, venenatis eu libero ac, scelerisque dictum est. In sed dapibus sem.",
-                                CreatedAt = DateTime.Now, Likes = 0,
-                                Autor = new User() },
+                                "Quisque a augue eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                },
+                    new Post {Title = "This is post 3",
+                                Content = "Nam massa purus, venenatis eu libero ac, scelerisque dictum est. In sed dapibus sem."
+                                },
                 };
         }
         public Post CreatePost(Post newPost)
         {
-            newPost.Id = posts[posts.Count - 1].Id +1;
+            newPost.Id = ++nextId;
             this.posts.Add(newPost);
             return newPost;
         }
