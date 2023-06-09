@@ -38,6 +38,7 @@ namespace WebForum.Services
         public Post UpdatePost(int id, Post post, User user)
         {
             Post postToUpdate = this.repository.GetPostById(id);
+
             if (postToUpdate.Autor.Id != user.Id)
             {
                 throw new UnauthorizedOperationException(UpdatePostWrongUserErrorMessage);
@@ -48,8 +49,9 @@ namespace WebForum.Services
             {
                 throw new DuplicateEntityException(DuplicateTitleErrorMessage);
             }
-            //TODO This is not completed!!!
-            return postToUpdate;
+
+            var updatedPost = this.repository.UpdatePost(id, post);
+            return updatedPost;
         }
     }
 }
