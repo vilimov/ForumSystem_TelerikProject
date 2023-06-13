@@ -9,5 +9,7 @@ namespace WebForum.Services
         Post DeletePost(int id, User user);
         Post GetPost(int id);
         IList<Post> GetAllPosts();
+        IList<Post> GetPostsByUserId(int id);
+
     }
 }

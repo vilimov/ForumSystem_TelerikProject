@@ -1,6 +1,7 @@
 using WebForum.Repository.Contracts;
 using WebForum.Repository;
 using WebForum.Services;
+using WebForum.Helpers.Mappers;
 
 namespace WebForum
 {
@@ -19,9 +20,15 @@ namespace WebForum
 
             // Repository
             builder.Services.AddSingleton<ICommentRepository, CommentRepository>();
+            builder.Services.AddSingleton<IPostRepository, PostRepository>();
 
             // Services
             builder.Services.AddScoped<ICommentsServices, CommentsServices>();
+            builder.Services.AddScoped<IPostServices, PostServices>();
+
+            //Helpers
+            builder.Services.AddScoped<PostCreatUpdateMapper>();
+
 
             var app = builder.Build();
             //Test

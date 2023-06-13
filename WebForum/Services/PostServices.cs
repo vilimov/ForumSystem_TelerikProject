@@ -25,7 +25,7 @@ namespace WebForum.Services
             }
 
             post.Autor = user;
-            post.CreatedAt = DateTime.Now;
+            post.CreatedAt = DateTime.Now;  //string formattedDate = date.ToString("yyyy-MM-dd HH:mm");
             post.Likes = 0;
             var createdPost = this.repository.CreatePost(post);
 
@@ -47,6 +47,11 @@ namespace WebForum.Services
             return this.repository.GetPostById(id);
         }
 
+        public IList<Post> GetPostsByUserId(int id)
+        {
+            return this.repository.GetPostByUserId(id);
+        }
+
         public Post UpdatePost(int id, Post post, User user)
         {
             Post postToUpdate = this.repository.GetPostById(id);
@@ -64,6 +69,6 @@ namespace WebForum.Services
 
             var updatedPost = this.repository.UpdatePost(id, post);
             return updatedPost;
-        }
+        } 
     }
 }
