@@ -2,6 +2,8 @@ using WebForum.Repository.Contracts;
 using WebForum.Repository;
 using WebForum.Services;
 using WebForum.Helpers.Mappers;
+using WebForum.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebForum
 {
@@ -14,6 +16,15 @@ namespace WebForum
             // Add services to the container.
 
             builder.Services.AddControllers();
+            builder.Services.AddDbContext<ForumContext>(options =>
+            {
+                //string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=EFCtestDB;Trusted_Connection=True;Encrypt=False;";
+                string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
+                options.UseSqlServer(connectionString);
+                options.EnableSensitiveDataLogging();
+
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -31,16 +42,6 @@ namespace WebForum
 
 
             var app = builder.Build();
-            //Test
-            IUserRepository userRepository = new UserRepository();
-            var users = userRepository.GetAllUsers();
-
-            foreach (var user in users)
-            {
-                Console.WriteLine($"ID: {user.Id}, FirstName: {user.FirstName}, LastName: {user.LastName}, Email: {user.Email}, Username: {user.Username}");
-            }
-            
-
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
