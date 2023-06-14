@@ -19,7 +19,9 @@ namespace WebForum
             builder.Services.AddDbContext<ForumContext>(options =>
             {
                 //string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=EFCtestDB;Trusted_Connection=True;Encrypt=False;";
-                string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
+                //string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
+                //string connectionString = @"Server=VILIMOV-PC;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
+                string connectionString = @"Server=localhost;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
                 options.UseSqlServer(connectionString);
                 options.EnableSensitiveDataLogging();
 
@@ -30,8 +32,8 @@ namespace WebForum
             builder.Services.AddSwaggerGen();
 
             // Repository
-            builder.Services.AddSingleton<ICommentRepository, CommentRepository>();
-            builder.Services.AddSingleton<IPostRepository, PostRepository>();
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+            builder.Services.AddScoped<IPostRepository, PostRepository>();
 
             // Services
             builder.Services.AddScoped<ICommentsServices, CommentsServices>();
