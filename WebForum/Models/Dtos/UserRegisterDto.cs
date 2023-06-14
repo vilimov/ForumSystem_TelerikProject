@@ -1,16 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebForum.Models
+namespace WebForum.Models.Dtos
 {
-    public class User
+    public class UserRegisterDto
     {
-        public int Id { get; set; }
-
         [Required]
         [MinLength(4, ErrorMessage = "The {0} field must be at least {1} characters.")]
         [MaxLength(32, ErrorMessage = "The {0} field must be less than {1} characters.")]
         public string FirstName { get; set; }
-
+        
         [Required]
         [MinLength(4, ErrorMessage = "The {0} field must be at least {1} characters.")]
         [MaxLength(32, ErrorMessage = "The {0} field must be less than {1} characters.")]
@@ -29,10 +27,5 @@ namespace WebForum.Models
         [MinLength(8, ErrorMessage = "The {0} field must be at least {1} characters.")]
         [MaxLength(20, ErrorMessage = "The {0} field must be less than {1} characters.")]
         public string Password { get; set; }
-       
-        public bool IsAdmin { get; set; }     
-        public bool IsBlocked { get; set; }
-        public List<Post> Posts { get; set; }
-        public List<Comment> Comments { get; set; }
     }
 }
