@@ -1,42 +1,79 @@
-﻿using WebForum.Models;
+﻿using Microsoft.Extensions.Hosting;
+using WebForum.Helpers.Exceptions;
+using WebForum.Models;
+using WebForum.Repository;
+using WebForum.Repository.Contracts;
 
 namespace WebForum.Services
 {
     public class CommentsServices : ICommentsServices
     {
-        public Comment Create(Comment comment)
-        {
-            throw new NotImplementedException();
-        }
+        private const string ModifyCommentErrorMessage = "Only author or admin can update or delete a comment!";
+        private readonly ICommentRepository repository;
+        private readonly IPostRepository postRepository;
 
-        public Comment Delete(int id)
+        public CommentsServices(ICommentRepository repository)
         {
-            throw new NotImplementedException();
+            this.repository = repository;
         }
 
         public List<Comment> GetAll()
         {
-            throw new NotImplementedException();
+            return repository.GetAll().ToList();
         }
 
-        public Comment GetByAuthor(User author)
+        public List<Comment> FilterBy(CommentQueryParameters filterParameters)
         {
-            throw new NotImplementedException();
+            return repository.FilterBy(filterParameters).ToList();
         }
 
-        public Comment GetById(int id)
+        public Comment GetCommentById(int id)
         {
-            throw new NotImplementedException();
+            return repository.GetCommentById(id);
         }
 
-        public Comment GetByPost(Post post)
+        public List<Comment> GetByPostId(int postId)
         {
-            throw new NotImplementedException();
+            List<Comment> result = repository.GetByPostId(postId).ToList();
+            return result;
         }
 
-        public Comment Update(int id, Comment comment)
+        public List<Comment> GetByAuthorId(int id)
         {
-            throw new NotImplementedException();
+            List<Comment> result = repository.GetByAuthorId(id).ToList();
+            return result;
         }
+
+        public Comment CreateComment(Comment comment, int postId)
+        {
+            postRepository.GetPostById(postId);
+            Comment createdComment = repository.Create(comment);
+            return createdComment;
+        }
+
+        public Comment Update(int id, Comment comment, User author)
+        {
+            Comment commentToUpdate = repository.GetCommentById(id);
+            if (!commentToUpdate.Autor.Equals(author) && !author.IsAdmin)
+            {
+                throw new UnauthorizedOperationException(ModifyCommentErrorMessage);
+            }
+
+            Comment updatedComment = repository.Update(id, comment);
+            return updatedComment;
+        }
+
+        public Comment Delete(int id, User author)
+        {
+            Comment commentToDelete = repository.GetCommentById(id);
+            if (!commentToDelete.Autor.Equals(author) && !author.IsAdmin)
+            {
+                throw new UnauthorizedOperationException(ModifyCommentErrorMessage);
+            }
+
+            Comment deletedComment = repository.Delete(id);
+            return deletedComment;
+        }
+
     }
 }

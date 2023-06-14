@@ -5,18 +5,19 @@ namespace WebForum.Services
     public interface ICommentsServices
     {
         List<Comment> GetAll();
+        List<Comment> FilterBy(CommentQueryParameters filterParameters);
 
-        Comment GetById(int id);
+        Comment GetCommentById(int id);
 
-        Comment GetByAuthor(User author);
+        List<Comment> GetByPostId(int id);
 
-        Comment GetByPost(Post post);
+        List<Comment> GetByAuthorId(int id);
 
-        Comment Create(Comment comment);
+        Comment CreateComment(Comment comment, int postId);
         
-        Comment Update(int id, Comment comment);
+        Comment Update(int id, Comment comment, User author);
         
-        Comment Delete(int id);
+        Comment Delete(int id, User author);
 
     }
 }
