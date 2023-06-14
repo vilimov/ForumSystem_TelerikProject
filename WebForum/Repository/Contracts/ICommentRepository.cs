@@ -4,11 +4,13 @@ namespace WebForum.Repository.Contracts
 {
     public interface ICommentRepository
     {
-        Comment GetById(int id);
         IEnumerable<Comment> GetAll();
+        Comment GetCommentById(int id);
         IEnumerable<Comment> GetByPostId(int postId);
+        IEnumerable<Comment> GetByAuthorId(int authorId);
         Comment Create(Comment newComment);
-        Comment Update(Comment comment);
-        void Delete(int id);
+        Comment Update(int id, Comment comment);
+        Comment Delete(int id);
+        IEnumerable<Comment> FilterBy(CommentQueryParameters filterParameters);
     }
 }
