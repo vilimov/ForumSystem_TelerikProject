@@ -45,13 +45,7 @@ namespace WebForum.Services
                 throw new EntityNotFoundException($"User with id {user.Id} does not exist.");
             }
 
-            // Ako user smenq E-maila si, proverqva dali noviq E-mail ne e zaet.
-            if (existingUser.Email != user.Email && userRepository.GetByEmail(user.Email) != null)
-            {
-                throw new DuplicateEntityException($"A user with email {user.Email} already exists.");
-            }
-
-            return userRepository.UpdateUser(user.Id, user);
+            return userRepository.UpdateUser(user);
         }
 
         public IList<Post> GetUserPosts(int userId)

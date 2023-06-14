@@ -1,4 +1,5 @@
-﻿using WebForum.Helpers.Exceptions;
+﻿using WebForum.Data;
+using WebForum.Helpers.Exceptions;
 using WebForum.Models;
 using WebForum.Repository.Contracts;
 
@@ -6,41 +7,35 @@ namespace WebForum.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly List<User> users;
+        private readonly ForumContext context;
 
-        private int nextId = 1;
-
-        public UserRepository()
+        public UserRepository(ForumContext context)
         {
-            users = new List<User>()
-        {
-            new User { Id = 1, FirstName = "Pesho", LastName = "Peshov", Email = "Pesho123@example.com",
-                       Username = "PesheP", Password = "password123", IsAdmin = false, IsBlocked = false},
-            new User { Id = 2, FirstName = "Tosho", LastName = "Toshov", Email = "Tosho123@example.com",
-                       Username = "ToshoT", Password = "password456", IsAdmin = false, IsBlocked = false},
-            new User { Id = 3, FirstName = "Gosho", LastName = "Goshov", Email = "Gosho123@example.com",
-                       Username = "GoshoG", Password = "password789", IsAdmin = true, IsBlocked = false},
-        };
+            this.context = context;
         }
-        
+
         public List<User> GetAllUsers()
         {
-            return this.users;
+            return context.Users.ToList();
         }
+
         public User GetUserById(int id)
         {
-            var user = this.users.Where(u => u.Id == id).FirstOrDefault();
+            var user = context.Users.Find(id);
             return user ?? throw new EntityNotFoundException($"User with id {id} does not exist");
         }
+
         public User GetByUsername(string username)
         {
-            return users.FirstOrDefault(u => u.Username == username);
+            return context.Users.FirstOrDefault(u => u.Username == username);
         }
+
         public User GetByEmail(string email)
         {
-            var user = this.users.FirstOrDefault(u => u.Email == email);
+            var user = context.Users.FirstOrDefault(u => u.Email == email);
             return user ?? throw new EntityNotFoundException($"User with email {email} does not exist");
         }
+
         public User CreateUser(User newUser)
         {
             if (newUser == null)
@@ -48,10 +43,22 @@ namespace WebForum.Repository
                 throw new ArgumentNullException(nameof(newUser), "New user cannot be null");
             }
 
-            newUser.Id = users.Count + 1;
-            users.Add(newUser);
+            if (context.Users.Any(u => u.Email == newUser.Email))
+            {
+                throw new ArgumentException("A user with this email already exists.");
+            }
+
+            if (context.Users.Any(u => u.Username == newUser.Username))
+            {
+                throw new ArgumentException("A user with this username already exists.");
+            }
+
+            context.Users.Add(newUser);
+            context.SaveChanges();
+
             return newUser;
         }
+
         public User DeleteUser(int id)
         {
             var userToDelete = this.GetUserById(id);
@@ -59,31 +66,49 @@ namespace WebForum.Repository
             {
                 throw new EntityNotFoundException($"User with id {id} does not exist");
             }
-            this.users.Remove(userToDelete);
+
+            context.Users.Remove(userToDelete);
+            context.SaveChanges();
 
             return userToDelete;
         }
-        public User AddUser(User newUser)
+
+        public User UpdateUser(User updatedUser)
         {
-            if (users.Any(u => u.Email == newUser.Email))
-            {
-                throw new ArgumentException("A user with this email already exists.");
-            }
-            newUser.Id = ++nextId;
-            users.Add(newUser);
-            return newUser;
-        }
-        public User UpdateUser(int id, User updatedUser)
-        {
-            User userToUpdate = this.GetUserById(id);
+            User userToUpdate = this.GetUserById(updatedUser.Id);
             if (userToUpdate == null)
             {
-                throw new EntityNotFoundException($"User with id {id} does not exist");
+                throw new EntityNotFoundException($"User with id {updatedUser.Id} does not exist");
             }
-            if (updatedUser.Email != null)
+
+            if (updatedUser.Email != null && userToUpdate.Email != updatedUser.Email)
             {
+                // Проверява дали новият e-mail е вече използван от друг user
+                var existingUserWithSameEmail = context.Users.FirstOrDefault(u => u.Email == updatedUser.Email);
+                if (existingUserWithSameEmail != null)
+                {
+                    throw new ArgumentException("A user with this email already exists.");
+                }
                 userToUpdate.Email = updatedUser.Email;
             }
+
+            if (updatedUser.Password != null)
+            {
+                userToUpdate.Password = updatedUser.Password;
+            }
+
+            if (updatedUser.FirstName != null)
+            {
+                userToUpdate.FirstName = updatedUser.FirstName;
+            }
+
+            if (updatedUser.LastName != null)
+            {
+                userToUpdate.LastName = updatedUser.LastName;
+            }
+
+            context.Users.Update(userToUpdate);
+            context.SaveChanges();
 
             return userToUpdate;
         }

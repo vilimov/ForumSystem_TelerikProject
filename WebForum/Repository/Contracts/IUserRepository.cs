@@ -7,9 +7,8 @@ namespace WebForum.Repository.Contracts
         User GetUserById(int id);
         User GetByUsername(string username);
         List<User> GetAllUsers();
-        User AddUser(User newUser);
         User CreateUser(User newUser);
-        User UpdateUser(int id, User updatedUser);
+        User UpdateUser(User updatedUser);
         User DeleteUser(int id);
         User GetByEmail(string email);
     }
