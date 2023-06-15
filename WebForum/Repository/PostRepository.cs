@@ -1,5 +1,7 @@
-﻿using System.Text;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Text;
 using System.Xml.Linq;
+using WebForum.Data;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
 using WebForum.Repository.Contracts;
@@ -8,61 +10,51 @@ namespace WebForum.Repository
 {
     public class PostRepository : IPostRepository
     {
-        private readonly List<Post> posts;
-        private int nextId = 0;
-        //private readonly List<Comment> comments;
-
-        public PostRepository()
+        private readonly ForumContext context;
+       
+        public PostRepository(ForumContext context)
         {
-            posts = new List<Post>()
-                {
-                    new Post {Title = "This is post 1",
-                                Content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non tincidunt lectus."
-                                },
-                    new Post {Title = "This is post 2",
-                                Content = "Phasellus dictum neque ac lacus auctor, a facilisis nibh maximus. " +
-                                "Quisque a augue eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                                },
-                    new Post {Title = "This is post 3",
-                                Content = "Nam massa purus, venenatis eu libero ac, scelerisque dictum est. In sed dapibus sem."
-                                },
-                };
+           this.context = context;
         }
         public Post CreatePost(Post newPost)
         {
-            newPost.Id = ++nextId;
-            this.posts.Add(newPost);
+            this.context.Posts.Add(newPost);
+            context.SaveChanges();
+
             return newPost;
         }
 
         public Post DeletePost(int id)
         {
             var postToDelete = this.GetPostById(id);
-            this.posts.Remove(postToDelete);
-
-            return postToDelete;
+            var deletedPost = this.context.Posts.Remove(postToDelete).Entity;
+            context.SaveChanges();
+            return deletedPost;
         }
 
         public List<Post> GetAllPosts()
         {
-            return this.posts;
+            return this.context.Posts
+                                    .Include(u => u.Autor)
+                                    .Include(c => c.Comments)
+                                    .ToList();
         }
 
         public Post GetPostById(int id)
         {
-            var post = this.posts.Where(p => p.Id == id).FirstOrDefault();
+            var post = this.context.Posts.Where(p => p.Id == id).FirstOrDefault();
             return post ?? throw new EntityNotFoundException($"Post with id {id} doesn't exist.");
         }
 
         public List<Post> GetPostByUserId(int userId)
         {
-            var post = this.posts.Where(p => p.Autor.Id == userId).ToList();
+            var post = this.context.Posts.Where(p => p.Autor.Id == userId).ToList();
             return post ?? throw new EntityNotFoundException($"Post with user id {userId}, not found");
         }
 
         public List<Post> GetPostByTitle(string title)
         {
-            var post = this.posts.Where(p => p.Title == title).ToList();
+            var post = this.context.Posts.Where(p => p.Title == title).ToList();
             return post ?? throw new EntityNotFoundException($"Post with title {title}, not found");
         }
 
@@ -78,12 +70,10 @@ namespace WebForum.Repository
                 postToUpdate.Content = post.Content;
             }
 
+            context.Update(postToUpdate);
+            context.SaveChanges();
             return postToUpdate;
         }
 
-        /*public List<Comment> GetPostComments()
-        {
-            throw new NotImplementedException();
-        }*/
     }
 }

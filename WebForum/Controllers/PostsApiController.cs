@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
 using WebForum.Models;
@@ -12,11 +13,14 @@ namespace WebForum.Controllers
     public class PostsApiController : ControllerBase
     {
         private readonly IPostServices posts;
+        private readonly IUserServices users;
+
         private readonly PostCreatUpdateMapper postMapper;
-        public PostsApiController(IPostServices posts, PostCreatUpdateMapper postMapper)
+        public PostsApiController(IPostServices posts, PostCreatUpdateMapper postMapper, IUserServices users)
         {
             this.posts = posts;
             this.postMapper = postMapper;
+            this.users = users;
         }
 
         [HttpGet("")]
@@ -62,6 +66,28 @@ namespace WebForum.Controllers
                 User user = new User();
                 Post post = postMapper.Map(postDto);
                 Post createPost = posts.CreatePost(post, user);
+
+                return StatusCode(StatusCodes.Status200OK, createPost);
+            }
+            catch (DuplicateEntityException e)
+            {
+                return StatusCode(StatusCodes.Status409Conflict, e.Message);
+            }
+            catch (UnauthorizedOperationException e)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdatePost([FromHeader] string username, [FromBody] PostDtoCreateUpdate updateDto, int id)
+        {
+            //UpdatePost(int id, Post post)
+            try
+            {
+                User user = this.users.Get;
+                Post post = postMapper.Map(updateDto);
+                Post createPost = posts.UpdatePost(id, post);
 
                 return StatusCode(StatusCodes.Status200OK, createPost);
             }
