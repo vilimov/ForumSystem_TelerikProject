@@ -18,12 +18,13 @@ namespace WebForum
             builder.Services.AddControllers();
             builder.Services.AddDbContext<ForumContext>(options =>
             {
-                //string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=EFCtestDB;Trusted_Connection=True;Encrypt=False;";
-                //string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
+
+
                 //string connectionString = @"Server=FREAKY\MSSQLSERVER2022;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
-                //string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
+                string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
                 //string connectionString = @"Server=VILIMOV-PC;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
-                string connectionString = @"Server=localhost;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
+                //string connectionString = @"Server=localhost;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
+
                 options.UseSqlServer(connectionString);
                 options.EnableSensitiveDataLogging();
 
@@ -36,10 +37,12 @@ namespace WebForum
             // Repository
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
             builder.Services.AddScoped<IPostRepository, PostRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             // Services
             builder.Services.AddScoped<ICommentsServices, CommentsServices>();
             builder.Services.AddScoped<IPostServices, PostServices>();
+            builder.Services.AddScoped<IUserServices, UserServices>();
 
             //Helpers
             builder.Services.AddScoped<PostCreatUpdateMapper>();
