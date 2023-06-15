@@ -25,7 +25,7 @@ namespace WebForum.Models
 
         [Required(ErrorMessage = "The {0} field is required")]
 
-        public int AutorId { get; set; }
+        public int? AutorId { get; set; }
         public User Autor { get; set; }
 
         public List<Comment> Comments { get; set; }

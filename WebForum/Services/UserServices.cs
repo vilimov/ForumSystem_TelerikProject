@@ -4,7 +4,7 @@ using WebForum.Repository.Contracts;
 
 namespace WebForum.Services
 {
-    public class UserServices
+    public class UserServices : IUserServices
     {
         private readonly IUserRepository userRepository;
         private readonly IPostRepository postRepository;
