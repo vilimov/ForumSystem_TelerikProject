@@ -85,9 +85,9 @@ namespace WebForum.Controllers
             //UpdatePost(int id, Post post)
             try
             {
-                User user = this.users.Get;
+                User user = new User();
                 Post post = postMapper.Map(updateDto);
-                Post createPost = posts.UpdatePost(id, post);
+                Post createPost = posts.UpdatePost(id, post, user);
 
                 return StatusCode(StatusCodes.Status200OK, createPost);
             }
