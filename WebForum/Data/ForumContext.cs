@@ -14,9 +14,9 @@ namespace WebForum.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+           *base.OnModelCreating(modelBuilder);
 
             List<User> users = new List<User>()
             {
@@ -69,14 +69,14 @@ namespace WebForum.Data
             base.OnModelCreating(modelBuilder);
             var users = new List<User>()
             {
-                new User { Id = 1, Username = "JuliusCaesar", Email = "JC@roman.im", Password = "Cleopatra", IsAdmin = true },
-                new User { Id = 2, Username = "MarcusAurelius", Email = "MA@roman.im", Password = "Antoninus", IsAdmin = true },
-                new User { Id = 3, Username = "MarcusTulliusCicero", Email = "MTC@roman.im", Password = "Tullius123", IsAdmin = false },
-                new User { Id = 4, Username = "Hippocrates", Email = "Hipo@roman.im", Password = "CorpusHippocraticum", IsAdmin = false },
-                new User {Id = 5, Username = "CaesarAugustus", Email = "CA@roman.im", Password = "GaiusOctavius", IsAdmin = false},
-                new User {Id = 6, Username = "MarcusJuniusBrutus", Email = "BrutusIAm@roman.im", Password = "MeToo", IsAdmin = false},
-                new User {Id = 7, Username = "PubliusOvidiusNaso", Email = "Ovid@roman.im", Password = "Metamorphoses", IsAdmin = false},
-                new User {Id = 8, Username = "LuciusAnnaeusSeneca", Email = "Seneca@roman.im", Password = "EpistulaeMorales", IsAdmin = false},
+                new User { Id = 1, FirstName = "Julius", LastName = "Julius", Username = "JuliusCaesar", Email = "JC@roman.im", Password = "Cleopatra", IsAdmin = true },
+                new User { Id = 2, FirstName = "Marcus", LastName = "Aurelius", Username = "MarcusAurelius", Email = "MA@roman.im", Password = "Antoninus", IsAdmin = true },
+                new User { Id = 3, FirstName = "MarcusTullius", LastName = "Cicero", Username = "MarcusTulliusCicero", Email = "MTC@roman.im", Password = "Tullius123", IsAdmin = false },
+                new User { Id = 4, FirstName = "Hippocrates", LastName = "ofKos", Username = "Hippocrates", Email = "Hipo@roman.im", Password = "CorpusHippocraticum", IsAdmin = false },
+                new User { Id = 5, FirstName = "Caesar", LastName = "Augustus", Username = "CaesarAugustus", Email = "CA@roman.im", Password = "GaiusOctavius", IsAdmin = false},
+                new User { Id = 6, FirstName = "MarcusJunius", LastName = "Brutus", Username = "MarcusJuniusBrutus", Email = "BrutusIAm@roman.im", Password = "MeToo", IsAdmin = false},
+                new User { Id = 7, FirstName = "PubliusOvidius", LastName = "Naso", Username = "PubliusOvidiusNaso", Email = "Ovid@roman.im", Password = "Metamorphoses", IsAdmin = false},
+                new User { Id = 8, FirstName = "LuciusAnnaeus", LastName = "Seneca", Username = "LuciusAnnaeusSeneca", Email = "Seneca@roman.im", Password = "EpistulaeMorales", IsAdmin = false},
             };
             modelBuilder.Entity<User>().HasData(users);
 
@@ -101,7 +101,6 @@ namespace WebForum.Data
                 new Comment { Id = 7, Content = "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", AutorId = 1, PostId = 3 },
             };
             modelBuilder.Entity<Comment>().HasData(comments);
-        }
-        }
+        }        
     }
 }
