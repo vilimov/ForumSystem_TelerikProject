@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebForum.Models
 {
     public class Comment
     {
         public int Id { get; set; }
-
-        //public int postId { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be an empty string.")]
         [MinLength(32, ErrorMessage = "The {0} field must be at least {1} characters.")]
@@ -16,15 +15,14 @@ namespace WebForum.Models
         [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; }
 
-        //[Range(0, int.MaxValue, ErrorMessage = "The {0} field must be between {1} and {2}.")]
+        public int? AutorId { get; set; }
+        
+        public User Autor { get; set; }
+
         public int Likes { get; set; }
-
-        //[Range(0, int.MaxValue, ErrorMessage = "The {0} field must be between {1} and {2}.")]
-        public int Dislikes { get; set; }
-        //public int CommentAutorId { get; set; }
-        //public User CommentAutor { get; set; }
-
-        public int PostId { get; set; }
+        //public List<Rating> Rating { get; set; }
+                
+        public int? PostId { get; set; }
         public Post Post { get; set; }
     }
 }
