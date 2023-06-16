@@ -4,6 +4,8 @@ namespace WebForum.Models.Dtos
 {
     public class UserUpdateDto
     {
+        public int Id { get; set; }
+
         [MinLength(4), MaxLength(32)]
         public string FirstName { get; set; }
 

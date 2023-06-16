@@ -21,8 +21,7 @@ namespace WebForum.Repository
 
         public User GetUserById(int id)
         {
-            var user = context.Users.Find(id);
-            return user ?? throw new EntityNotFoundException($"User with id {id} does not exist");
+            return context.Users.Find(id);
         }
 
         public User GetByUsername(string username)
@@ -32,8 +31,7 @@ namespace WebForum.Repository
 
         public User GetByEmail(string email)
         {
-            var user = context.Users.FirstOrDefault(u => u.Email == email);
-            return user ?? throw new EntityNotFoundException($"User with email {email} does not exist");
+            return context.Users.FirstOrDefault(u => u.Email == email);
         }
 
         public User CreateUser(User newUser)
@@ -41,16 +39,6 @@ namespace WebForum.Repository
             if (newUser == null)
             {
                 throw new ArgumentNullException(nameof(newUser), "New user cannot be null");
-            }
-
-            if (context.Users.Any(u => u.Email == newUser.Email))
-            {
-                throw new ArgumentException("A user with this email already exists.");
-            }
-
-            if (context.Users.Any(u => u.Username == newUser.Username))
-            {
-                throw new ArgumentException("A user with this username already exists.");
             }
 
             context.Users.Add(newUser);

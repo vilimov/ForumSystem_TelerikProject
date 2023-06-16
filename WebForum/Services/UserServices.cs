@@ -1,5 +1,7 @@
 ﻿using WebForum.Helpers.Exceptions;
+using WebForum.Helpers.Mappers;
 using WebForum.Models;
+using WebForum.Models.Dtos;
 using WebForum.Repository.Contracts;
 
 namespace WebForum.Services
@@ -15,14 +17,37 @@ namespace WebForum.Services
             this.postRepository = postRepository;
         }
 
+        public List<User> GetAllUsers()
+        {
+            return userRepository.GetAllUsers();
+        }
+
+        public User GetUserById(int id)
+        {
+            return userRepository.GetUserById(id);
+        }
+
+        public User GetByUsername(string username)
+        {
+            return userRepository.GetByUsername(username);
+        }
+
+        public User GetByEmail(string email)
+        {
+            return userRepository.GetByEmail(email);
+        }
+
         public User Register(User newUser)
         {
-            if (userRepository.GetByEmail(newUser.Email) != null)
+            var existingUserEmail = userRepository.GetByEmail(newUser.Email);
+            var existingUserUsername = userRepository.GetByUsername(newUser.Username);
+
+            if (existingUserEmail != null)
             {
                 throw new DuplicateEntityException($"A user with email {newUser.Email} already exists.");
             }
 
-            if (userRepository.GetByUsername(newUser.Username) != null)
+            if (existingUserUsername != null)
             {
                 throw new DuplicateEntityException($"A user with username {newUser.Username} already exists.");
             }
@@ -32,30 +57,41 @@ namespace WebForum.Services
 
         public User Login(string username, string password)
         {
-            // ToDo
-            throw new NotImplementedException();
+            var user = userRepository.GetByUsername(username);
+
+            if (user == null)
+            {
+                throw new EntityNotFoundException($"User with username {username} does not exist.");
+            }
+
+            if (user.Password != password)
+            {
+                throw new UnauthorizedAccessException("Invalid password.");
+            }
+
+            return user;
         }
 
-        public User UpdateProfile(User user)
+        public User UpdateProfile(User userUpdate)
         {
-            var existingUser = userRepository.GetUserById(user.Id);
+            var existingUser = userRepository.GetUserById(userUpdate.Id);
 
             if (existingUser == null)
             {
-                throw new EntityNotFoundException($"User with id {user.Id} does not exist.");
+                throw new EntityNotFoundException($"User with id {userUpdate.Id} does not exist.");
             }
 
-            return userRepository.UpdateUser(user);
+            return userRepository.UpdateUser(userUpdate);
         }
 
         public IList<Post> GetUserPosts(int userId)
         {
-            return postRepository.GetPostByUserId(userId).ToList();
+            return postRepository.GetPostByUserId(userId);
         }
 
         public IList<Post> GetAllPosts()
         {
-            return postRepository.GetAllPosts().ToList();
+            return postRepository.GetAllPosts();
         }
     }
 }
