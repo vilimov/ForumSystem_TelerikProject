@@ -4,6 +4,7 @@ using WebForum.Services;
 using WebForum.Helpers.Mappers;
 using WebForum.Data;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace WebForum
 {
@@ -12,6 +13,9 @@ namespace WebForum
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Register AutoMapper
+            builder.Services.AddAutoMapper(typeof(Program));
 
             // Add services to the container.
 
@@ -45,8 +49,8 @@ namespace WebForum
             builder.Services.AddScoped<IUserServices, UserServices>();
 
             //Helpers
-            builder.Services.AddScoped<PostCreatUpdateMapper>();
-
+            //builder.Services.AddScoped<PostCreatUpdateMapper>();
+            //builder.Services.AddScoped<IMapper>();
 
             var app = builder.Build();
 

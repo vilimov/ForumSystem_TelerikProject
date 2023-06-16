@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
@@ -14,20 +15,23 @@ namespace WebForum.Controllers
     {
         private readonly IPostServices posts;
         private readonly IUserServices users;
+        private readonly IMapper mapper;
 
-        private readonly PostCreatUpdateMapper postMapper;
-        public PostsApiController(IPostServices posts, PostCreatUpdateMapper postMapper, IUserServices users)
+        
+        public PostsApiController(IPostServices posts, IUserServices users, IMapper mapper)
         {
             this.posts = posts;
-            this.postMapper = postMapper;
+            this.mapper = mapper;
             this.users = users;
         }
 
         [HttpGet("")]
         public IActionResult GetAllPosts()
         {
-            var result = this.posts.GetAllPosts();
-            return StatusCode(StatusCodes.Status200OK, result);
+            var posts = this.posts.GetAllPosts();
+            var postShowDtos = this.mapper.Map<List<PostShowDto>>(posts);
+
+            return StatusCode(StatusCodes.Status200OK, postShowDtos);
         }
 
         [HttpGet("{id}")]
@@ -64,7 +68,8 @@ namespace WebForum.Controllers
             try
             {
                 User user = new User();
-                Post post = postMapper.Map(postDto);
+
+                Post post = mapper.Map<Post>(postDto);
                 Post createPost = posts.CreatePost(post, user);
 
                 return StatusCode(StatusCodes.Status200OK, createPost);
@@ -86,7 +91,7 @@ namespace WebForum.Controllers
             try
             {
                 User user = new User();
-                Post post = postMapper.Map(updateDto);
+                Post post = mapper.Map<Post>(updateDto);
                 Post createPost = posts.UpdatePost(id, post, user);
 
                 return StatusCode(StatusCodes.Status200OK, createPost);

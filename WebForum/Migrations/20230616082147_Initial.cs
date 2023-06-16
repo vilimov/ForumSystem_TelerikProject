@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebForum.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -88,7 +88,7 @@ namespace WebForum.Migrations
                     { 3, "MTC@roman.im", "MarcusTullius", false, false, "Cicero", "Tullius123", "MarcusTulliusCicero" },
                     { 4, "Hipo@roman.im", "Hippocrates", false, false, "ofKos", "CorpusHippocraticum", "Hippocrates" },
                     { 5, "CA@roman.im", "Caesar", false, false, "Augustus", "GaiusOctavius", "CaesarAugustus" },
-                    { 6, "BrutusIAm@roman.im", "MarcusJunius", false, false, "Brutus", "MeToo", "MarcusJuniusBrutus" },
+                    { 6, "BrutusIAm@roman.im", "MarcusJunius", false, true, "Brutus", "MeToo", "MarcusJuniusBrutus" },
                     { 7, "Ovid@roman.im", "PubliusOvidius", false, false, "Naso", "Metamorphoses", "PubliusOvidiusNaso" },
                     { 8, "Seneca@roman.im", "LuciusAnnaeus", false, false, "Seneca", "EpistulaeMorales", "LuciusAnnaeusSeneca" }
                 });
@@ -98,11 +98,11 @@ namespace WebForum.Migrations
                 columns: new[] { "Id", "AutorId", "Content", "CreatedAt", "Likes", "Title" },
                 values: new object[,]
                 {
-                    { 1, 3, "The beginnings of all things are small.", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Omnium Rerum Principia Parva Sunt" },
-                    { 2, 3, "Always the same.", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Semper Idem" },
-                    { 3, 4, "Art is long, life is short.", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Ars Longa, Vita Brevis" },
-                    { 4, 5, "The play is over, applaud!", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Acta est Fabula, Plaudite!" },
-                    { 5, 1, "The die is cast.", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "Alea Jacta Est" }
+                    { 1, 3, "The beginnings of all things are small.", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2264), 5, "Omnium Rerum Principia Parva Sunt" },
+                    { 2, 3, "Always the same.", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2381), 1, "Semper Idem" },
+                    { 3, 4, "Art is long, life is short.", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2384), 10, "Ars Longa, Vita Brevis" },
+                    { 4, 5, "The play is over, applaud!", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2386), 3, "Acta est Fabula, Plaudite!" },
+                    { 5, 1, "The die is cast.", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2388), 2, "Alea Jacta Est" }
                 });
 
             migrationBuilder.InsertData(
@@ -110,13 +110,13 @@ namespace WebForum.Migrations
                 columns: new[] { "Id", "AutorId", "Content", "CreatedAt", "Likes", "PostId" },
                 values: new object[,]
                 {
-                    { 1, 7, "Exitus Acta Probat – The result justifies the deed", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 1 },
-                    { 2, 8, "Veritas Odit Moras – Truth hates delay", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 1 },
-                    { 3, 8, "Timendi Causa Est Nescire – The cause of fear is ignorance", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 1 },
-                    { 4, 8, "Vivamus, Moriendum Est – Let us live, since we must die", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 2 },
-                    { 5, 8, "Nemo Sine Vitio Est – No one is without fault", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 2 },
-                    { 6, 8, "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 3 },
-                    { 7, 1, "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, 3 }
+                    { 1, 7, "Exitus Acta Probat – The result justifies the deed", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2416), 8, 1 },
+                    { 2, 8, "Veritas Odit Moras – Truth hates delay", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2421), 2, 1 },
+                    { 3, 8, "Timendi Causa Est Nescire – The cause of fear is ignorance", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2423), 3, 1 },
+                    { 4, 8, "Vivamus, Moriendum Est – Let us live, since we must die", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2425), 1, 2 },
+                    { 5, 8, "Nemo Sine Vitio Est – No one is without fault", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2427), 5, 2 },
+                    { 6, 8, "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2430), 1, 3 },
+                    { 7, 1, "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2432), 7, 3 }
                 });
 
             migrationBuilder.CreateIndex(
