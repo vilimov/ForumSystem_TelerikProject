@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WebForum.Models
 {
@@ -32,7 +33,9 @@ namespace WebForum.Models
        
         public bool IsAdmin { get; set; }     
         public bool IsBlocked { get; set; }
+        [JsonIgnore]
         public List<Post> Posts { get; set; }
+        [JsonIgnore]
         public List<Comment> Comments { get; set; }
     }
 }
