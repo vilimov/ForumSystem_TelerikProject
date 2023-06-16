@@ -69,7 +69,7 @@ namespace WebForum.Data
             base.OnModelCreating(modelBuilder);
             var users = new List<User>()
             {
-                new User { Id = 1, FirstName = "Julius", LastName = "Julius", Username = "JuliusCaesar", Email = "JC@roman.im", Password = "Cleopatra", IsAdmin = true },
+                new User { Id = 1, FirstName = "Julius", LastName = "Caesar", Username = "JuliusCaesar", Email = "JC@roman.im", Password = "Cleopatra", IsAdmin = true },
                 new User { Id = 2, FirstName = "Marcus", LastName = "Aurelius", Username = "MarcusAurelius", Email = "MA@roman.im", Password = "Antoninus", IsAdmin = true },
                 new User { Id = 3, FirstName = "MarcusTullius", LastName = "Cicero", Username = "MarcusTulliusCicero", Email = "MTC@roman.im", Password = "Tullius123", IsAdmin = false },
                 new User { Id = 4, FirstName = "Hippocrates", LastName = "ofKos", Username = "Hippocrates", Email = "Hipo@roman.im", Password = "CorpusHippocraticum", IsAdmin = false },
