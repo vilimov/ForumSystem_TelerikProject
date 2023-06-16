@@ -34,6 +34,11 @@ namespace WebForum.Services
 
         public Post DeletePost(int id, User user)
         {
+            Post postTodelete = repository.GetPostById(id);
+            if (user.Id != postTodelete.Autor.Id && !user.IsAdmin) 
+            {
+                throw new UnauthorizedOperationException("Only the Autor of the post or Admin can delete this post");
+            }
             return this.repository.DeletePost(id);
         }
 

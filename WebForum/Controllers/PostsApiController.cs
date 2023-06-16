@@ -107,5 +107,24 @@ namespace WebForum.Controllers
                 return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
             }
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletePost([FromHeader] string username, int id)
+        {
+            try
+            {
+                User user = users.GetByUsername(username);
+                Post postToDelete = posts.DeletePost(id, user);
+                return StatusCode(StatusCodes.Status200OK, postToDelete);
+            }
+            catch (UnauthorizedOperationException e)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
+        }
     }
 }

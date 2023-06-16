@@ -17,30 +17,23 @@ namespace WebForum.Helpers.Mappers
                         .ForMember(dto => dto.AutorName, post => post.MapFrom(user => user.Autor.Username))
                         .ForMember(dto => dto.Comments, post => post.MapFrom(src => MapComments(src)));
 
-            CreateMap<Comment, CommentsShowDTO>()
-                .ForMember(dto => dto.AutorName, opt => opt.MapFrom(comment => comment.Autor.Username))
-                .ForMember(dto => dto.PostTitle, opt => opt.MapFrom(comment => comment.Post.Title))
-                .ForMember(dto => dto.CreatedAt, opt => opt.MapFrom(comment => comment.CreatedAt));
-
         }
 
         private List<CommentsShowDTO> MapComments(Post post)
         {
             var comments = new List<CommentsShowDTO>();
-            List<Comment> listComments = post.Comments;
+            var listComments = post.Comments;
             foreach (var comment in listComments)
             {
-                comments.Add(new CommentsShowDTO
-                {
-                    Content = comment.Content,
-                    AutorName = comment.Autor.Username,
-                    PostTitle = comment.Post.Title,
-                    CreatedAt = comment.CreatedAt
-                });
+                comments.Add(new CommentsShowDTO(comment));
             }
 
             return comments;
         }
+        /*private List<Comment> MapComments(Post post)
+        {
+            return post.Comments;
+        }*/
 
     }
 }
