@@ -15,7 +15,7 @@ namespace WebForum
             var builder = WebApplication.CreateBuilder(args);
 
             // Register AutoMapper
-            builder.Services.AddAutoMapper(typeof(Program));
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             // Add services to the container.
 

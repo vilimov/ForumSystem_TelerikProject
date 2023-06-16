@@ -30,7 +30,6 @@ namespace WebForum.Controllers
         {
             var posts = this.posts.GetAllPosts();
             var postShowDtos = this.mapper.Map<List<PostShowDto>>(posts);
-
             return StatusCode(StatusCodes.Status200OK, postShowDtos);
         }
 
@@ -40,7 +39,8 @@ namespace WebForum.Controllers
             try
             {
                 var post = this.posts.GetPost(id);
-                return StatusCode(StatusCodes.Status200OK, post);
+                var postShowDto = this.mapper.Map<PostShowDto>(post);
+                return StatusCode(StatusCodes.Status200OK, postShowDto);
             }
             catch (EntityNotFoundException)
             {
@@ -67,9 +67,10 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = new User();
+                User user = users.GetByUsername(username);
 
                 Post post = mapper.Map<Post>(postDto);
+                //post.Autor = user; // Set the user as the author of the post
                 Post createPost = posts.CreatePost(post, user);
 
                 return StatusCode(StatusCodes.Status200OK, createPost);
@@ -84,13 +85,14 @@ namespace WebForum.Controllers
             }
         }
 
+
         [HttpPut("{id}")]
         public IActionResult UpdatePost([FromHeader] string username, [FromBody] PostDtoCreateUpdate updateDto, int id)
         {
             //UpdatePost(int id, Post post)
             try
             {
-                User user = new User();
+                User user = users.GetByUsername(username);
                 Post post = mapper.Map<Post>(updateDto);
                 Post createPost = posts.UpdatePost(id, post, user);
 
