@@ -46,7 +46,7 @@ namespace WebForum.Controllers
         }
 
         [HttpGet("email/{email}")]
-        public ActionResult<UserPublicDataDto> GetByEmail(string email)
+        public IActionResult GetByEmail(string email)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace WebForum.Controllers
         }
 
         [HttpGet("username/{username}")]
-        public ActionResult<UserPublicDataDto> GetByUsername(string username)
+        public IActionResult GetByUsername(string username)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace WebForum.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult<UserPublicDataDto> Register(UserRegisterDto newUserDto)
+        public IActionResult Register(UserRegisterDto newUserDto)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace WebForum.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult<UserPublicDataDto> Login(UserLoginDto loginDto)
+        public IActionResult Login(UserLoginDto loginDto)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace WebForum.Controllers
         }
 
         [HttpPut("update")]
-        public ActionResult<UserPublicDataDto> UpdateProfile(UserUpdateDto userUpdateDto)
+        public IActionResult UpdateProfile(UserUpdateDto userUpdateDto)
         {
             try
             {
