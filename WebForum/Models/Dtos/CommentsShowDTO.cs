@@ -1,22 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WebForum.Repository;
+using WebForum.Repository.Contracts;
 using WebForum.Services;
 
 namespace WebForum.Models.Dtos
 {
     public class CommentsShowDTO
     {
-        private readonly UserRepository userRepository;
+        private static UserServices userService;
+        private static PostServices postService;
         public CommentsShowDTO(Comment commentModel)
         {
             Content = commentModel.Content;
             CreatedAt = commentModel.CreatedAt;
-            //
+            //Autor = userService.GetUserById((int)commentModel.AutorId).Username;
             Autor = commentModel.Autor;
-            // ToDo - should take author from UserServices, but no such method there currently  
-            Autor = userRepository.GetUserById(commentModel.Id);
             Likes = commentModel.Likes;
             Post = commentModel.Post;
+            //Post = postService.GetPost((int)commentModel.PostId).Autor;
         }
 
         public string Content { get; set; }        
