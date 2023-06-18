@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using WebForum.Data;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
@@ -16,25 +17,36 @@ namespace WebForum.Repository
         }
         public IEnumerable<Comment> GetAll()
         {
-            return context.Comments.ToList();
+            IEnumerable<Comment> result = context.Comments
+                                                  .Include(c => c.Autor)
+                                                  .Include(c => c.Post);
+            return result.ToList() ?? throw new EntityNotFoundException($"No comments were found!");
         }
 
         public Comment GetCommentById(int id)
         {
-            Comment comment = context.Comments.FirstOrDefault(c => c.Id == id);
+            Comment comment = GetAll().FirstOrDefault(c => c.Id == id);
             return comment ?? throw new EntityNotFoundException($"Comment with ID:{id} does not exist!");
         }
 
         public IEnumerable<Comment> GetByPostId(int postId)
         {
-            IEnumerable<Comment> result = context.Comments.Where(c => c.PostId == postId);
-            return result.ToList() ?? throw new EntityNotFoundException($"Post with ID:{postId} does not have any comments!");
+            IEnumerable<Comment> result = GetAll().Where(c => c.PostId == postId);
+            if (!result.Any()) 
+            {
+                throw new EntityNotFoundException($"Post with ID:{postId} does not have any comments!");
+            }
+            return result;
         }
 
-        public IEnumerable<Comment> GetByAuthorId(int authorId)
+        public IEnumerable<Comment> GetByAuthorId(int autorId)
         {
-            IEnumerable<Comment> result = context.Comments.Where(c => c.AutorId == authorId);
-            return result.ToList() ?? throw new EntityNotFoundException($"No comments from author with ID: {authorId}!");
+            IEnumerable<Comment> result = GetAll().Where(c => c.AutorId == autorId).ToList();
+            if (!result.Any())
+            {
+                throw new EntityNotFoundException($"Autor with ID:{autorId} does not have any comments!");
+            }
+            return result;
         }
 
         public Comment Create(Comment newComment)
@@ -72,7 +84,9 @@ namespace WebForum.Repository
 
         public IEnumerable<Comment> FilterBy(CommentQueryParameters filterParameters)
         {
-            IEnumerable<Comment> result = context.Comments;
+            IEnumerable<Comment> result = context.Comments
+                                                  .Include(c => c.Autor)
+                                                  .Include(c => c.Post);
 
             result = FilterByContent(result, filterParameters.Content);
             result = FilterByMinLikes(result, filterParameters.MinLikes);

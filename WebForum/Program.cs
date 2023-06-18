@@ -52,6 +52,8 @@ namespace WebForum
             //builder.Services.AddScoped<PostCreatUpdateMapper>();
             //builder.Services.AddScoped<IMapper>();
 
+            builder.Services.AddScoped<CommentMapper>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

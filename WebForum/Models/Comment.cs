@@ -14,6 +14,7 @@ namespace WebForum.Models
         public string Content { get; set; }
 
         [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{hh:mm:ss}")]
         public DateTime CreatedAt { get; set; }
 
         public int? AutorId { get; set; }

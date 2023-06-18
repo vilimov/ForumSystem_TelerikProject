@@ -7,23 +7,22 @@ namespace WebForum.Models.Dtos
 {
     public class CommentsShowDTO
     {
-        private static UserServices userService;
-        private static PostServices postService;
         public CommentsShowDTO(Comment commentModel)
         {
             Content = commentModel.Content;
-            CreatedAt = commentModel.CreatedAt;
-            //Autor = userService.GetUserById((int)commentModel.AutorId).Username;
-            Autor = commentModel.Autor;
             Likes = commentModel.Likes;
-            Post = commentModel.Post;
-            //Post = postService.GetPost((int)commentModel.PostId).Autor;
+            CreatedAt = commentModel.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss");
+            Autor = commentModel.Autor.Username;
+            PostTitle = commentModel.Post.Title;
+            PostContent = commentModel.Post.Content;
         }
 
-        public string Content { get; set; }        
-        public DateTime CreatedAt { get; set; }
-        public User Autor { get; set; }
+        public string Content { get; set; }
         public int Likes { get; set; }
-        public Post Post { get; set; }
+        public string CreatedAt { get; set; }
+        public string Autor { get; set; }
+        public string PostTitle { get; set; }
+        public string PostContent { get; set; }
+
     }
 }

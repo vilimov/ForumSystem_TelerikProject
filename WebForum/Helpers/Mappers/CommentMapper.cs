@@ -21,7 +21,7 @@ namespace WebForum.Helpers.Mappers
             {
                 Content = dto.Content,
                 PostId = postServices.GetPost(dto.PostId).Id,
-                AutorId = userServices.GetUserById(dto.AutorId).Id
+                //AutorId = userServices.GetUserById(dto.AutorId).Id
             };
         }
     }
