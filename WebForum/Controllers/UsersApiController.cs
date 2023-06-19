@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
 using WebForum.Models;
@@ -17,17 +18,20 @@ namespace WebForum.Controllers
         {
             this.userServices = userServices;
         }
-        
+
 
         [HttpGet("")]
-        public IActionResult GetUsers([FromQuery] CommentQueryParameters filterParameters)
+        public IActionResult GetUsers()
         {
             List<User> users = userServices.GetAllUsers();
             if (users.Count == 0)
             {
-                return StatusCode(StatusCodes.Status204NoContent);
+                return NoContent();
             }
-            return StatusCode(StatusCodes.Status200OK, users);
+
+            var usersPublicDataDtos = users.Select(UserMappers.ToUserPublicDataDto).ToList();
+
+            return Ok(usersPublicDataDtos);
         }
 
         [HttpGet("{id}")]
@@ -120,7 +124,7 @@ namespace WebForum.Controllers
                 }
                 userToUpdate.ApplyUpdate(userUpdateDto);
                 var updatedUser = userServices.UpdateProfile(userToUpdate);
-                return Ok();
+                return Ok(updatedUser);
             }
             catch (EntityNotFoundException ex)
             {

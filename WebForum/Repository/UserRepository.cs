@@ -1,4 +1,5 @@
-﻿using WebForum.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using WebForum.Data;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
 using WebForum.Repository.Contracts;
