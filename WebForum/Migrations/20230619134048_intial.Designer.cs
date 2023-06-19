@@ -12,8 +12,8 @@ using WebForum.Data;
 namespace WebForum.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20230616082147_Initial")]
-    partial class Initial
+    [Migration("20230619134048_intial")]
+    partial class intial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,8 +36,6 @@ namespace WebForum.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(8192)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -63,7 +61,7 @@ namespace WebForum.Migrations
                             Id = 1,
                             AutorId = 7,
                             Content = "Exitus Acta Probat – The result justifies the deed",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2416),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(7011),
                             Likes = 8,
                             PostId = 1
                         },
@@ -72,7 +70,7 @@ namespace WebForum.Migrations
                             Id = 2,
                             AutorId = 8,
                             Content = "Veritas Odit Moras – Truth hates delay",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2421),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(7014),
                             Likes = 2,
                             PostId = 1
                         },
@@ -81,7 +79,7 @@ namespace WebForum.Migrations
                             Id = 3,
                             AutorId = 8,
                             Content = "Timendi Causa Est Nescire – The cause of fear is ignorance",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2423),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(7015),
                             Likes = 3,
                             PostId = 1
                         },
@@ -90,7 +88,7 @@ namespace WebForum.Migrations
                             Id = 4,
                             AutorId = 8,
                             Content = "Vivamus, Moriendum Est – Let us live, since we must die",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2425),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(7017),
                             Likes = 1,
                             PostId = 2
                         },
@@ -99,7 +97,7 @@ namespace WebForum.Migrations
                             Id = 5,
                             AutorId = 8,
                             Content = "Nemo Sine Vitio Est – No one is without fault",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2427),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(7018),
                             Likes = 5,
                             PostId = 2
                         },
@@ -108,7 +106,7 @@ namespace WebForum.Migrations
                             Id = 6,
                             AutorId = 8,
                             Content = "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2430),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(7020),
                             Likes = 1,
                             PostId = 3
                         },
@@ -117,7 +115,7 @@ namespace WebForum.Migrations
                             Id = 7,
                             AutorId = 1,
                             Content = "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2432),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(7021),
                             Likes = 7,
                             PostId = 3
                         });
@@ -163,7 +161,7 @@ namespace WebForum.Migrations
                             Id = 1,
                             AutorId = 3,
                             Content = "The beginnings of all things are small.",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2264),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(6947),
                             Likes = 5,
                             Title = "Omnium Rerum Principia Parva Sunt"
                         },
@@ -172,7 +170,7 @@ namespace WebForum.Migrations
                             Id = 2,
                             AutorId = 3,
                             Content = "Always the same.",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2381),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(6986),
                             Likes = 1,
                             Title = "Semper Idem"
                         },
@@ -181,7 +179,7 @@ namespace WebForum.Migrations
                             Id = 3,
                             AutorId = 4,
                             Content = "Art is long, life is short.",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2384),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(6987),
                             Likes = 10,
                             Title = "Ars Longa, Vita Brevis"
                         },
@@ -190,7 +188,7 @@ namespace WebForum.Migrations
                             Id = 4,
                             AutorId = 5,
                             Content = "The play is over, applaud!",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2386),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(6989),
                             Likes = 3,
                             Title = "Acta est Fabula, Plaudite!"
                         },
@@ -199,7 +197,7 @@ namespace WebForum.Migrations
                             Id = 5,
                             AutorId = 1,
                             Content = "The die is cast.",
-                            CreatedAt = new DateTime(2023, 6, 16, 11, 21, 47, 279, DateTimeKind.Local).AddTicks(2388),
+                            CreatedAt = new DateTime(2023, 6, 19, 16, 40, 47, 917, DateTimeKind.Local).AddTicks(6990),
                             Likes = 2,
                             Title = "Alea Jacta Est"
                         });
@@ -255,7 +253,7 @@ namespace WebForum.Migrations
                             FirstName = "Julius",
                             IsAdmin = true,
                             IsBlocked = false,
-                            LastName = "Julius",
+                            LastName = "Caesar",
                             Password = "Cleopatra",
                             Username = "JuliusCaesar"
                         },
