@@ -13,16 +13,19 @@ namespace WebForum.Controllers
     {
         private readonly ICommentsServices commentServices;
         private readonly IUserServices userServices;
+        private readonly IPostServices postServices;
         private readonly CommentMapper commentMapper;
 
-        public CommentsApiController(ICommentsServices commentServices, IUserServices userServices, CommentMapper commentMapper)
+        public CommentsApiController(ICommentsServices commentServices, IUserServices userServices, CommentMapper commentMapper, IPostServices postServices)
         {
             this.commentServices = commentServices;
             this.userServices = userServices;
             this.commentMapper = commentMapper;
+            this.postServices = postServices;
         }
-
+        
         [HttpGet("")]
+
         public IActionResult GetComments([FromQuery] CommentQueryParameters filterParameters)
         {
             List<Comment> comments = commentServices.FilterBy(filterParameters);
@@ -79,14 +82,15 @@ namespace WebForum.Controllers
         }
 
 
-        [HttpPost("")]
-        public IActionResult CreateComment([FromHeader] string username, [FromBody] CommentsCreateUpdateDTO commentDTO)
+        [HttpPost("post/{postId}")]
+        public IActionResult CreateComment([FromHeader] string username, int postId, [FromBody] CommentsCreateUpdateDTO commentDTO)
         {
             try
             {
                 User user = userServices.GetByUsername(username);
+                Post post = postServices.GetPostById(postId);
                 Comment comment = commentMapper.Map(commentDTO);
-                Comment createdComment = commentServices.CreateComment(comment, user.Id);
+                Comment createdComment = commentServices.CreateComment(comment, post, user);
 
                 return StatusCode(StatusCodes.Status201Created, createdComment);
             }

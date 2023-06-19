@@ -44,9 +44,13 @@ namespace WebForum.Services
             return result;
         }
 
-        public Comment CreateComment(Comment comment, int postId)
+        public Comment CreateComment(Comment comment, Post post, User autor)
         {
-            postRepository.GetPostById(postId);
+            //hack Mila
+            comment.Post = post;
+            comment.Autor = autor;
+            comment.CreatedAt = DateTime.Now;
+            //postRepository.GetPostById(postId);
             Comment createdComment = repository.Create(comment);
             return createdComment;
         }

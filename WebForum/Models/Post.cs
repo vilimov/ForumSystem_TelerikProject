@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace WebForum.Models
 {
@@ -28,6 +29,7 @@ namespace WebForum.Models
         public int? AutorId { get; set; }
         public User Autor { get; set; }
 
+        [JsonIgnore]
         public List<Comment> Comments { get; set; }
 
         //TODO Tags on posts

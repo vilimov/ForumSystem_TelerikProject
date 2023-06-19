@@ -37,25 +37,21 @@ namespace WebForum.Repository
             return this.context.Posts
                                      .Include(u => u.Autor)
                                      .Include(c => c.Comments)
-                                     .ToList();
+                                     .ThenInclude(a=>a.Autor)
+                                    .ToList();
         }
 
         public Post GetPostById(int id)
         {
-            //var post = this.context.Posts.Where(p => p.Id == id).FirstOrDefault();
-            var post = this.context.Posts
-                                         .Include(p => p.Autor) // Include the Autor navigation property
-                                         .FirstOrDefault(p => p.Id == id);
-            return post ?? throw new EntityNotFoundException($"Post with id {id} doesn't exist.");
+
+           var post = this.GetAllPosts().FirstOrDefault(p => p.Id == id);
+           return post ?? throw new EntityNotFoundException($"Post with id {id} doesn't exist.");
         }
 
         public List<Post> GetPostByUserId(int userId)
         {
             //var post = this.context.Posts.Where(p => p.Autor.Id == userId).ToList();
-            var posts = this.context.Posts
-                                          .Include(p => p.Autor) // Include the Autor navigation property
-                                          .Where(p => p.Autor.Id == userId)
-                                          .ToList();
+            var posts = this.GetAllPosts().Where(p => p.Autor.Id == userId).ToList();
             return posts ?? throw new EntityNotFoundException($"Post with user id {userId}, not found");
         }
 

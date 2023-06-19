@@ -19,8 +19,8 @@ namespace WebForum.Helpers.Mappers
         {
             return new Comment
             {
-                Content = dto.Content,
-                PostId = postServices.GetPost(dto.PostId).Id,
+                Content = dto.Content
+                //PostId = postServices.GetPostById(dto.PostId).Id,
                 //AutorId = userServices.GetUserById(dto.AutorId).Id
             };
         }

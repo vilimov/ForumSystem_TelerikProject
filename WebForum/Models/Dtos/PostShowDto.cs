@@ -7,10 +7,11 @@ namespace WebForum.Models.Dtos
     {
         public string Title { get; set; }
         public string Content { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string CreatedAt { get; set; }
         public int Likes { get; set; }
         public string AutorName { get; set; }
-        public Dictionary<string, string> Comments { get; set; } = new Dictionary<string, string>();
+        public List<CommentToPostDto> Comments { get; set; } = new List<CommentToPostDto>();
+
 
     }
 }

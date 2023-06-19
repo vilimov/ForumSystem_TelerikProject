@@ -9,6 +9,7 @@ using WebForum.Services;
 
 namespace WebForum.Controllers
 {
+
     [ApiController]
     [Route("api/posts")]
     public class PostsApiController : ControllerBase
@@ -38,7 +39,7 @@ namespace WebForum.Controllers
         {
             try
             {
-                var post = this.posts.GetPost(id);
+                var post = this.posts.GetPostById(id);
                 var postShowDto = this.mapper.Map<PostShowDto>(post);
                 return StatusCode(StatusCodes.Status200OK, postShowDto);
             }
@@ -54,7 +55,8 @@ namespace WebForum.Controllers
             try
             {
                 var post = this.posts.GetPostsByUserId(userId);
-                return StatusCode(StatusCodes.Status200OK, post);
+                var postShowDto = this.mapper.Map<List<PostShowDto>>(post);
+                return StatusCode(StatusCodes.Status200OK, postShowDto);
             }
             catch (EntityNotFoundException)
             {

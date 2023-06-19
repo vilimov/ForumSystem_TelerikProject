@@ -8,9 +8,9 @@ namespace WebForum.Models
     {
         public int Id { get; set; }
 
-        /*[Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be an empty string.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be an empty string.")]
         [MinLength(32, ErrorMessage = "The {0} field must be at least {1} characters.")]
-        [MaxLength(8192, ErrorMessage = "The {0} field must be less than {1} characters.")]*/
+        [MaxLength(8192, ErrorMessage = "The {0} field must be less than {1} characters.")]
         public string Content { get; set; }
 
         [DataType(DataType.DateTime)]

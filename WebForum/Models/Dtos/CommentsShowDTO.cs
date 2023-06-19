@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Extensions.Primitives;
+using System.ComponentModel.DataAnnotations;
 using WebForum.Repository;
 using WebForum.Repository.Contracts;
 using WebForum.Services;
@@ -7,6 +8,10 @@ namespace WebForum.Models.Dtos
 {
     public class CommentsShowDTO
     {
+        public CommentsShowDTO()
+        {
+            
+        }
         public CommentsShowDTO(Comment commentModel)
         {
             Content = commentModel.Content;

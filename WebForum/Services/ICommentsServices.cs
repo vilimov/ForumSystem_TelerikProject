@@ -13,8 +13,9 @@ namespace WebForum.Services
 
         List<Comment> GetByAuthorId(int id);
 
-        Comment CreateComment(Comment comment, int postId);
-        
+        Comment CreateComment(Comment comment, Post post, User autor);
+
+
         Comment Update(int id, Comment comment, User author);
         
         Comment Delete(int id, User author);

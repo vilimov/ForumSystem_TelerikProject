@@ -47,7 +47,7 @@ namespace WebForum.Services
             return repository.GetAllPosts();
         }
 
-        public Post GetPost(int id)
+        public Post GetPostById(int id)
         {
             return this.repository.GetPostById(id);
         }
