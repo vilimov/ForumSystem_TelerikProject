@@ -40,8 +40,8 @@ namespace WebForum.Controllers
             try
             {
                 User user = userServices.GetUserById(id);
-
-                return StatusCode(StatusCodes.Status200OK, user);
+                var userPublicDataDto = UserMappers.ToUserPublicDataDto(user);
+                return Ok(userPublicDataDto);
             }
             catch (EntityNotFoundException e)
             {
@@ -54,9 +54,9 @@ namespace WebForum.Controllers
         {
             try
             {
-                var user = userServices.GetByEmail(email);
-
-                return StatusCode(StatusCodes.Status200OK, user);
+                User user = userServices.GetByEmail(email);
+                var userPublicDataDto = UserMappers.ToUserPublicDataDto(user);
+                return Ok(userPublicDataDto);
             }
             catch (EntityNotFoundException e)
             {
@@ -69,9 +69,9 @@ namespace WebForum.Controllers
         {
             try
             {
-                var user = userServices.GetByUsername(username);
-
-                return Ok(user);
+                User user = userServices.GetByUsername(username);
+                var userPublicDataDto = UserMappers.ToUserPublicDataDto(user);
+                return Ok(userPublicDataDto);
             }
             catch (EntityNotFoundException e)
             {
