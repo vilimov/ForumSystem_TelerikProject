@@ -86,7 +86,9 @@ namespace WebForum.Controllers
             {
                 var newUser = UserMappers.ToEntity(newUserDto);
                 var registeredUser = userServices.Register(newUser);
-                return CreatedAtAction("GetById", new { id = registeredUser.Id }, registeredUser);
+                //Hack Mila User Register
+                //return CreatedAtAction("GetUserById", new { id = registeredUser.Id }, registeredUser);
+                return Ok(registeredUser);
             }
             catch (DuplicateEntityException)
             {

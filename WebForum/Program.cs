@@ -5,6 +5,7 @@ using WebForum.Helpers.Mappers;
 using WebForum.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using WebForum.Helpers.Authentication;
 
 namespace WebForum
 {
@@ -49,6 +50,7 @@ namespace WebForum
             builder.Services.AddScoped<IUserServices, UserServices>();
 
             //Helpers
+            builder.Services.AddScoped<AuthManager>();
             //builder.Services.AddScoped<PostCreatUpdateMapper>();
             //builder.Services.AddScoped<IMapper>();
 

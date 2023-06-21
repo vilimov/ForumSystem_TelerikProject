@@ -1,4 +1,5 @@
-﻿using WebForum.Helpers.Exceptions;
+﻿using WebForum.Helpers.Authentication;
+using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
 using WebForum.Models;
 using WebForum.Models.Dtos;
@@ -51,6 +52,16 @@ namespace WebForum.Services
             {
                 throw new DuplicateEntityException($"A user with username {newUser.Username} already exists.");
             }
+            
+            // Generate salt
+            string salt = AuthManager.GenerateSalt();
+
+            // Concatenate salt with password and generate hashed password
+            string hashedPassword = AuthManager.HashPassword(newUser.Password, salt);
+
+            // Assign salt and hashed password to user object
+            newUser.Salt = salt;
+            newUser.HashedPassword = hashedPassword;
 
             return userRepository.CreateUser(newUser);
         }
@@ -79,6 +90,19 @@ namespace WebForum.Services
             if (existingUser == null)
             {
                 throw new EntityNotFoundException($"User with id {userUpdate.Id} does not exist.");
+            }
+
+            if (userUpdate.Password != null)
+            {
+                // Generate new salt
+                string newSalt = AuthManager.GenerateSalt();
+
+                // Hash the new password with the new salt
+                string newHashedPassword = AuthManager.HashPassword(userUpdate.Password, newSalt);
+
+                // Update the user's salt and hashed password
+                existingUser.Salt = newSalt;
+                existingUser.HashedPassword = newHashedPassword;
             }
 
             return userRepository.UpdateUser(userUpdate);

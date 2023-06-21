@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using WebForum.Helpers.Authentication;
 using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
 using WebForum.Models;
@@ -17,14 +18,18 @@ namespace WebForum.Controllers
         private readonly IPostServices posts;
         private readonly IUserServices users;
         private readonly IMapper mapper;
-
+        private readonly AuthManager authManager;
         
-        public PostsApiController(IPostServices posts, IUserServices users, IMapper mapper)
+        public PostsApiController(IPostServices posts, IUserServices users, IMapper mapper, AuthManager authManager)
         {
             this.posts = posts;
             this.mapper = mapper;
             this.users = users;
+            this.authManager = authManager;
         }
+
+        //Todo - Posts when user is not logged???
+
 
         [HttpGet("")]
         public IActionResult GetAllPosts()
@@ -65,14 +70,12 @@ namespace WebForum.Controllers
         }
 
         [HttpPost("")]
-        public IActionResult CreatePost([FromHeader] string username, [FromBody] PostDtoCreateUpdate postDto)
+        public IActionResult CreatePost([FromHeader] string credentials, [FromBody] PostDtoCreateUpdate postDto)
         {
             try
             {
-                User user = users.GetByUsername(username);
-
+                User user = this.authManager.TryGetUser(credentials);
                 Post post = mapper.Map<Post>(postDto);
-                //post.Autor = user; // Set the user as the author of the post
                 Post createPost = posts.CreatePost(post, user);
 
                 return StatusCode(StatusCodes.Status200OK, createPost);
@@ -84,6 +87,10 @@ namespace WebForum.Controllers
             catch (UnauthorizedOperationException e)
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+            }
+            catch (InvalidPasswordException e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
         }
 
@@ -120,6 +127,10 @@ namespace WebForum.Controllers
                 return StatusCode(StatusCodes.Status200OK, postToDelete);
             }
             catch (UnauthorizedOperationException e)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+            }
+            catch (UnauthenticatedOperationException e)
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
             }
