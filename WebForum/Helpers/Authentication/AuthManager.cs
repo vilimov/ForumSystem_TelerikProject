@@ -35,7 +35,7 @@ namespace WebForum.Helpers.Authentication
                 //string saltedPassword = string.Concat(enteredPassword, user.Salt);
                 string hashedPassword = HashPassword(enteredPassword, user.Salt);
 
-                if (user.HashedPassword == hashedPassword)
+                if (user.Password == hashedPassword)
                 {
                     return user;
                 }

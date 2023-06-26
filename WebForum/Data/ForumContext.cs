@@ -63,15 +63,10 @@ namespace WebForum.Data
         //        Password = "password789",
         //        IsAdmin = true,
         //        IsBlocked = false
-        //    },
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            var salt = AuthManager.GenerateSalt();
-            var users = new List<User>()
-            {
-                new User { Id = 1, FirstName = "Julius", LastName = "Caesar", Username = "JuliusCaesar", Email = "JC@roman.im", Salt = salt, Password = "Cleopatra", HashedPassword = AuthManager.HashPassword("Cleopatra", salt), IsAdmin = true },
+        //
+        //
+        //   },
+        /*new User { Id = 1, FirstName = "Julius", LastName = "Caesar", Username = "JuliusCaesar", Email = "JC@roman.im", Salt = salt, Password = "Cleopatra", HashedPassword = AuthManager.HashPassword("Cleopatra", salt), IsAdmin = true },
                 new User { Id = 2, FirstName = "Marcus", LastName = "Aurelius", Username = "MarcusAurelius", Email = "MA@roman.im", Salt = salt, Password = "Antoninus", HashedPassword = AuthManager.HashPassword("Antoninus", salt), IsAdmin = true },
                 new User { Id = 3, FirstName = "MarcusTullius", LastName = "Cicero", Username = "MarcusTulliusCicero", Email = "MTC@roman.im", Salt = salt, Password = "Tullius123", HashedPassword = AuthManager.HashPassword("Tullius123", salt), IsAdmin = false },
                 new User { Id = 4, FirstName = "Hippocrates", LastName = "ofKos", Username = "Hippocrates", Email = "Hipo@roman.im", Salt = salt, Password = "CorpusHippocraticum", HashedPassword = AuthManager.HashPassword("CorpusHippocraticum", salt), IsAdmin = false },
@@ -79,6 +74,22 @@ namespace WebForum.Data
                 new User { Id = 6, FirstName = "MarcusJunius", LastName = "Brutus", Username = "MarcusJuniusBrutus", Email = "BrutusIAm@roman.im", Salt = salt, Password = "MeToo", HashedPassword = AuthManager.HashPassword("MeToo", salt), IsAdmin = false, IsBlocked = true },
                 new User { Id = 7, FirstName = "PubliusOvidius", LastName = "Naso", Username = "PubliusOvidiusNaso", Email = "Ovid@roman.im", Salt = salt, Password = "Metamorphoses", HashedPassword = AuthManager.HashPassword("Metamorphoses", salt), IsAdmin = false },
                 new User { Id = 8, FirstName = "LuciusAnnaeus", LastName = "Seneca", Username = "LuciusAnnaeusSeneca", Email = "Seneca@roman.im", Salt = salt, Password = "EpistulaeMorales", HashedPassword = AuthManager.HashPassword("EpistulaeMorales", salt), IsAdmin = false }
+            
+         */
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            var salt = AuthManager.GenerateSalt();
+            var users = new List<User>()
+            {
+                new User { Id = 1, FirstName = "Julius", LastName = "Caesar", Username = "JuliusCaesar", Email = "JC@roman.im", Salt = salt, Password = AuthManager.HashPassword("Cleopatra", salt), IsAdmin = true },
+                new User { Id = 2, FirstName = "Marcus", LastName = "Aurelius", Username = "MarcusAurelius", Email = "MA@roman.im", Salt = salt, Password = AuthManager.HashPassword("Antoninus", salt), IsAdmin = true },
+                new User { Id = 3, FirstName = "MarcusTullius", LastName = "Cicero", Username = "MarcusTulliusCicero", Email = "MTC@roman.im", Salt = salt, Password = AuthManager.HashPassword("Tullius123", salt), IsAdmin = false },
+                new User { Id = 4, FirstName = "Hippocrates", LastName = "ofKos", Username = "Hippocrates", Email = "Hipo@roman.im", Salt = salt, Password = AuthManager.HashPassword("CorpusHippocraticum", salt), IsAdmin = false },
+                new User { Id = 5, FirstName = "Caesar", LastName = "Augustus", Username = "CaesarAugustus", Email = "CA@roman.im", Salt = salt, Password = AuthManager.HashPassword("GaiusOctavius", salt), IsAdmin = false },
+                new User { Id = 6, FirstName = "MarcusJunius", LastName = "Brutus", Username = "MarcusJuniusBrutus", Email = "BrutusIAm@roman.im", Salt = salt, Password = AuthManager.HashPassword("MeToo", salt), IsAdmin = false, IsBlocked = true },
+                new User { Id = 7, FirstName = "PubliusOvidius", LastName = "Naso", Username = "PubliusOvidiusNaso", Email = "Ovid@roman.im", Salt = salt, Password = AuthManager.HashPassword("Metamorphoses", salt), IsAdmin = false },
+                new User { Id = 8, FirstName = "LuciusAnnaeus", LastName = "Seneca", Username = "LuciusAnnaeusSeneca", Email = "Seneca@roman.im", Salt = salt, Password = AuthManager.HashPassword("EpistulaeMorales", salt), IsAdmin = false }
             };
             modelBuilder.Entity<User>().HasData(users);
 

@@ -61,7 +61,8 @@ namespace WebForum.Services
 
             // Assign salt and hashed password to user object
             newUser.Salt = salt;
-            newUser.HashedPassword = hashedPassword;
+            //newUser.HashedPassword = hashedPassword;
+            newUser.Password = hashedPassword;
 
             return userRepository.CreateUser(newUser);
         }
@@ -102,7 +103,7 @@ namespace WebForum.Services
 
                 // Update the user's salt and hashed password
                 existingUser.Salt = newSalt;
-                existingUser.HashedPassword = newHashedPassword;
+                existingUser.Password = newHashedPassword;
             }
 
             return userRepository.UpdateUser(userUpdate);

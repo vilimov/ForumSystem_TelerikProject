@@ -12,8 +12,8 @@ using WebForum.Data;
 namespace WebForum.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20230621110406_seededUsersUpdate")]
-    partial class seededUsersUpdate
+    [Migration("20230626160140_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,7 +63,7 @@ namespace WebForum.Migrations
                             Id = 1,
                             AutorId = 7,
                             Content = "Exitus Acta Probat – The result justifies the deed",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9757),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3581),
                             Likes = 8,
                             PostId = 1
                         },
@@ -72,7 +72,7 @@ namespace WebForum.Migrations
                             Id = 2,
                             AutorId = 8,
                             Content = "Veritas Odit Moras – Truth hates delay",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9762),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3585),
                             Likes = 2,
                             PostId = 1
                         },
@@ -81,7 +81,7 @@ namespace WebForum.Migrations
                             Id = 3,
                             AutorId = 8,
                             Content = "Timendi Causa Est Nescire – The cause of fear is ignorance",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9764),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3588),
                             Likes = 3,
                             PostId = 1
                         },
@@ -90,7 +90,7 @@ namespace WebForum.Migrations
                             Id = 4,
                             AutorId = 8,
                             Content = "Vivamus, Moriendum Est – Let us live, since we must die",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9767),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3590),
                             Likes = 1,
                             PostId = 2
                         },
@@ -99,7 +99,7 @@ namespace WebForum.Migrations
                             Id = 5,
                             AutorId = 8,
                             Content = "Nemo Sine Vitio Est – No one is without fault",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9769),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3592),
                             Likes = 5,
                             PostId = 2
                         },
@@ -108,7 +108,7 @@ namespace WebForum.Migrations
                             Id = 6,
                             AutorId = 8,
                             Content = "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9772),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3594),
                             Likes = 1,
                             PostId = 3
                         },
@@ -117,7 +117,7 @@ namespace WebForum.Migrations
                             Id = 7,
                             AutorId = 1,
                             Content = "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9774),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3596),
                             Likes = 7,
                             PostId = 3
                         });
@@ -163,7 +163,7 @@ namespace WebForum.Migrations
                             Id = 1,
                             AutorId = 3,
                             Content = "The beginnings of all things are small.",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9653),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3497),
                             Likes = 5,
                             Title = "Omnium Rerum Principia Parva Sunt"
                         },
@@ -172,7 +172,7 @@ namespace WebForum.Migrations
                             Id = 2,
                             AutorId = 3,
                             Content = "Always the same.",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9710),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3541),
                             Likes = 1,
                             Title = "Semper Idem"
                         },
@@ -181,7 +181,7 @@ namespace WebForum.Migrations
                             Id = 3,
                             AutorId = 4,
                             Content = "Art is long, life is short.",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9713),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3543),
                             Likes = 10,
                             Title = "Ars Longa, Vita Brevis"
                         },
@@ -190,7 +190,7 @@ namespace WebForum.Migrations
                             Id = 4,
                             AutorId = 5,
                             Content = "The play is over, applaud!",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9715),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3545),
                             Likes = 3,
                             Title = "Acta est Fabula, Plaudite!"
                         },
@@ -199,7 +199,7 @@ namespace WebForum.Migrations
                             Id = 5,
                             AutorId = 1,
                             Content = "The die is cast.",
-                            CreatedAt = new DateTime(2023, 6, 21, 14, 4, 6, 47, DateTimeKind.Local).AddTicks(9717),
+                            CreatedAt = new DateTime(2023, 6, 26, 19, 1, 40, 28, DateTimeKind.Local).AddTicks(3547),
                             Likes = 2,
                             Title = "Alea Jacta Est"
                         });
@@ -222,9 +222,6 @@ namespace WebForum.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<string>("HashedPassword")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
@@ -238,8 +235,8 @@ namespace WebForum.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(170)
+                        .HasColumnType("nvarchar(170)");
 
                     b.Property<string>("Salt")
                         .HasColumnType("nvarchar(max)");
@@ -259,12 +256,11 @@ namespace WebForum.Migrations
                             Id = 1,
                             Email = "JC@roman.im",
                             FirstName = "Julius",
-                            HashedPassword = "5HCv18Z8GwDaB7SAcYhXkM/Va5EsDkghw8xTLuGEK88=",
                             IsAdmin = true,
                             IsBlocked = false,
                             LastName = "Caesar",
-                            Password = "Cleopatra",
-                            Salt = "36H4soyqRmCs4TiyKtAT9g==",
+                            Password = "JYsZJWP5TqklkDluhFzlPHDW2U4x4FOjEOpSKyMmNrI=",
+                            Salt = "hgao85Qg9j0urKyL1stcjw==",
                             Username = "JuliusCaesar"
                         },
                         new
@@ -272,12 +268,11 @@ namespace WebForum.Migrations
                             Id = 2,
                             Email = "MA@roman.im",
                             FirstName = "Marcus",
-                            HashedPassword = "vUkAVJdcY5fdoK8gCPS12OxWqlcFBdRe8wPvG7T9Jzs=",
                             IsAdmin = true,
                             IsBlocked = false,
                             LastName = "Aurelius",
-                            Password = "Antoninus",
-                            Salt = "36H4soyqRmCs4TiyKtAT9g==",
+                            Password = "CcnsLZbvplUGt0uFoLaGJUdosrOoTyJx2a0HHKgV1bg=",
+                            Salt = "hgao85Qg9j0urKyL1stcjw==",
                             Username = "MarcusAurelius"
                         },
                         new
@@ -285,12 +280,11 @@ namespace WebForum.Migrations
                             Id = 3,
                             Email = "MTC@roman.im",
                             FirstName = "MarcusTullius",
-                            HashedPassword = "koGr5Cj1n1s6uEmqAlN0P5uKNLNLjHsTsvVbELwEqj4=",
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Cicero",
-                            Password = "Tullius123",
-                            Salt = "36H4soyqRmCs4TiyKtAT9g==",
+                            Password = "TLPqUrVrizp0aCJR1MwX1Ede38HdmJd54hBNnedJ4Ps=",
+                            Salt = "hgao85Qg9j0urKyL1stcjw==",
                             Username = "MarcusTulliusCicero"
                         },
                         new
@@ -298,12 +292,11 @@ namespace WebForum.Migrations
                             Id = 4,
                             Email = "Hipo@roman.im",
                             FirstName = "Hippocrates",
-                            HashedPassword = "U1pFsY6GNa92rht6+0z3SbhTkjamm09+EIzqMzqgrhc=",
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "ofKos",
-                            Password = "CorpusHippocraticum",
-                            Salt = "36H4soyqRmCs4TiyKtAT9g==",
+                            Password = "X/9NSoqFZA84vGm/RM8QOyiAzzqCuiMa0P9APOqiSR0=",
+                            Salt = "hgao85Qg9j0urKyL1stcjw==",
                             Username = "Hippocrates"
                         },
                         new
@@ -311,12 +304,11 @@ namespace WebForum.Migrations
                             Id = 5,
                             Email = "CA@roman.im",
                             FirstName = "Caesar",
-                            HashedPassword = "aFwxpyTwOxHQ4mLZJf5UrBW4WGuvrzfw7yP4bDGBNq0=",
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Augustus",
-                            Password = "GaiusOctavius",
-                            Salt = "36H4soyqRmCs4TiyKtAT9g==",
+                            Password = "04zVzUHKgu+eXJZFZdlZ6SgH3Sq/XGqnNJ17wctxg94=",
+                            Salt = "hgao85Qg9j0urKyL1stcjw==",
                             Username = "CaesarAugustus"
                         },
                         new
@@ -324,12 +316,11 @@ namespace WebForum.Migrations
                             Id = 6,
                             Email = "BrutusIAm@roman.im",
                             FirstName = "MarcusJunius",
-                            HashedPassword = "ztA9BLiMinsn9BY0XEzMH03cWpp//gN7W2j04fLLoBQ=",
                             IsAdmin = false,
                             IsBlocked = true,
                             LastName = "Brutus",
-                            Password = "MeToo",
-                            Salt = "36H4soyqRmCs4TiyKtAT9g==",
+                            Password = "AKG2/vTppTxxNl6XUtH1vHLEhqHJnBwHiEu9B++Nl/E=",
+                            Salt = "hgao85Qg9j0urKyL1stcjw==",
                             Username = "MarcusJuniusBrutus"
                         },
                         new
@@ -337,12 +328,11 @@ namespace WebForum.Migrations
                             Id = 7,
                             Email = "Ovid@roman.im",
                             FirstName = "PubliusOvidius",
-                            HashedPassword = "pKsEIOupFopZLi1EDxEih/L2pZM/uMTSf5LKCCy9a7U=",
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Naso",
-                            Password = "Metamorphoses",
-                            Salt = "36H4soyqRmCs4TiyKtAT9g==",
+                            Password = "bbcr4bL3Rsz2X+VcLib67eRlptG/wb7aFUetJ2QbOuw=",
+                            Salt = "hgao85Qg9j0urKyL1stcjw==",
                             Username = "PubliusOvidiusNaso"
                         },
                         new
@@ -350,12 +340,11 @@ namespace WebForum.Migrations
                             Id = 8,
                             Email = "Seneca@roman.im",
                             FirstName = "LuciusAnnaeus",
-                            HashedPassword = "9EZ45VY5ZM5XtgFIRnTcva8mqsgcjzmDxPNKzNqmp40=",
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Seneca",
-                            Password = "EpistulaeMorales",
-                            Salt = "36H4soyqRmCs4TiyKtAT9g==",
+                            Password = "8tXHH+AvBxmJfPfmb+SBQgmBOdJdO53ygoewa24/HT8=",
+                            Salt = "hgao85Qg9j0urKyL1stcjw==",
                             Username = "LuciusAnnaeusSeneca"
                         });
                 });
