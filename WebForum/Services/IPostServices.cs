@@ -1,4 +1,5 @@
 ﻿using WebForum.Models;
+using WebForum.Models.QueryParameters;
 
 namespace WebForum.Services
 {
@@ -10,6 +11,7 @@ namespace WebForum.Services
         Post GetPostById(int id);
         IList<Post> GetAllPosts();
         IList<Post> GetPostsByUserId(int id);
+        IList<Post> FilterPostsBy(PostFilterQueryParameters filterQueryParameters);
 
     }
 }

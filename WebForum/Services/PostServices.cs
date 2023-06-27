@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
+using WebForum.Models.QueryParameters;
 using WebForum.Repository.Contracts;
 
 namespace WebForum.Services
@@ -55,6 +56,12 @@ namespace WebForum.Services
         public IList<Post> GetPostsByUserId(int id)
         {
             return this.repository.GetPostByUserId(id);
+        }
+
+        public IList<Post> FilterPostsBy(PostFilterQueryParameters filterQueryParameters)
+        {
+            //todo POST filter
+            return this.repository.FilterPostsBy(filterQueryParameters);
         }
 
         public Post UpdatePost(int id, Post post, User user)

@@ -6,6 +6,7 @@ using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
 using WebForum.Models;
 using WebForum.Models.Dtos;
+using WebForum.Models.QueryParameters;
 using WebForum.Services;
 
 namespace WebForum.Controllers
@@ -32,11 +33,17 @@ namespace WebForum.Controllers
 
 
         [HttpGet("")]
-        public IActionResult GetAllPosts()
+        public IActionResult GetAllPosts([FromQuery] PostFilterQueryParameters filterQueryParameters)
         {
-            var posts = this.posts.GetAllPosts();
+            //var posts = this.posts.GetAllPosts();
+            var posts = this.posts.FilterPostsBy(filterQueryParameters);
             var postShowDtos = this.mapper.Map<List<PostShowDto>>(posts);
-            return StatusCode(StatusCodes.Status200OK, postShowDtos);
+
+            if (postShowDtos.Count != 0)
+            {
+                return StatusCode(StatusCodes.Status200OK, postShowDtos);
+            }
+            return StatusCode(StatusCodes.Status404NotFound, $"No posts to show");
         }
 
         [HttpGet("{id}")]
@@ -96,12 +103,12 @@ namespace WebForum.Controllers
 
 
         [HttpPut("{id}")]
-        public IActionResult UpdatePost([FromHeader] string username, [FromBody] PostDtoCreateUpdate updateDto, int id)
+        public IActionResult UpdatePost([FromHeader] string credentials, [FromBody] PostDtoCreateUpdate updateDto, int id)
         {
             //UpdatePost(int id, Post post)
             try
             {
-                User user = users.GetByUsername(username);
+                User user = this.authManager.TryGetUser(credentials);
                 Post post = mapper.Map<Post>(updateDto);
                 Post createPost = posts.UpdatePost(id, post, user);
 
@@ -115,14 +122,18 @@ namespace WebForum.Controllers
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
             }
+            catch (InvalidPasswordException e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+            }
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletePost([FromHeader] string username, int id)
+        public IActionResult DeletePost([FromHeader] string credentials, int id)
         {
             try
             {
-                User user = users.GetByUsername(username);
+                User user = this.authManager.TryGetUser(credentials);
                 Post postToDelete = posts.DeletePost(id, user);
                 return StatusCode(StatusCodes.Status200OK, postToDelete);
             }

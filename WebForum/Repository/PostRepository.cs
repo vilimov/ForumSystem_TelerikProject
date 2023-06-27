@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using WebForum.Data;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
+using WebForum.Models.QueryParameters;
 using WebForum.Repository.Contracts;
 
 namespace WebForum.Repository
@@ -41,6 +42,37 @@ namespace WebForum.Repository
                                     .ToList();
         }
 
+        public IList<Post> FilterPostsBy(PostFilterQueryParameters filterQueryParameters)
+        {
+            List<Post> posts = GetAllPosts();
+            if(!string.IsNullOrEmpty(filterQueryParameters.Title))
+            {
+                posts = posts.FindAll(p => p.Title.Contains(filterQueryParameters.Title, StringComparison.InvariantCultureIgnoreCase));
+            }
+            if (!string.IsNullOrEmpty(filterQueryParameters.UserName))
+            {
+                posts = posts.FindAll(p => p.Autor.Username.Contains(filterQueryParameters.UserName, StringComparison.InvariantCultureIgnoreCase));
+            }
+            if (!string.IsNullOrEmpty(filterQueryParameters.OrderByComments))
+            {
+                posts = posts.OrderBy(p => p.Comments.Count).ToList();
+                posts.Reverse();
+            }
+
+            if (!string.IsNullOrEmpty(filterQueryParameters.OrderByDate))
+            {
+                posts = posts.OrderBy(p => p.CreatedAt).ToList();
+                posts.Reverse();
+            }
+
+            if (!string.IsNullOrEmpty(filterQueryParameters.OrderByLikes))
+            {
+                posts = posts.OrderBy(p => p.Likes).ToList();
+                posts.Reverse();
+            }
+
+            return posts;
+        }
         public Post GetPostById(int id)
         {
 

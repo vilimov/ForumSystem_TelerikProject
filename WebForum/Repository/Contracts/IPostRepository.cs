@@ -1,4 +1,5 @@
 ﻿using WebForum.Models;
+using WebForum.Models.QueryParameters;
 
 namespace WebForum.Repository.Contracts
 {
@@ -11,6 +12,7 @@ namespace WebForum.Repository.Contracts
         Post CreatePost(Post newPost);
         Post UpdatePost(int id, Post post);
         Post DeletePost(int id);
+        IList<Post> FilterPostsBy(PostFilterQueryParameters filterQueryParameters);
         //List<Comment> GetPostComments();
     }
 }
