@@ -29,12 +29,11 @@ namespace WebForum.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be empty.")]
         //Hack Mila User
         //[MinLength(8, ErrorMessage = "The {0} field must be at least {1} characters.")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$", ErrorMessage = "The {0} must contain Uppercase, Lowercase, Digit, Symbol and be at least 8 characters")]
-        [MaxLength(20, ErrorMessage = "The {0} field must be less than {1} characters.")]
+        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$", ErrorMessage = "The {0} must contain Uppercase, Lowercase, Digit, Symbol and be at least 8 characters")]
+        //[MaxLength(20, ErrorMessage = "The {0} field must be less than {1} characters.")]
+        [MaxLength(170)]
         public string Password { get; set; }
         public string Salt { get; set; }
-        public string HashedPassword { get; set; }
-
         public bool IsAdmin { get; set; }     
         public bool IsBlocked { get; set; }
         [JsonIgnore]
