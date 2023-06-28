@@ -72,7 +72,7 @@ namespace WebForum.Services
         {
             Post postToUpdate = this.repository.GetPostById(id);
 
-            if (postToUpdate.Autor.Id != user.Id)
+            if (postToUpdate.Autor.Id != user.Id && user.IsAdmin == false)
             {
                 throw new UnauthorizedOperationException(UpdatePostWrongUserErrorMessage);
             }
