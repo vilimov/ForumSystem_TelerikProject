@@ -19,7 +19,11 @@ namespace WebForum.Services
 
         public Post CreatePost(Post post, User user)
         {
-            var postsByTitle = this.repository.GetPostByTitle(post.Title);
+            List<Post> postsByTitle = this.repository.GetPostByTitle(post.Title);
+            if (postsByTitle == null)
+            {
+                postsByTitle = new List<Post>();
+            }
             if (postsByTitle.Count > 0)
             {
                 throw new DuplicateEntityException(DuplicateTitleErrorMessage);
