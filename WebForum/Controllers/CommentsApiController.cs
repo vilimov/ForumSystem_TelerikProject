@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebForum.Helpers.Authentication;
 using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
@@ -28,7 +26,7 @@ namespace WebForum.Controllers
             this.postServices = postServices;
             this.authManager = authManager;
         }
-        
+
         [HttpGet("")]
         public IActionResult GetComments([FromQuery] CommentQueryParameters filterParameters)
         {
@@ -36,7 +34,7 @@ namespace WebForum.Controllers
             List<CommentsShowDTO> result = comments.Select(comment => new CommentsShowDTO(comment)).ToList();
             if (result.Count == 0)
             {
-                return StatusCode(StatusCodes.Status204NoContent);
+                return StatusCode(StatusCodes.Status404NotFound, $"No comments found matching the search criteria.");
             }
             return StatusCode(StatusCodes.Status200OK, result);
         }
@@ -84,7 +82,7 @@ namespace WebForum.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, e.Message);
             }
         }
-        
+
 
 
         [HttpPost("post/{postId}")]
@@ -113,18 +111,28 @@ namespace WebForum.Controllers
             {
                 return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
+            catch (EntityNotFoundException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateComment(int id, [FromHeader] string username, [FromBody] CommentsCreateUpdateDTO commentDTO)
+        public IActionResult UpdateComment(int id, [FromHeader] string credentials, [FromBody] CommentsCreateUpdateDTO commentDTO)
         {
             try
             {
-                User user = userServices.GetByUsername(username);
+                //User user = userServices.GetByUsername(username);
+                User user = authManager.TryGetUser(credentials);
                 Comment comment = commentMapper.Map(commentDTO);
                 Comment updatedComment = commentServices.Update(id, comment, user);
+                CommentsShowDTO result = new CommentsShowDTO(updatedComment);
 
-                return StatusCode(StatusCodes.Status200OK, updatedComment);
+                return StatusCode(StatusCodes.Status200OK, result);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
             }
             catch (DuplicateEntityException e)
             {
@@ -133,18 +141,28 @@ namespace WebForum.Controllers
             catch (UnauthorizedOperationException e)
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+            }
+            catch (InvalidPasswordException e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteComment(int id, [FromHeader] string username)
+        public IActionResult DeleteComment(int id, [FromHeader] string credentials)
         {
             try
             {
-                User user = userServices.GetByUsername(username);
+                //User user = userServices.GetByUsername(username);
+                User user = authManager.TryGetUser(credentials);
                 Comment deletedComment = commentServices.Delete(id, user);
+                CommentsShowDTO result = new CommentsShowDTO(deletedComment);
 
-                return StatusCode(StatusCodes.Status200OK, deletedComment);
+                return StatusCode(StatusCodes.Status200OK, result);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
             }
             catch (DuplicateEntityException e)
             {
@@ -153,6 +171,10 @@ namespace WebForum.Controllers
             catch (UnauthorizedOperationException e)
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+            }
+            catch (InvalidPasswordException e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
         }
     }

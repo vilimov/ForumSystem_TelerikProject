@@ -99,7 +99,7 @@ namespace WebForum.Repository
         {
             if (!string.IsNullOrEmpty(content))
             {
-                return comments.Where(c => c.Content.Contains(content));
+                return comments.Where(c => c.Content.Contains(content, StringComparison.InvariantCultureIgnoreCase));
             }
             else
             {
@@ -122,10 +122,25 @@ namespace WebForum.Repository
 
         private static IEnumerable<Comment> SortBy(IEnumerable<Comment> comments, string sortCriteria)
         {
+            if (sortCriteria != null)
+            {
+                sortCriteria = sortCriteria.ToLower();
+            }
+
             switch (sortCriteria)
             {
+                case "content":
+                    return comments.OrderBy(c => c.Content);
                 case "likes":
                     return comments.OrderBy(c => c.Likes);
+                case "date":
+                    return comments.OrderBy(c => c.CreatedAt);
+                case "autor":
+                    return comments.OrderBy(c => c.Autor.Username);
+                case "posttitle":
+                    return comments.OrderBy(c => c.Post.Title);
+                case "postcontent":
+                    return comments.OrderBy(c => c.Post.Content);
                 default:
                     return comments;
             }
@@ -133,7 +148,7 @@ namespace WebForum.Repository
 
         private static IEnumerable<Comment> Order(IEnumerable<Comment> comments, string sortOrder)
         {
-            return (sortOrder == "desc") ? comments.Reverse() : comments;
+            return (string.Equals(sortOrder, "desc", StringComparison.InvariantCultureIgnoreCase)) ? comments.Reverse() : comments;
         }
     }
 }
