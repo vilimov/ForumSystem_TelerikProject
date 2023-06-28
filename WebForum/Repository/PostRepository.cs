@@ -28,6 +28,12 @@ namespace WebForum.Repository
         public Post DeletePost(int id)
         {
             var postToDelete = this.GetPostById(id);
+            //Delete Comments of Post in Comments Database
+            foreach(var c in postToDelete.Comments)
+            {
+                context.Comments.Remove(c);
+            }
+
             var deletedPost = this.context.Posts.Remove(postToDelete).Entity;
             context.SaveChanges();
             return deletedPost;
