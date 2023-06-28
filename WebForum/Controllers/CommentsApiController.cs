@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using Swashbuckle.AspNetCore.Annotations;
+using WebForum.Helpers.Authentication;
 using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
 using WebForum.Models;
@@ -15,17 +19,18 @@ namespace WebForum.Controllers
         private readonly IUserServices userServices;
         private readonly IPostServices postServices;
         private readonly CommentMapper commentMapper;
+        private readonly AuthManager authManager;
 
-        public CommentsApiController(ICommentsServices commentServices, IUserServices userServices, CommentMapper commentMapper, IPostServices postServices)
+        public CommentsApiController(ICommentsServices commentServices, AuthManager authManager, IUserServices userServices, CommentMapper commentMapper, IPostServices postServices)
         {
             this.commentServices = commentServices;
             this.userServices = userServices;
             this.commentMapper = commentMapper;
             this.postServices = postServices;
+            this.authManager = authManager;
         }
         
         [HttpGet("")]
-
         public IActionResult GetComments([FromQuery] CommentQueryParameters filterParameters)
         {
             List<Comment> comments = commentServices.FilterBy(filterParameters);
@@ -53,20 +58,6 @@ namespace WebForum.Controllers
             }
         }
 
-        [HttpGet("Post/{id}")]
-        public IActionResult GetCommentsByPostId(int id)
-        {
-            try
-            {
-                List<CommentsShowDTO> result = commentServices.GetByPostId(id).Select(comment => new CommentsShowDTO(comment)).ToList();
-                return StatusCode(StatusCodes.Status200OK, result);
-            }
-            catch (EntityNotFoundException e)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, e.Message);
-            }
-        }
-
         [HttpGet("Autor/{id}")]
         public IActionResult GetCommentsByAutorId(int id)
         {
@@ -81,18 +72,35 @@ namespace WebForum.Controllers
             }
         }
 
-
-        [HttpPost("post/{postId}")]
-        public IActionResult CreateComment([FromHeader] string username, int postId, [FromBody] CommentsCreateUpdateDTO commentDTO)
+        [HttpGet("Post/{id}")]
+        public IActionResult GetCommentsByPostId(int id)
         {
             try
             {
-                User user = userServices.GetByUsername(username);
+                List<CommentsShowDTO> result = commentServices.GetByPostId(id).Select(comment => new CommentsShowDTO(comment)).ToList();
+                return StatusCode(StatusCodes.Status200OK, result);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
+        }
+        
+
+
+        [HttpPost("post/{postId}")]
+        public IActionResult CreateComment([FromHeader] string credentials, int postId, [FromBody] CommentsCreateUpdateDTO commentDTO)
+        {
+            try
+            {
+                //User user = userServices.GetByUsername(username);
+                User user = authManager.TryGetUser(credentials);
                 Post post = postServices.GetPostById(postId);
                 Comment comment = commentMapper.Map(commentDTO);
                 Comment createdComment = commentServices.CreateComment(comment, post, user);
+                CommentsShowDTO result = new CommentsShowDTO(createdComment);
 
-                return StatusCode(StatusCodes.Status201Created, createdComment);
+                return StatusCode(StatusCodes.Status201Created, result);
             }
             catch (DuplicateEntityException e)
             {
@@ -101,6 +109,10 @@ namespace WebForum.Controllers
             catch (UnauthorizedOperationException e)
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+            }
+            catch (InvalidPasswordException e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
         }
 
@@ -126,7 +138,7 @@ namespace WebForum.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteComment(int id, [FromHeader] string username) 
+        public IActionResult DeleteComment(int id, [FromHeader] string username)
         {
             try
             {

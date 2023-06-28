@@ -93,7 +93,7 @@ namespace WebForum.Repository
             result = SortBy(result, filterParameters.SortBy);
             result = Order(result, filterParameters.SortOrder);
 
-            return result.ToList();
+            return result;
         }
         private static IEnumerable<Comment> FilterByContent(IEnumerable<Comment> comments, string content)
         {
