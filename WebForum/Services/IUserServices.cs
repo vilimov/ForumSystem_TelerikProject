@@ -12,6 +12,7 @@ namespace WebForum.Services
         User Register(User newUser);
         User Login(string username, string password);
         User UpdateProfile(User userUpdate);
+        void DeleteUser(int id);
         IList<Post> GetUserPosts(int userId);
         IList<Post> GetAllPosts();
     }

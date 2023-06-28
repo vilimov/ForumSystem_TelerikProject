@@ -108,6 +108,16 @@ namespace WebForum.Services
 
             return userRepository.UpdateUser(userUpdate);
         }
+        public void DeleteUser(int id)
+        {
+            var user = GetUserById(id);
+            if (user == null)
+            {
+                throw new EntityNotFoundException($"User with id {id} does not exist");
+            }
+
+            userRepository.DeleteUser(id);
+        }
 
         public IList<Post> GetUserPosts(int userId)
         {

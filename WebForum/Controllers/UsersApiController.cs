@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
 using WebForum.Models;
@@ -43,9 +45,9 @@ namespace WebForum.Controllers
                 var userPublicDataDto = UserMappers.ToUserPublicDataDto(user);
                 return Ok(userPublicDataDto);
             }
-            catch (EntityNotFoundException e)
+            catch (EntityNotFoundException ex)
             {
-                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
             }
         }
 
@@ -58,9 +60,9 @@ namespace WebForum.Controllers
                 var userPublicDataDto = UserMappers.ToUserPublicDataDto(user);
                 return Ok(userPublicDataDto);
             }
-            catch (EntityNotFoundException e)
+            catch (EntityNotFoundException ex)
             {
-                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
             }
         }
 
@@ -73,9 +75,9 @@ namespace WebForum.Controllers
                 var userPublicDataDto = UserMappers.ToUserPublicDataDto(user);
                 return Ok(userPublicDataDto);
             }
-            catch (EntityNotFoundException e)
+            catch (EntityNotFoundException ex)
             {
-                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
             }
         }
 
@@ -127,6 +129,27 @@ namespace WebForum.Controllers
                 userToUpdate.ApplyUpdate(userUpdateDto);
                 var updatedUser = userServices.UpdateProfile(userToUpdate);
                 return Ok(updatedUser);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteUser(int id)
+        {
+            try
+            {
+                var authenticatedUser = userServices.GetByUsername(User.Identity.Name);
+
+                if (authenticatedUser.Id != id && !User.IsInRole("Admin"))
+                {
+                    return Forbid();
+                }
+
+                userServices.DeleteUser(id);
+                return Ok(new { message = "User deleted successfully" });
             }
             catch (EntityNotFoundException ex)
             {
