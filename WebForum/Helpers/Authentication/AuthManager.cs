@@ -16,7 +16,7 @@ namespace WebForum.Helpers.Authentication
 
         public User TryGetUser(string credentials)
         {
-            if (!credentials.Contains(':'))
+            if (!credentials.Contains(':') || string.IsNullOrEmpty(credentials))
             {
                 throw new InvalidPasswordException("Invalid credentials");
             }
