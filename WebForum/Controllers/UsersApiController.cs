@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.Net;
+using WebForum.Helpers.Authentication;
 using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
 using WebForum.Models;
@@ -15,10 +17,12 @@ namespace WebForum.Controllers
     public class UsersApiController : ControllerBase
     {
         private readonly IUserServices userServices;
+        private readonly AuthManager authManager;
 
-        public UsersApiController(IUserServices userServices)
+        public UsersApiController(IUserServices userServices, AuthManager authManager)
         {
             this.userServices = userServices;
+            this.authManager = authManager;
         }
 
 
@@ -141,6 +145,7 @@ namespace WebForum.Controllers
         {
             try
             {
+                //User user = this.authManager.TryGetUser(credentials);
                 var authenticatedUser = userServices.GetByUsername(User.Identity.Name);
 
                 if (authenticatedUser.Id != id && !User.IsInRole("Admin"))

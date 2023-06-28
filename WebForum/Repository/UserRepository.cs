@@ -50,7 +50,14 @@ namespace WebForum.Repository
 
         public User DeleteUser(int id)
         {
-            var userToDelete = this.GetUserById(id);
+            var userToDelete = context.Users
+                               .Include(u => u.Posts)
+                               .ThenInclude(p => p.Comments)
+                               .ThenInclude(c => c.Likes)
+                               .Include(u => u.Posts)
+                               .ThenInclude(p => p.Likes)
+                               .SingleOrDefault(u => u.Id == id);
+
             if (userToDelete == null)
             {
                 throw new EntityNotFoundException($"User with id {id} does not exist");
