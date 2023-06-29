@@ -54,7 +54,17 @@ namespace WebForum.Tests.TestHelper
                 Likes = 3,
                 AutorId = 3,
                 PostId = 3
-                }
+                },
+
+                new Comment
+                {
+                Id = 4,
+                Content = "TestContent 4",
+                CreatedAt = DateTime.Now,
+                Likes = 1,
+                AutorId = 1,
+                PostId = 1
+                },
             };
         }
     }
