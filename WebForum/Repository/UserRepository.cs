@@ -53,9 +53,9 @@ namespace WebForum.Repository
             var userToDelete = context.Users
                                .Include(u => u.Posts)
                                .ThenInclude(p => p.Comments)
-                               .ThenInclude(c => c.Likes)
+                               //.ThenInclude(c => c.Likes)
                                .Include(u => u.Posts)
-                               .ThenInclude(p => p.Likes)
+                               //.ThenInclude(p => p.Likes)
                                .SingleOrDefault(u => u.Id == id);
 
             if (userToDelete == null)

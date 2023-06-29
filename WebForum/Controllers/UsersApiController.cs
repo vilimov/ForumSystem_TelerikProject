@@ -140,15 +140,14 @@ namespace WebForum.Controllers
             }
         }
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
-        public IActionResult DeleteUser(int id)
+        public IActionResult DeleteUser([FromHeader] string credentials, int id)
         {
             try
             {
-                //User user = this.authManager.TryGetUser(credentials);
-                var authenticatedUser = userServices.GetByUsername(User.Identity.Name);
+                User authenticatedUser = authManager.TryGetUser(credentials);
 
-                if (authenticatedUser.Id != id && !User.IsInRole("Admin"))
+                // Unauthorized access if the authenticated user is null or not an admin and trying to delete another user
+                if (authenticatedUser == null || (authenticatedUser.Id != id && !authenticatedUser.IsAdmin))
                 {
                     return Forbid();
                 }
@@ -159,6 +158,14 @@ namespace WebForum.Controllers
             catch (EntityNotFoundException ex)
             {
                 return NotFound(new { message = ex.Message });
+            }
+            catch (UnauthorizedOperationException)
+            {
+                return Unauthorized(new { message = "Invalid credentials" });
+            }
+            catch (InvalidPasswordException)
+            {
+                return BadRequest(new { message = "Invalid password" });
             }
         }
     }
