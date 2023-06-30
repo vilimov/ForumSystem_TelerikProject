@@ -69,6 +69,9 @@ namespace WebForum.Services
 
         public User Login(string username, string password)
         {
+            string salt = AuthManager.GenerateSalt();
+            string hashedPassword = AuthManager.HashPassword(password, salt);
+
             var user = userRepository.GetByUsername(username);
 
             if (user == null)
@@ -76,7 +79,7 @@ namespace WebForum.Services
                 throw new EntityNotFoundException($"User with username {username} does not exist.");
             }
 
-            if (user.Password != password)
+            if (user.Password != hashedPassword)
             {
                 throw new UnauthorizedAccessException("Invalid password.");
             }
