@@ -1,4 +1,5 @@
 ﻿using WebForum.Models;
+using WebForum.Models.LikesModels;
 using WebForum.Models.QueryParameters;
 
 namespace WebForum.Repository.Contracts
@@ -13,6 +14,8 @@ namespace WebForum.Repository.Contracts
         Post UpdatePost(int id, Post post);
         Post DeletePost(int id);
         IList<Post> FilterPostsBy(PostFilterQueryParameters filterQueryParameters);
+        public Post AddLikePost(Post post, LikePost likePost);
+        public Post RemoveLikePost(Post post, LikePost likePost);
         //List<Comment> GetPostComments();
     }
 }

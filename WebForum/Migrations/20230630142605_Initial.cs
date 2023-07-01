@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebForum.Migrations
 {
-    public partial class asd : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -79,19 +79,43 @@ namespace WebForum.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "LikePosts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PostId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LikePosts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LikePosts_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_LikePosts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "FirstName", "IsAdmin", "IsBlocked", "LastName", "Password", "Salt", "Username" },
                 values: new object[,]
                 {
-                    { 1, "JC@roman.im", "Julius", true, false, "Caesar", "O0HyLBlQncPwbCbTMCK6DzXlCj/+GjokavAGeYxsULg=", "nc/s6wtluclpTEQrUIBf7w==", "JuliusCaesar" },
-                    { 2, "MA@roman.im", "Marcus", true, false, "Aurelius", "55/eSXJFJdlZQHVoV/gUtpDX6XV/DIfWoTig7spQu+8=", "nc/s6wtluclpTEQrUIBf7w==", "MarcusAurelius" },
-                    { 3, "MTC@roman.im", "MarcusTullius", false, false, "Cicero", "dbhtzfPRFHpSBve+YooWUfXxCH8w/xDVuZ9dNMgxr90=", "nc/s6wtluclpTEQrUIBf7w==", "MarcusTulliusCicero" },
-                    { 4, "Hipo@roman.im", "Hippocrates", false, false, "ofKos", "chdVRT8nN/Tuy/crNjhbenA6Sxj1T5hn7ofIvk8wYuA=", "nc/s6wtluclpTEQrUIBf7w==", "Hippocrates" },
-                    { 5, "CA@roman.im", "Caesar", false, false, "Augustus", "TXdEQDuIJDF4Xvu6QDkTCfTFMF9EjVMUxrQV8aRKAQU=", "nc/s6wtluclpTEQrUIBf7w==", "CaesarAugustus" },
-                    { 6, "BrutusIAm@roman.im", "MarcusJunius", false, true, "Brutus", "PJLiDTF7uMJ5dC/quzLNpmCaw/eXFa2koGF/pDuj3kk=", "nc/s6wtluclpTEQrUIBf7w==", "MarcusJuniusBrutus" },
-                    { 7, "Ovid@roman.im", "PubliusOvidius", false, false, "Naso", "9D1Q/gjv2mb2Lfs+vq1XnXadWkgtTpHrVJYW8HvoaR8=", "nc/s6wtluclpTEQrUIBf7w==", "PubliusOvidiusNaso" },
-                    { 8, "Seneca@roman.im", "LuciusAnnaeus", false, false, "Seneca", "uZLPL16ilf0Ha6ESs6f0mBQUPliO/ekAcWkdve7dV6I=", "nc/s6wtluclpTEQrUIBf7w==", "LuciusAnnaeusSeneca" }
+                    { 1, "JC@roman.im", "Julius", true, false, "Caesar", "mUZGl4xCcJ9ZuK6sG6AOb74LNo69qe1nhGKVUeQAzGA=", "s2yXTRxPkzjLhq5Tidgu3g==", "JuliusCaesar" },
+                    { 2, "MA@roman.im", "Marcus", true, false, "Aurelius", "yZ3/MMzxbGfos8TlaCkwffXPkKP+dsQbMxC89tSVBgQ=", "s2yXTRxPkzjLhq5Tidgu3g==", "MarcusAurelius" },
+                    { 3, "MTC@roman.im", "MarcusTullius", false, false, "Cicero", "XSDX7xBeqDvuKpaDh3sIEhPfi6ZaHRfFr+oQ9tIuhN4=", "s2yXTRxPkzjLhq5Tidgu3g==", "MarcusTulliusCicero" },
+                    { 4, "Hipo@roman.im", "Hippocrates", false, false, "ofKos", "DbRoTbDK9eUZWNW3HdOF86iPF4ZWwVT1bR7BGGU6RLE=", "s2yXTRxPkzjLhq5Tidgu3g==", "Hippocrates" },
+                    { 5, "CA@roman.im", "Caesar", false, false, "Augustus", "Fg49colv1UXO8kPIlQhtn/+cw6l7I6OtzFLmupFlNNA=", "s2yXTRxPkzjLhq5Tidgu3g==", "CaesarAugustus" },
+                    { 6, "BrutusIAm@roman.im", "MarcusJunius", false, true, "Brutus", "5RWMx3nNTaF2WaQlemtJuZrzt7j1BQS74c18iGjKB6o=", "s2yXTRxPkzjLhq5Tidgu3g==", "MarcusJuniusBrutus" },
+                    { 7, "Ovid@roman.im", "PubliusOvidius", false, false, "Naso", "V95uoJeZETwL1ctBj0lU2dMl1vpfT3sGUNU81+stMA4=", "s2yXTRxPkzjLhq5Tidgu3g==", "PubliusOvidiusNaso" },
+                    { 8, "Seneca@roman.im", "LuciusAnnaeus", false, false, "Seneca", "KXGCzP/Plf51YW5xRZb1l63hl3cIjYqdIvuB+phY1FY=", "s2yXTRxPkzjLhq5Tidgu3g==", "LuciusAnnaeusSeneca" }
                 });
 
             migrationBuilder.InsertData(
@@ -99,11 +123,11 @@ namespace WebForum.Migrations
                 columns: new[] { "Id", "AutorId", "Content", "CreatedAt", "Likes", "Title" },
                 values: new object[,]
                 {
-                    { 1, 3, "The beginnings of all things are small.", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9267), 5, "Omnium Rerum Principia Parva Sunt" },
-                    { 2, 3, "Always the same.", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9303), 1, "Semper Idem" },
-                    { 3, 4, "Art is long, life is short.", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9305), 10, "Ars Longa, Vita Brevis" },
-                    { 4, 5, "The play is over, applaud!", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9307), 3, "Acta est Fabula, Plaudite!" },
-                    { 5, 1, "The die is cast.", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9308), 2, "Alea Jacta Est" }
+                    { 1, 3, "The beginnings of all things are small.", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7655), 5, "Omnium Rerum Principia Parva Sunt" },
+                    { 2, 3, "Always the same.", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7699), 1, "Semper Idem" },
+                    { 3, 4, "Art is long, life is short.", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7701), 10, "Ars Longa, Vita Brevis" },
+                    { 4, 5, "The play is over, applaud!", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7704), 3, "Acta est Fabula, Plaudite!" },
+                    { 5, 1, "The die is cast.", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7706), 2, "Alea Jacta Est" }
                 });
 
             migrationBuilder.InsertData(
@@ -111,13 +135,26 @@ namespace WebForum.Migrations
                 columns: new[] { "Id", "AutorId", "Content", "CreatedAt", "Likes", "PostId" },
                 values: new object[,]
                 {
-                    { 1, 7, "Exitus Acta Probat – The result justifies the deed", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9338), 8, 1 },
-                    { 2, 8, "Veritas Odit Moras – Truth hates delay", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9341), 2, 1 },
-                    { 3, 8, "Timendi Causa Est Nescire – The cause of fear is ignorance", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9343), 3, 1 },
-                    { 4, 8, "Vivamus, Moriendum Est – Let us live, since we must die", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9344), 1, 2 },
-                    { 5, 8, "Nemo Sine Vitio Est – No one is without fault", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9345), 5, 2 },
-                    { 6, 8, "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9347), 1, 3 },
-                    { 7, 1, "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", new DateTime(2023, 6, 29, 23, 59, 18, 859, DateTimeKind.Local).AddTicks(9348), 7, 3 }
+                    { 1, 7, "Exitus Acta Probat – The result justifies the deed", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7754), 8, 1 },
+                    { 2, 8, "Veritas Odit Moras – Truth hates delay", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7758), 2, 1 },
+                    { 3, 8, "Timendi Causa Est Nescire – The cause of fear is ignorance", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7761), 3, 1 },
+                    { 4, 8, "Vivamus, Moriendum Est – Let us live, since we must die", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7762), 1, 2 },
+                    { 5, 8, "Nemo Sine Vitio Est – No one is without fault", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7764), 5, 2 },
+                    { 6, 8, "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7767), 1, 3 },
+                    { 7, 1, "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7769), 7, 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "LikePosts",
+                columns: new[] { "Id", "PostId", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1, 2 },
+                    { 2, 1, 3 },
+                    { 3, 3, 3 },
+                    { 4, 3, 4 },
+                    { 5, 3, 5 },
+                    { 6, 4, 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -131,6 +168,16 @@ namespace WebForum.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LikePosts_PostId",
+                table: "LikePosts",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LikePosts_UserId",
+                table: "LikePosts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_AutorId",
                 table: "Posts",
                 column: "AutorId");
@@ -140,6 +187,9 @@ namespace WebForum.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "LikePosts");
 
             migrationBuilder.DropTable(
                 name: "Posts");

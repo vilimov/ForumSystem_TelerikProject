@@ -1,4 +1,5 @@
 ﻿using WebForum.Models;
+using WebForum.Models.LikesModels;
 using WebForum.Models.QueryParameters;
 
 namespace WebForum.Services
@@ -12,6 +13,9 @@ namespace WebForum.Services
         IList<Post> GetAllPosts();
         IList<Post> GetPostsByUserId(int id);
         IList<Post> FilterPostsBy(PostFilterQueryParameters filterQueryParameters);
+
+        public Post AddLikePost(Post post, User user);
+        public Post RemoveLikePost(Post post, User user);
 
     }
 }

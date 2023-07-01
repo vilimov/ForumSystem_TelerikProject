@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using WebForum.Models.LikesModels;
 
 namespace WebForum.Models
 {
@@ -41,5 +42,8 @@ namespace WebForum.Models
         public List<Post> Posts { get; set; }
         [JsonIgnore]
         public List<Comment> Comments { get; set; }
+        [JsonIgnore]
+        public List<LikePost> LikePosts { get; set; } = new List<LikePost>();
+
     }
 }

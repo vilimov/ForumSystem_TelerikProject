@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System.Text;
 using System.Xml.Linq;
 using WebForum.Data;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
+using WebForum.Models.LikesModels;
 using WebForum.Models.QueryParameters;
 using WebForum.Repository.Contracts;
 
@@ -44,7 +46,9 @@ namespace WebForum.Repository
             return this.context.Posts
                                      .Include(u => u.Autor)
                                      .Include(c => c.Comments)
-                                     .ThenInclude(a=>a.Autor)
+                                        .ThenInclude(a=>a.Autor)
+                                     .Include(l => l.LikePosts)
+                                        .ThenInclude(likeUser => likeUser.User)
                                     .ToList();
         }
 
@@ -114,6 +118,23 @@ namespace WebForum.Repository
             context.Update(postToUpdate);
             context.SaveChanges();
             return postToUpdate;
+        }
+        
+        public Post AddLikePost(Post post, LikePost likePost)
+        {
+            post.LikePosts.Add(likePost);
+            this.context.SaveChanges();
+
+            return post;
+        }
+
+        public Post RemoveLikePost(Post post, LikePost likePost)
+        {
+            post.LikePosts.Remove(likePost);
+            
+            this.context.SaveChanges();
+
+            return post;
         }
 
     }

@@ -2,6 +2,7 @@
 using System.Reflection.Emit;
 using WebForum.Helpers.Authentication;
 using WebForum.Models;
+using WebForum.Models.LikesModels;
 
 namespace WebForum.Data
 {
@@ -14,6 +15,7 @@ namespace WebForum.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<LikePost> LikePosts { get; set; }
 
         /*protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -97,11 +99,11 @@ namespace WebForum.Data
 
             List<Post> posts = new List<Post>()
             {
-                new Post { Id = 1, Title = "Omnium Rerum Principia Parva Sunt", Content = "The beginnings of all things are small.", AutorId = 3, CreatedAt = DateTime.Now, Likes = 5},
-                new Post { Id = 2, Title = "Semper Idem", Content = "Always the same.", AutorId = 3, CreatedAt = DateTime.Now, Likes = 1},
-                new Post { Id = 3, Title = "Ars Longa, Vita Brevis", Content = "Art is long, life is short.", AutorId = 4, CreatedAt = DateTime.Now, Likes = 10},
-                new Post { Id = 4, Title = "Acta est Fabula, Plaudite!", Content = "The play is over, applaud!", AutorId = 5, CreatedAt = DateTime.Now, Likes = 3 },
-                new Post { Id = 5, Title = "Alea Jacta Est", Content = "The die is cast.", AutorId = 1, CreatedAt = DateTime.Now, Likes = 2 },
+                new Post { Id = 1, Title = "Omnium Rerum Principia Parva Sunt", Content = "The beginnings of all things are small.", AutorId = 3, CreatedAt = DateTime.Now},
+                new Post { Id = 2, Title = "Semper Idem", Content = "Always the same.", AutorId = 3, CreatedAt = DateTime.Now},
+                new Post { Id = 3, Title = "Ars Longa, Vita Brevis", Content = "Art is long, life is short.", AutorId = 4, CreatedAt = DateTime.Now},
+                new Post { Id = 4, Title = "Acta est Fabula, Plaudite!", Content = "The play is over, applaud!", AutorId = 5, CreatedAt = DateTime.Now},
+                new Post { Id = 5, Title = "Alea Jacta Est", Content = "The die is cast.", AutorId = 1, CreatedAt = DateTime.Now},
             };
             modelBuilder.Entity<Post>().HasData(posts);
 
@@ -116,6 +118,17 @@ namespace WebForum.Data
                 new Comment { Id = 7, Content = "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", AutorId = 1, PostId = 3, CreatedAt = DateTime.Now, Likes = 7 },
             };
             modelBuilder.Entity<Comment>().HasData(comments);
+
+            List<LikePost> list = new List<LikePost>()
+            {
+                new LikePost { Id = 1, PostId = 1, UserId = 2},
+                new LikePost { Id = 2, PostId = 1, UserId = 3},
+                new LikePost { Id = 3, PostId = 3, UserId = 3},
+                new LikePost { Id = 4, PostId = 3, UserId = 4},
+                new LikePost { Id = 5, PostId = 3, UserId = 5},
+                new LikePost { Id = 6, PostId = 4, UserId = 2},
+            };
+            modelBuilder.Entity<LikePost>().HasData(list);
         }
     }
 }

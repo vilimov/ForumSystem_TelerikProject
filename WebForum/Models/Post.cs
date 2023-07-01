@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
+using WebForum.Models.LikesModels;
 
 namespace WebForum.Models
 {
@@ -21,9 +22,6 @@ namespace WebForum.Models
         [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; }             //CreatedAt = DateTime.Now  
 
-        [Range(0, int.MaxValue, ErrorMessage = "The {0} field must be between {1} and {2}.")]
-        public int Likes { get; set; }
-
         [Required(ErrorMessage = "The {0} field is required")]
 
         public int? AutorId { get; set; }
@@ -31,6 +29,11 @@ namespace WebForum.Models
 
         [JsonIgnore]
         public List<Comment> Comments { get; set; }
+        [JsonIgnore]
+        public List<LikePost> LikePosts { get; set; } = new List<LikePost>();
+
+        [Range(0, int.MaxValue, ErrorMessage = "The {0} field must be between {1} and {2}.")]
+        public int Likes { get; set; }
 
         //TODO Tags on posts
         //public List<Tag> Tags { get; set; }
