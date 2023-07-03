@@ -33,7 +33,7 @@ namespace WebForum.Models
         public List<LikePost> LikePosts { get; set; } = new List<LikePost>();
 
         [Range(0, int.MaxValue, ErrorMessage = "The {0} field must be between {1} and {2}.")]
-        public int Likes { get; set; }
+        public int Likes => LikePosts.Count;
 
         //TODO Tags on posts
         //public List<Tag> Tags { get; set; }

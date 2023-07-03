@@ -85,10 +85,22 @@ namespace WebForum.Repository
         }
         public Post GetPostById(int id)
         {
+            var post = this.context.Posts
+                .Include(p => p.Autor)
+                .Include(p => p.Comments)
+                    .ThenInclude(c => c.Autor)
+                .Include(p => p.LikePosts)
+                    .ThenInclude(lp => lp.User)
+                .FirstOrDefault(p => p.Id == id);
 
-           var post = this.GetAllPosts().FirstOrDefault(p => p.Id == id);
-           return post ?? throw new EntityNotFoundException($"Post with id {id} doesn't exist.");
+            if (post == null)
+            {
+                throw new EntityNotFoundException($"Post with id {id} doesn't exist.");
+            }
+
+            return post;
         }
+
 
         public List<Post> GetPostByUserId(int userId)
         {
@@ -123,6 +135,7 @@ namespace WebForum.Repository
         public Post AddLikePost(Post post, LikePost likePost)
         {
             post.LikePosts.Add(likePost);
+            this.context.LikePosts.Add(likePost);
             this.context.SaveChanges();
 
             return post;
@@ -131,7 +144,7 @@ namespace WebForum.Repository
         public Post RemoveLikePost(Post post, LikePost likePost)
         {
             post.LikePosts.Remove(likePost);
-            
+            this.context.LikePosts.Remove(likePost);
             this.context.SaveChanges();
 
             return post;

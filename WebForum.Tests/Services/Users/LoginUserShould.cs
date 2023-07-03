@@ -48,5 +48,27 @@ namespace WebForum.Tests.Services.Users
             // Act and Assert
             Assert.ThrowsException<UnauthorizedAccessException>(() => sut.Login(testUser.Username, "WrongPassword"));
         }
+
+        [TestMethod]
+        public void Return_CorrectUser_When_ValidCredentials()
+        {
+            // Arrange
+            var userRepoMock = new Mock<IUserRepository>();
+            var postRepoMock = new Mock<IPostRepository>();
+
+            User testUser = UsersHelper.GetTestUser();
+
+            userRepoMock.Setup(repo => repo.GetByUsername(testUser.Username)).Returns(testUser);
+
+            var sut = new UserServices(userRepoMock.Object, postRepoMock.Object);
+
+            // Act
+            User loggedInUser = sut.Login(testUser.Username, "Cleopatra");
+
+            // Assert
+            Assert.IsNotNull(loggedInUser);
+            Assert.AreEqual(testUser.Username, loggedInUser.Username);
+        }
+
     }
 }

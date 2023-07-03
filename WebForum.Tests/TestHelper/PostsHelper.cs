@@ -18,7 +18,7 @@ namespace WebForum.Tests.TestHelper
                 Title = "Test Title For Unit test2",
                 Content = "Test Content for Unit test, let's see the result",
                 CreatedAt = DateTime.Now,
-                Likes = 0,
+                //Likes = 0,
                 AutorId = 1
             };
         }
@@ -33,7 +33,7 @@ namespace WebForum.Tests.TestHelper
                 Title = "Acta est Fabula, Plaudite!",
                 Content = "1. The play is over, applaud! Louder applaud!!!",
                 CreatedAt = DateTime.Now,
-                Likes = 10,
+                //Likes = 10,
                 AutorId = 1
                 },
 
@@ -43,7 +43,7 @@ namespace WebForum.Tests.TestHelper
                 Title = "Alea Jacta Est est Jacta",
                 Content = "2. The play is over, applaud! Louder applaud!!!",
                 CreatedAt = DateTime.Now,
-                Likes = 0,
+                //Likes = 0,
                 AutorId = 1
                 },
 
@@ -53,7 +53,7 @@ namespace WebForum.Tests.TestHelper
                 Title = "Omnium Rerum Principia Parva Sunt",
                 Content = "3. The play is over, applaud! Louder applaud!!!",
                 CreatedAt = DateTime.Now,
-                Likes = 1,
+                //Likes = 1,
                 AutorId = 2
                 }
             };

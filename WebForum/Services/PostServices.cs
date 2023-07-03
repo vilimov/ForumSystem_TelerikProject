@@ -104,7 +104,7 @@ namespace WebForum.Services
             }
             var likePost = new LikePost { Post = post, User = user };
             this.repository.AddLikePost(post, likePost);
-            post.Likes++;
+            //post.Likes++;
 
             return post;
         }
@@ -123,7 +123,7 @@ namespace WebForum.Services
             }
 
             this.repository.RemoveLikePost(post, likePost);
-            post.Likes--;
+            //post.Likes--;
 
             return post;
         }
