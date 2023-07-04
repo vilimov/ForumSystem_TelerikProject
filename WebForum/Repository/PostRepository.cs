@@ -35,6 +35,10 @@ namespace WebForum.Repository
             {
                 context.Comments.Remove(c);
             }
+            foreach (var like in postToDelete.LikePosts)
+            {
+                this.context.LikePosts.Remove(like);
+            }
 
             var deletedPost = this.context.Posts.Remove(postToDelete).Entity;
             context.SaveChanges();
