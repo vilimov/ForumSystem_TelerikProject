@@ -8,8 +8,10 @@ namespace WebForum.Repository.Contracts
         Tag GetTagByName(string name);
         List<Tag> GetAllTags();
         Tag CreateTag(Tag newTag);
+        Tag UpdateTag(Tag tag);
         List<Post> GetPostsByTagName(string tagName);
         void AddTagToPost(int postId, Tag tag);
         void RemoveTagFromPost(int postId, int tagId);
+        void DeleteTag(int tagId);
     }
 }

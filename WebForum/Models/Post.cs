@@ -35,6 +35,6 @@ namespace WebForum.Models
         [Range(0, int.MaxValue, ErrorMessage = "The {0} field must be between {1} and {2}.")]
         public int Likes => LikePosts.Count;
 
-        public virtual ICollection<PostTag> PostTags { get; set; } = new List<PostTag>();
+        public ICollection<PostTag> PostTags { get; set; } = new List<PostTag>();
     }
 }

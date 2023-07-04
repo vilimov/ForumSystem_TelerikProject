@@ -74,7 +74,19 @@ namespace WebForum.Repository
             this.context.PostTags.Add(postTag);
             this.context.SaveChanges();
         }
+        public Tag UpdateTag(Tag tag)
+        {
+            var existingTag = this.context.Tags.Find(tag.Id);
+            if (existingTag == null)
+            {
+                throw new EntityNotFoundException($"Tag with id {tag.Id} does not exist.");
+            }
 
+            existingTag.Name = tag.Name.ToLower();
+            this.context.SaveChanges();
+
+            return existingTag;
+        }
         public void RemoveTagFromPost(int postId, int tagId)
         {
             var postTag = this.context.PostTags.FirstOrDefault(pt => pt.PostId == postId && pt.TagId == tagId);
@@ -83,6 +95,21 @@ namespace WebForum.Repository
                 this.context.PostTags.Remove(postTag);
                 this.context.SaveChanges();
             }
+        }
+        public void DeleteTag(int tagId)
+        {
+            var tag = this.context.Tags.Find(tagId);
+            if (tag == null)
+            {
+                throw new EntityNotFoundException($"Tag with id {tagId} doesn't exist.");
+            }
+
+            // Remove all PostTag records associated with this tag
+            var postTags = this.context.PostTags.Where(pt => pt.TagId == tagId);
+            this.context.PostTags.RemoveRange(postTags);
+
+            this.context.Tags.Remove(tag);
+            this.context.SaveChanges();
         }
     }
 }

@@ -24,12 +24,17 @@ namespace WebForum.Tests.Services.Posts
             // Set the post's author
             testPost.Autor = testUser;
 
+            // Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
             repositoryMock.Setup(repo => repo.GetPostById(testPost.Id)).Returns(testPost);
             repositoryMock.Setup(repo => repo.DeletePost(testPost.Id))
                            .Returns(testPost);
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            //Tag new
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act
             Post actualPost = sut.DeletePost(testPost.Id, testUser);
@@ -50,6 +55,9 @@ namespace WebForum.Tests.Services.Posts
             // Set the post's author
             testPost.Autor = testUser;
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
             repositoryMock.Setup(repo => repo.GetPostById(testPost.Id))
                             .Returns(testPost);
@@ -57,7 +65,8 @@ namespace WebForum.Tests.Services.Posts
             repositoryMock.Setup(repo => repo.DeletePost(testPost.Id))
                             .Returns(testPost);
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act and Assert
             Assert.ThrowsException<UnauthorizedOperationException>(() => sut.DeletePost(testPost.Id, otherUser));
@@ -73,11 +82,15 @@ namespace WebForum.Tests.Services.Posts
             // Set the post's author
             testPost.Autor = testUser;
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
             repositoryMock.Setup(repo => repo.GetPostById(testPost.Id)).Returns(testPost);
             repositoryMock.Setup(repo => repo.DeletePost(testPost.Id))
                 .Returns(testPost);
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act
             Post actualPost = sut.DeletePost(testPost.Id, otherUser);

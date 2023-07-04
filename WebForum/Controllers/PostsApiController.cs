@@ -20,13 +20,19 @@ namespace WebForum.Controllers
         private readonly IUserServices users;
         private readonly IMapper mapper;
         private readonly AuthManager authManager;
-        
-        public PostsApiController(IPostServices posts, IUserServices users, IMapper mapper, AuthManager authManager)
+
+        // Tag new
+        private readonly ITagService tagService;
+
+        public PostsApiController(IPostServices posts, IUserServices users, IMapper mapper, AuthManager authManager, ITagService tagService)
         {
             this.posts = posts;
             this.mapper = mapper;
             this.users = users;
             this.authManager = authManager;
+
+            // Tag new
+            this.tagService = tagService;
         }
 
         //Todo - Posts when user is not logged???
@@ -202,5 +208,45 @@ namespace WebForum.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, e.Message);
             }
         }
+
+        // Tags new
+        [HttpPost("{postId}/tags")]
+        public IActionResult AdminAddTagToPost([FromHeader] string credentials, int postId, string tagName)
+        {
+            try
+            {
+                User user = this.authManager.TryGetUser(credentials);
+                tagService.AdminAddTagToPost(postId, tagName, user.Id);
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
+            catch (UnauthorizedOperationException e)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+            }
+        }
+
+        [HttpDelete("{postId}/tags/{tagName}")]
+        public IActionResult AdminRemoveTagFromPost([FromHeader] string credentials, int postId, string tagName)
+        {
+            try
+            {
+                User user = this.authManager.TryGetUser(credentials);
+                tagService.AdminRemoveTagFromPost(postId, tagName, user.Id);
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch (EntityNotFoundException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
+            catch (UnauthorizedOperationException e)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+            }
+        }
+
     }
 }

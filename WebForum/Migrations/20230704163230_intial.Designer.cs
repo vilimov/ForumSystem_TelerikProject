@@ -12,17 +12,18 @@ using WebForum.Data;
 namespace WebForum.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20230630142605_Initial")]
-    partial class Initial
+    [Migration("20230704163230_intial")]
+    partial class intial
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.18")
+                .HasAnnotation("ProductVersion", "7.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("WebForum.Models.Comment", b =>
                 {
@@ -30,7 +31,7 @@ namespace WebForum.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AutorId")
                         .HasColumnType("int");
@@ -63,7 +64,7 @@ namespace WebForum.Migrations
                             Id = 1,
                             AutorId = 7,
                             Content = "Exitus Acta Probat – The result justifies the deed",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7754),
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2120),
                             Likes = 8,
                             PostId = 1
                         },
@@ -72,7 +73,7 @@ namespace WebForum.Migrations
                             Id = 2,
                             AutorId = 8,
                             Content = "Veritas Odit Moras – Truth hates delay",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7758),
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2123),
                             Likes = 2,
                             PostId = 1
                         },
@@ -81,7 +82,7 @@ namespace WebForum.Migrations
                             Id = 3,
                             AutorId = 8,
                             Content = "Timendi Causa Est Nescire – The cause of fear is ignorance",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7761),
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2125),
                             Likes = 3,
                             PostId = 1
                         },
@@ -90,7 +91,7 @@ namespace WebForum.Migrations
                             Id = 4,
                             AutorId = 8,
                             Content = "Vivamus, Moriendum Est – Let us live, since we must die",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7762),
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2126),
                             Likes = 1,
                             PostId = 2
                         },
@@ -99,7 +100,7 @@ namespace WebForum.Migrations
                             Id = 5,
                             AutorId = 8,
                             Content = "Nemo Sine Vitio Est – No one is without fault",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7764),
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2127),
                             Likes = 5,
                             PostId = 2
                         },
@@ -108,7 +109,7 @@ namespace WebForum.Migrations
                             Id = 6,
                             AutorId = 8,
                             Content = "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7767),
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2129),
                             Likes = 1,
                             PostId = 3
                         },
@@ -117,7 +118,7 @@ namespace WebForum.Migrations
                             Id = 7,
                             AutorId = 1,
                             Content = "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7769),
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2130),
                             Likes = 7,
                             PostId = 3
                         });
@@ -129,7 +130,7 @@ namespace WebForum.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("PostId")
                         .HasColumnType("int");
@@ -190,7 +191,7 @@ namespace WebForum.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AutorId")
                         .IsRequired()
@@ -203,9 +204,6 @@ namespace WebForum.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -224,8 +222,7 @@ namespace WebForum.Migrations
                             Id = 1,
                             AutorId = 3,
                             Content = "The beginnings of all things are small.",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7655),
-                            Likes = 5,
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(1998),
                             Title = "Omnium Rerum Principia Parva Sunt"
                         },
                         new
@@ -233,8 +230,7 @@ namespace WebForum.Migrations
                             Id = 2,
                             AutorId = 3,
                             Content = "Always the same.",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7699),
-                            Likes = 1,
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2037),
                             Title = "Semper Idem"
                         },
                         new
@@ -242,8 +238,7 @@ namespace WebForum.Migrations
                             Id = 3,
                             AutorId = 4,
                             Content = "Art is long, life is short.",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7701),
-                            Likes = 10,
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2041),
                             Title = "Ars Longa, Vita Brevis"
                         },
                         new
@@ -251,8 +246,7 @@ namespace WebForum.Migrations
                             Id = 4,
                             AutorId = 5,
                             Content = "The play is over, applaud!",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7704),
-                            Likes = 3,
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2042),
                             Title = "Acta est Fabula, Plaudite!"
                         },
                         new
@@ -260,9 +254,107 @@ namespace WebForum.Migrations
                             Id = 5,
                             AutorId = 1,
                             Content = "The die is cast.",
-                            CreatedAt = new DateTime(2023, 6, 30, 17, 26, 5, 291, DateTimeKind.Local).AddTicks(7706),
-                            Likes = 2,
+                            CreatedAt = new DateTime(2023, 7, 4, 19, 32, 30, 178, DateTimeKind.Local).AddTicks(2043),
                             Title = "Alea Jacta Est"
+                        });
+                });
+
+            modelBuilder.Entity("WebForum.Models.PostTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("PostTags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            PostId = 1,
+                            TagId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            PostId = 1,
+                            TagId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            PostId = 2,
+                            TagId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            PostId = 3,
+                            TagId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            PostId = 4,
+                            TagId = 4
+                        },
+                        new
+                        {
+                            Id = 6,
+                            PostId = 5,
+                            TagId = 4
+                        });
+                });
+
+            modelBuilder.Entity("WebForum.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "History"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Philosophy"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Medicine"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Politics"
                         });
                 });
 
@@ -272,7 +364,7 @@ namespace WebForum.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -320,8 +412,8 @@ namespace WebForum.Migrations
                             IsAdmin = true,
                             IsBlocked = false,
                             LastName = "Caesar",
-                            Password = "mUZGl4xCcJ9ZuK6sG6AOb74LNo69qe1nhGKVUeQAzGA=",
-                            Salt = "s2yXTRxPkzjLhq5Tidgu3g==",
+                            Password = "iYQR6yil01pBnm9JOg+83xnTGjnIRM+CJYO2qfYGRbc=",
+                            Salt = "UVK8whUkXT15/kr0QfiqSA==",
                             Username = "JuliusCaesar"
                         },
                         new
@@ -332,8 +424,8 @@ namespace WebForum.Migrations
                             IsAdmin = true,
                             IsBlocked = false,
                             LastName = "Aurelius",
-                            Password = "yZ3/MMzxbGfos8TlaCkwffXPkKP+dsQbMxC89tSVBgQ=",
-                            Salt = "s2yXTRxPkzjLhq5Tidgu3g==",
+                            Password = "vETyUkK0HQwBymO/xuuiRkQ2/3r4u7MRYxv0XAO82WE=",
+                            Salt = "UVK8whUkXT15/kr0QfiqSA==",
                             Username = "MarcusAurelius"
                         },
                         new
@@ -344,8 +436,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Cicero",
-                            Password = "XSDX7xBeqDvuKpaDh3sIEhPfi6ZaHRfFr+oQ9tIuhN4=",
-                            Salt = "s2yXTRxPkzjLhq5Tidgu3g==",
+                            Password = "9JYVGbnaM9m1na16Mi8ZhXnOODnOXR3mr4V6lVVdiZ8=",
+                            Salt = "UVK8whUkXT15/kr0QfiqSA==",
                             Username = "MarcusTulliusCicero"
                         },
                         new
@@ -356,8 +448,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "ofKos",
-                            Password = "DbRoTbDK9eUZWNW3HdOF86iPF4ZWwVT1bR7BGGU6RLE=",
-                            Salt = "s2yXTRxPkzjLhq5Tidgu3g==",
+                            Password = "8yYEAE4WdQ6vdvGQCuT5H36EpLP6f860TiKanbQx70k=",
+                            Salt = "UVK8whUkXT15/kr0QfiqSA==",
                             Username = "Hippocrates"
                         },
                         new
@@ -368,8 +460,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Augustus",
-                            Password = "Fg49colv1UXO8kPIlQhtn/+cw6l7I6OtzFLmupFlNNA=",
-                            Salt = "s2yXTRxPkzjLhq5Tidgu3g==",
+                            Password = "MrWw3f4FRBGt4ACVv0Ykn1pyqFq34YmOiXBmlksTdWQ=",
+                            Salt = "UVK8whUkXT15/kr0QfiqSA==",
                             Username = "CaesarAugustus"
                         },
                         new
@@ -380,8 +472,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = true,
                             LastName = "Brutus",
-                            Password = "5RWMx3nNTaF2WaQlemtJuZrzt7j1BQS74c18iGjKB6o=",
-                            Salt = "s2yXTRxPkzjLhq5Tidgu3g==",
+                            Password = "RUioMyaqrZua+niq6OTiuGH2V3HfY+f6xgT2l29zMb0=",
+                            Salt = "UVK8whUkXT15/kr0QfiqSA==",
                             Username = "MarcusJuniusBrutus"
                         },
                         new
@@ -392,8 +484,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Naso",
-                            Password = "V95uoJeZETwL1ctBj0lU2dMl1vpfT3sGUNU81+stMA4=",
-                            Salt = "s2yXTRxPkzjLhq5Tidgu3g==",
+                            Password = "lVVRCLwAx0F9lD5R99VACf8GoAy7unhzPxuaOJYJQVs=",
+                            Salt = "UVK8whUkXT15/kr0QfiqSA==",
                             Username = "PubliusOvidiusNaso"
                         },
                         new
@@ -404,8 +496,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Seneca",
-                            Password = "KXGCzP/Plf51YW5xRZb1l63hl3cIjYqdIvuB+phY1FY=",
-                            Salt = "s2yXTRxPkzjLhq5Tidgu3g==",
+                            Password = "gnL9+xbhDf8FvWJZxWIJnbI4MfA3sbMnGOujNv3q4LI=",
+                            Salt = "UVK8whUkXT15/kr0QfiqSA==",
                             Username = "LuciusAnnaeusSeneca"
                         });
                 });
@@ -451,11 +543,37 @@ namespace WebForum.Migrations
                     b.Navigation("Autor");
                 });
 
+            modelBuilder.Entity("WebForum.Models.PostTag", b =>
+                {
+                    b.HasOne("WebForum.Models.Post", "Post")
+                        .WithMany("PostTags")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebForum.Models.Tag", "Tag")
+                        .WithMany("PostTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("Tag");
+                });
+
             modelBuilder.Entity("WebForum.Models.Post", b =>
                 {
                     b.Navigation("Comments");
 
                     b.Navigation("LikePosts");
+
+                    b.Navigation("PostTags");
+                });
+
+            modelBuilder.Entity("WebForum.Models.Tag", b =>
+                {
+                    b.Navigation("PostTags");
                 });
 
             modelBuilder.Entity("WebForum.Models.User", b =>

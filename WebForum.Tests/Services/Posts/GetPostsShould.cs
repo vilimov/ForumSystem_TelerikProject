@@ -25,10 +25,14 @@ namespace WebForum.Tests.Services.Posts
             // Set the post's author
             testPost.Autor = testUser;
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
             repositoryMock.Setup(repo => repo.GetPostById(testPost.Id)).Returns(testPost);
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act
             Post actualPost = sut.GetPostById(testPost.Id);
@@ -41,13 +45,18 @@ namespace WebForum.Tests.Services.Posts
         public void Throw_When_PostNotFound()
         {
             //Arrange
+
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
             repositoryMock
                 .Setup(repo => repo.GetPostById(It.IsAny<int>()))
                 .Throws(new EntityNotFoundException("Post Not Found"));
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
             //Act & Assert
 
             Assert.ThrowsException<EntityNotFoundException>(() => sut.GetPostById(It.IsAny<int>()));
@@ -65,10 +74,15 @@ namespace WebForum.Tests.Services.Posts
 
             List<Post> allPosts = TestHelper.PostsHelper.GetTestPostList();
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
             repositoryMock.Setup(repo => repo.GetAllPosts()).Returns(allPosts);
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act
             IList<Post> actualPosts = sut.GetAllPosts();
@@ -90,11 +104,15 @@ namespace WebForum.Tests.Services.Posts
 
             List<Post> allPosts = TestHelper.PostsHelper.GetTestPostList().Where(p => p.AutorId == testUser.Id).ToList();
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
             repositoryMock.Setup(repo => repo.GetPostByUserId(It.Is<int>(id => id == testUser.Id)))
                             .Returns(allPosts.Where(p => p.AutorId == testUser.Id).ToList());
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act
             IList<Post> actualPosts = sut.GetPostsByUserId(testUser.Id);
@@ -127,10 +145,14 @@ namespace WebForum.Tests.Services.Posts
 
             allPosts = allPosts.Where(p => p.Autor.Username.Contains(filterQueryParameters.UserName)).ToList();
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
             repositoryMock.Setup(repo => repo.FilterPostsBy(filterQueryParameters)).Returns(allPosts);
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act
             IList<Post> actualPosts = sut.FilterPostsBy(filterQueryParameters);

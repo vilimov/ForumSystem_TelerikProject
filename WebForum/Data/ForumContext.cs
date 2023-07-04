@@ -131,6 +131,26 @@ namespace WebForum.Data
                 new LikePost { Id = 6, PostId = 4, UserId = 2},
             };
             modelBuilder.Entity<LikePost>().HasData(list);
+
+            var tags = new List<Tag>()
+            {
+                new Tag { Id = 1, Name = "History"},
+                new Tag { Id = 2, Name = "Philosophy"},
+                new Tag { Id = 3, Name = "Medicine"},
+                new Tag { Id = 4, Name = "Politics"}
+            };
+            modelBuilder.Entity<Tag>().HasData(tags);
+
+            var postTags = new List<PostTag>()
+            {
+                new PostTag { Id = 1, PostId = 1, TagId = 1 },
+                new PostTag { Id = 2, PostId = 1, TagId = 2 },
+                new PostTag { Id = 3, PostId = 2, TagId = 2 },
+                new PostTag { Id = 4, PostId = 3, TagId = 3 },
+                new PostTag { Id = 5, PostId = 4, TagId = 4 },
+                new PostTag { Id = 6, PostId = 5, TagId = 4 },
+            };
+            modelBuilder.Entity<PostTag>().HasData(postTags);
         }
     }
 }

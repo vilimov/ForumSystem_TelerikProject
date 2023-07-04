@@ -22,6 +22,9 @@ namespace WebForum.Tests.Services.Posts
             Post testPost = TestHelper.PostsHelper.GetTestPost();
             testPost.Autor = testUser;
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
             repositoryMock.Setup(repo => repo.GetPostById(testPost.Id)).Returns(testPost);
@@ -31,7 +34,8 @@ namespace WebForum.Tests.Services.Posts
 
             repositoryMock.Setup(repo => repo.UpdatePost(testPost.Id, testPost)).Returns(testPost);
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act 
             Post actualPost = sut.UpdatePost(testPost.Id, testPost, testUser);
@@ -48,6 +52,9 @@ namespace WebForum.Tests.Services.Posts
             Post testPost = TestHelper.PostsHelper.GetTestPost();
             testPost.Autor = testUser;
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
             repositoryMock.Setup(repo => repo.GetPostById(testPost.Id)).Returns(testPost);
@@ -57,7 +64,8 @@ namespace WebForum.Tests.Services.Posts
 
             repositoryMock.Setup(repo => repo.UpdatePost(testPost.Id, testPost)).Returns(testPost);
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             //Act & Assert
             Assert.ThrowsException<DuplicateEntityException>(() => sut.UpdatePost(testPost.Id, testPost, testUser));
@@ -73,6 +81,9 @@ namespace WebForum.Tests.Services.Posts
             List<User> users = TestHelper.UsersHelper.GetTestUsersList();
             User otherUser = users[2];
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
             repositoryMock.Setup(repo => repo.GetPostById(testPost.Id)).Returns(testPost);
@@ -82,7 +93,8 @@ namespace WebForum.Tests.Services.Posts
 
             repositoryMock.Setup(repo => repo.UpdatePost(testPost.Id, testPost)).Returns(testPost);
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             //Act & Assert
             Assert.ThrowsException<UnauthorizedOperationException>(() => sut.UpdatePost(testPost.Id, testPost, otherUser));
@@ -98,6 +110,9 @@ namespace WebForum.Tests.Services.Posts
             List<User> users = TestHelper.UsersHelper.GetTestUsersList();
             User otherUser = users[1];
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
             repositoryMock.Setup(repo => repo.GetPostById(testPost.Id)).Returns(testPost);
@@ -107,7 +122,8 @@ namespace WebForum.Tests.Services.Posts
 
             repositoryMock.Setup(repo => repo.UpdatePost(testPost.Id, testPost)).Returns(testPost);
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act 
             Post actualPost = sut.UpdatePost(testPost.Id, testPost, otherUser);

@@ -18,9 +18,13 @@ namespace WebForum.Services
 
         private readonly IPostRepository repository;
 
-        public PostServices(IPostRepository repository)
+        // Tags new
+        private readonly ITagService tagService;
+
+        public PostServices(IPostRepository repository, ITagService tagService)
         {
             this.repository = repository;
+            this.tagService = tagService;
         }
 
         public Post CreatePost(Post post, User user)
@@ -37,6 +41,25 @@ namespace WebForum.Services
 
             post.Autor = user;
             post.CreatedAt = DateTime.Now;  //string formattedDate = date.ToString("yyyy-MM-dd HH:mm");
+
+            //Tags new
+            // Handle post tags
+            if (post.PostTags != null && post.PostTags.Count > 0)
+            {
+                foreach (var postTag in post.PostTags)
+                {
+                    var existingTag = this.tagService.GetTagByName(postTag.Tag.Name.ToLower());
+                    if (existingTag == null)
+                    {
+                        // Create new tag if it does not exist
+                        existingTag = new Tag { Name = postTag.Tag.Name.ToLower() };
+                        this.tagService.CreateTag(existingTag);
+                    }
+                    // Add the tag to the post
+                    postTag.TagId = existingTag.Id;
+                }
+            }
+
             var createdPost = this.repository.CreatePost(post);
 
             return createdPost;

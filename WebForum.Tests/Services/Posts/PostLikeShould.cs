@@ -24,12 +24,17 @@ namespace WebForum.Tests.Services.Posts
             User testUser = TestHelper.UsersHelper.GetTestUser();
             Post testPost = TestHelper.PostsHelper.GetTestPost();
             var likePost = new LikePost { Post = testPost, User = testUser };
+
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
             repositoryMock
                 .Setup(repo => repo.AddLikePost(testPost, likePost))
                                    .Returns(testPost);
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             //Act 
             Post actualPost = sut.AddLikePost(testPost, testUser);
@@ -46,6 +51,9 @@ namespace WebForum.Tests.Services.Posts
             Post testPost = TestHelper.PostsHelper.GetTestPost();
             var likePost = new LikePost { Post = testPost, User = testUser };
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
             repositoryMock
@@ -53,7 +61,8 @@ namespace WebForum.Tests.Services.Posts
                 .Callback<Post, LikePost>((post, like) => post.LikePosts.Add(like))
                 .Returns((Post post, LikePost like) => post);
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act 
             Post actualPost = sut.AddLikePost(testPost, testUser);
@@ -70,9 +79,13 @@ namespace WebForum.Tests.Services.Posts
             User testUser = TestHelper.UsersHelper.GetTestUser();
             Post testPost = null; // Set the testPost to null
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act and Assert
             Assert.ThrowsException<EntityNotFoundException>(() => sut.AddLikePost(testPost, testUser));
@@ -90,9 +103,13 @@ namespace WebForum.Tests.Services.Posts
             likePost.UserId = 1;
             testPost.LikePosts.Add(likePost);
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act and Assert
             Assert.ThrowsException<DuplicateEntityException>(() => sut.AddLikePost(testPost, testUser));
@@ -106,9 +123,13 @@ namespace WebForum.Tests.Services.Posts
             User testUser = TestHelper.UsersHelper.GetTestUser();
             Post testPost = null; // Set the testPost to null
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act and Assert
             Assert.ThrowsException<EntityNotFoundException>(() => sut.RemoveLikePost(testPost, testUser));
@@ -124,9 +145,13 @@ namespace WebForum.Tests.Services.Posts
             var likePost = new LikePost { Post = testPost, User = null };
             testPost.LikePosts.Add(likePost);
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act and Assert
             Assert.ThrowsException<EntityNotFoundException>(() => sut.RemoveLikePost(testPost, testUser));
@@ -144,12 +169,16 @@ namespace WebForum.Tests.Services.Posts
             likePost.UserId = 1;
             testPost.LikePosts.Add(likePost);
 
+            //Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
             var repositoryMock = new Mock<IPostRepository>();
 
             repositoryMock
                 .Setup(repo => repo.RemoveLikePost(testPost, likePost))
                                    .Returns(testPost);
-            var sut = new PostServices(repositoryMock.Object);
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             //Act 
             Post actualPost = sut.RemoveLikePost(testPost, testUser);

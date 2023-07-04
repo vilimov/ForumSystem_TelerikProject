@@ -26,7 +26,12 @@ namespace WebForum.Tests.Services.Posts
             repositoryMock
                 .Setup(repo => repo.CreatePost(testPost))
                                    .Returns(testPost);
-            var sut = new PostServices(repositoryMock.Object);
+
+            // Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             //Act 
             Post actualPost = sut.CreatePost(testPost, testUser);
@@ -46,7 +51,11 @@ namespace WebForum.Tests.Services.Posts
             var repositoryMock = new Mock<IPostRepository>();
             repositoryMock.Setup(repo => repo.GetPostByTitle(It.IsAny<string>())).Returns(new List<Post>() { new Post() });
 
-            var sut = new PostServices(repositoryMock.Object);
+            // Tag new
+            var tagServiceMock = new Mock<ITagService>();
+
+            //var sut = new PostServices(repositoryMock.Object);
+            var sut = new PostServices(repositoryMock.Object, tagServiceMock.Object);
 
             // Act and Assert
             Assert.ThrowsException<DuplicateEntityException>(() => sut.CreatePost(testPost, testUser));
