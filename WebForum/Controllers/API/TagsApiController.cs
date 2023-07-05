@@ -4,7 +4,7 @@ using WebForum.Helpers.Exceptions;
 using WebForum.Models;
 using WebForum.Services;
 
-namespace WebForum.Controllers
+namespace WebForum.Controllers.Api
 {
     [ApiController]
     [Route("api/tags")]
@@ -22,18 +22,18 @@ namespace WebForum.Controllers
         [HttpGet("")]
         public IActionResult GetAllTags()
         {
-            var tags = this.tagService.GetAllTags();
+            var tags = tagService.GetAllTags();
             return Ok(tags);
         }
         [HttpGet("{id}")]
-        public IActionResult GetTagById(int id) 
+        public IActionResult GetTagById(int id)
         {
             try
             {
-                var tag = this.tagService.GetTagById(id);
+                var tag = tagService.GetTagById(id);
                 return Ok(tag);
             }
-            catch (EntityNotFoundException ex) 
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
@@ -43,8 +43,8 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
-                var tag = this.tagService.CreateTag(newTag);
+                User user = authManager.TryGetUser(credentials);
+                var tag = tagService.CreateTag(newTag);
                 return Created($"/api/tags/{tag.Id}", tag);
             }
             catch (DuplicateEntityException ex)
@@ -61,15 +61,15 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
-                var updatedTag = this.tagService.UpdateTag(id, newTagName);
+                User user = authManager.TryGetUser(credentials);
+                var updatedTag = tagService.UpdateTag(id, newTagName);
                 return Ok(updatedTag);
             }
-            catch(EntityNotFoundException ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
-            catch(UnauthorizedOperationException ex)
+            catch (UnauthorizedOperationException ex)
             {
                 return Unauthorized(ex.Message);
             }
@@ -77,17 +77,17 @@ namespace WebForum.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteTag([FromHeader] string credentials, int id)
         {
-            try 
+            try
             {
-                User user = this.authManager.TryGetUser(credentials);
-                this.tagService.DeleteTag(id, user);
+                User user = authManager.TryGetUser(credentials);
+                tagService.DeleteTag(id, user);
                 return Ok("Tag deleted successfully");
             }
-            catch(EntityNotFoundException ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
-            catch(UnauthenticatedOperationException ex)
+            catch (UnauthenticatedOperationException ex)
             {
                 return Unauthorized(ex.Message);
             }
@@ -97,19 +97,19 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
-                this.tagService.AddTagToPost(postId, tagName, user.Id);
+                User user = authManager.TryGetUser(credentials);
+                tagService.AddTagToPost(postId, tagName, user.Id);
                 return Ok("Tag Added");
             }
             catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
-            catch(DuplicateEntityException ex)
+            catch (DuplicateEntityException ex)
             {
                 return Conflict(ex.Message);
             }
-            catch(UnauthenticatedOperationException ex)
+            catch (UnauthenticatedOperationException ex)
             {
                 return Unauthorized(ex.Message);
             }
@@ -120,15 +120,15 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
-                this.tagService.RemoveTagFromPost(postId, tagName, user.Id);
+                User user = authManager.TryGetUser(credentials);
+                tagService.RemoveTagFromPost(postId, tagName, user.Id);
                 return Ok("Tag removed successfully");
             }
-            catch(EntityNotFoundException ex)
+            catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
-            catch(UnauthenticatedOperationException ex)
+            catch (UnauthenticatedOperationException ex)
             {
                 return Unauthorized(ex.Message);
             }
@@ -136,26 +136,26 @@ namespace WebForum.Controllers
             {
                 return Unauthorized(ex.Message);
             }
-            
+
         }
         [HttpPost("admin/posts/{postId}")]
         public IActionResult AdminAddTagToPost([FromHeader] string credentials, int postId, [FromBody] string tagName)
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
-                this.tagService.AdminAddTagToPost(postId, tagName, user.Id);
+                User user = authManager.TryGetUser(credentials);
+                tagService.AdminAddTagToPost(postId, tagName, user.Id);
                 return Ok("tag added successfully");
             }
             catch (EntityNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
-            catch(DuplicateEntityException ex)
+            catch (DuplicateEntityException ex)
             {
                 return Conflict(ex.Message);
             }
-            catch(UnauthenticatedOperationException ex)
+            catch (UnauthenticatedOperationException ex)
             {
                 return Unauthorized(ex.Message);
             }
@@ -165,8 +165,8 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
-                this.tagService.AdminRemoveTagFromPost(postId, tagName, user.Id);
+                User user = authManager.TryGetUser(credentials);
+                tagService.AdminRemoveTagFromPost(postId, tagName, user.Id);
                 return Ok("Tag removed successfully");
             }
             catch (EntityNotFoundException e)

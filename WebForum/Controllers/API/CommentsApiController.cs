@@ -6,7 +6,7 @@ using WebForum.Models;
 using WebForum.Models.Dtos;
 using WebForum.Services;
 
-namespace WebForum.Controllers
+namespace WebForum.Controllers.Api
 {
     [ApiController]
     [Route("api/comments")]

@@ -9,7 +9,7 @@ using WebForum.Models.Dtos;
 using WebForum.Models.QueryParameters;
 using WebForum.Services;
 
-namespace WebForum.Controllers
+namespace WebForum.Controllers.Api
 {
 
     [ApiController]
@@ -43,7 +43,7 @@ namespace WebForum.Controllers
         {
             //var posts = this.posts.GetAllPosts();
             var posts = this.posts.FilterPostsBy(filterQueryParameters);
-            var postShowDtos = this.mapper.Map<List<PostShowDto>>(posts);
+            var postShowDtos = mapper.Map<List<PostShowDto>>(posts);
 
             if (postShowDtos.Count != 0)
             {
@@ -57,8 +57,8 @@ namespace WebForum.Controllers
         {
             try
             {
-                var post = this.posts.GetPostById(id);
-                var postShowDto = this.mapper.Map<PostShowDto>(post);
+                var post = posts.GetPostById(id);
+                var postShowDto = mapper.Map<PostShowDto>(post);
                 return StatusCode(StatusCodes.Status200OK, postShowDto);
             }
             catch (EntityNotFoundException)
@@ -72,8 +72,8 @@ namespace WebForum.Controllers
         {
             try
             {
-                var post = this.posts.GetPostsByUserId(userId);
-                var postShowDto = this.mapper.Map<List<PostShowDto>>(post);
+                var post = posts.GetPostsByUserId(userId);
+                var postShowDto = mapper.Map<List<PostShowDto>>(post);
                 return StatusCode(StatusCodes.Status200OK, postShowDto);
             }
             catch (EntityNotFoundException)
@@ -87,7 +87,7 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
+                User user = authManager.TryGetUser(credentials);
                 Post post = mapper.Map<Post>(postDto);
                 Post createPost = posts.CreatePost(post, user);
 
@@ -114,7 +114,7 @@ namespace WebForum.Controllers
             //UpdatePost(int id, Post post)
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
+                User user = authManager.TryGetUser(credentials);
                 Post post = mapper.Map<Post>(updateDto);
                 Post createPost = posts.UpdatePost(id, post, user);
 
@@ -139,7 +139,7 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
+                User user = authManager.TryGetUser(credentials);
                 Post postToDelete = posts.DeletePost(id, user);
                 return StatusCode(StatusCodes.Status200OK, postToDelete);
             }
@@ -162,7 +162,7 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
+                User user = authManager.TryGetUser(credentials);
                 Post postToBeLiked = posts.GetPostById(postId);
                 Post likedPost = posts.AddLikePost(postToBeLiked, user);
                 return StatusCode(StatusCodes.Status200OK, likedPost);
@@ -190,7 +190,7 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
+                User user = authManager.TryGetUser(credentials);
                 Post postToRemoveLikeFrom = posts.GetPostById(postId);
                 Post dislikedPost = posts.RemoveLikePost(postToRemoveLikeFrom, user);
                 return StatusCode(StatusCodes.Status200OK, dislikedPost);
@@ -215,7 +215,7 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
+                User user = authManager.TryGetUser(credentials);
                 tagService.AdminAddTagToPost(postId, tagName, user.Id);
                 return StatusCode(StatusCodes.Status200OK);
             }
@@ -234,7 +234,7 @@ namespace WebForum.Controllers
         {
             try
             {
-                User user = this.authManager.TryGetUser(credentials);
+                User user = authManager.TryGetUser(credentials);
                 tagService.AdminRemoveTagFromPost(postId, tagName, user.Id);
                 return StatusCode(StatusCodes.Status200OK);
             }

@@ -10,7 +10,7 @@ using WebForum.Models;
 using WebForum.Models.Dtos;
 using WebForum.Services;
 
-namespace WebForum.Controllers
+namespace WebForum.Controllers.Api
 {
     [ApiController]
     [Route("api/users")]
@@ -46,7 +46,7 @@ namespace WebForum.Controllers
             try
             {
                 User user = userServices.GetUserById(id);
-                var userPublicDataDto = UserMappers.ToUserPublicDataDto(user);
+                var userPublicDataDto = user.ToUserPublicDataDto();
                 return Ok(userPublicDataDto);
             }
             catch (EntityNotFoundException ex)
@@ -61,7 +61,7 @@ namespace WebForum.Controllers
             try
             {
                 User user = userServices.GetByEmail(email);
-                var userPublicDataDto = UserMappers.ToUserPublicDataDto(user);
+                var userPublicDataDto = user.ToUserPublicDataDto();
                 return Ok(userPublicDataDto);
             }
             catch (EntityNotFoundException ex)
@@ -76,7 +76,7 @@ namespace WebForum.Controllers
             try
             {
                 User user = userServices.GetByUsername(username);
-                var userPublicDataDto = UserMappers.ToUserPublicDataDto(user);
+                var userPublicDataDto = user.ToUserPublicDataDto();
                 return Ok(userPublicDataDto);
             }
             catch (EntityNotFoundException ex)
@@ -147,7 +147,7 @@ namespace WebForum.Controllers
                 User authenticatedUser = authManager.TryGetUser(credentials);
 
                 // Unauthorized access if the authenticated user is null or not an admin and trying to delete another user
-                if (authenticatedUser == null || (authenticatedUser.Id != id && !authenticatedUser.IsAdmin))
+                if (authenticatedUser == null || authenticatedUser.Id != id && !authenticatedUser.IsAdmin)
                 {
                     return Forbid();
                 }
