@@ -55,8 +55,9 @@ namespace WebForum.Services
 
             try
             {
-                post.PostTags.Add(new PostTag { PostId = postId, TagId = tag.Id });
-                postRepository.UpdatePost(post.Id, post); // Here we pass the post id and the post object
+                tagRepository.AddTagToPost(post, tag);
+/*                post.PostTags.Add(new PostTag { PostId = postId, TagId = tag.Id });
+                postRepository.UpdatePost(post.Id, post); // Here we pass the post id and the post object*/
             }
             catch (Exception ex)
             {
@@ -80,7 +81,7 @@ namespace WebForum.Services
                 throw new DuplicateEntityException($"Tag {tagName} already added to the post.");
             }
 
-            tagRepository.AddTagToPost(postId, tag);
+            tagRepository.AddTagToPost(post, tag);
         }
         public Tag CreateTag(Tag newTag)
         {

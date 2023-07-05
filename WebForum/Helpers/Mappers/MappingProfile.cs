@@ -24,7 +24,8 @@ namespace WebForum.Helpers.Mappers
                 .ForMember(dto => dto.Content, opt => opt.MapFrom(post => post.Content))
                 .ForMember(dto => dto.CreatedAt, opt => opt.MapFrom(post => post.CreatedAt))
                 .ForMember(dto => dto.Likes, opt => opt.MapFrom(post => post.LikePosts.Count))
-                .ForMember(dto => dto.usersWhoLiked, opt => opt.MapFrom(post => post.LikePosts.Select(likePost => likePost.User.Username).ToList()))
+                .ForMember(dto => dto.UsersWhoLiked, opt => opt.MapFrom(post => post.LikePosts.Select(likePost => likePost.User.Username).ToList()))
+                .ForMember(dto => dto.TagsAddedToPost, opt => opt.MapFrom(post => post.PostTags.Select(tag => tag.Tag.Name).ToList()))
                 .ForMember(dto => dto.AutorName, opt => opt.MapFrom(post => post.Autor.Username))
                 .ForMember(dto => dto.Comments, opt => opt.MapFrom(post => post.Comments.Select(c => new CommentToPostDto
                 {

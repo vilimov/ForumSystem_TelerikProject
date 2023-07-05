@@ -99,7 +99,7 @@ namespace WebForum.Controllers
             {
                 User user = this.authManager.TryGetUser(credentials);
                 this.tagService.AddTagToPost(postId, tagName, user.Id);
-                return Ok();
+                return Ok("Tag Added");
             }
             catch (EntityNotFoundException ex)
             {
@@ -114,6 +114,7 @@ namespace WebForum.Controllers
                 return Unauthorized(ex.Message);
             }
         }
+
         [HttpDelete("posts/{postId}/{tagName}")]
         public IActionResult RemoveTagFromPost([FromHeader] string credentials, int postId, string tagName)
         {

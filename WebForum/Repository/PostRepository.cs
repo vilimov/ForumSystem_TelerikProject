@@ -35,6 +35,7 @@ namespace WebForum.Repository
             {
                 context.Comments.Remove(c);
             }
+            //Delete Likes of Posts in Likes database
             foreach (var like in postToDelete.LikePosts)
             {
                 this.context.LikePosts.Remove(like);
@@ -53,6 +54,8 @@ namespace WebForum.Repository
                                         .ThenInclude(a=>a.Autor)
                                      .Include(l => l.LikePosts)
                                         .ThenInclude(likeUser => likeUser.User)
+                                    .Include(pt=>pt.PostTags)
+                                        .ThenInclude(tag=>tag.Tag)
                                     .ToList();
         }
 
@@ -133,29 +136,6 @@ namespace WebForum.Repository
                 postToUpdate.Content = post.Content;
             }
 
-            // Update tags
-            if (post.PostTags != null)
-            {
-                // Clear existing tags
-                postToUpdate.PostTags.Clear();
-
-                // Add new tags
-                foreach (var postTag in post.PostTags)
-                {
-                    var existingTag = context.Tags.FirstOrDefault(t => t.Name == postTag.Tag.Name.ToLower());
-                    if (existingTag == null)
-                    {
-                        // Create new tag if it does not exist
-                        existingTag = new Tag { Name = postTag.Tag.Name.ToLower() };
-                        context.Tags.Add(existingTag);
-                        // Save changes to get the Id of the new tag
-                        context.SaveChanges();
-                    }
-
-                    // Add the tag to the post
-                    postToUpdate.PostTags.Add(new PostTag { PostId = postToUpdate.Id, TagId = existingTag.Id });
-                }
-            }
             context.Update(postToUpdate);
             context.SaveChanges();
             return postToUpdate;

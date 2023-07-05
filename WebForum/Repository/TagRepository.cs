@@ -62,15 +62,15 @@ namespace WebForum.Repository
             return posts;
         }
 
-        public void AddTagToPost(int postId, Tag tag)
+        public void AddTagToPost(Post postToAddTagTo, Tag tag)
         {
-            var post = this.context.Posts.Find(postId);
-            if (post == null)
+            //var post = this.context.Posts.Find(postId);
+            if (postToAddTagTo == null)
             {
-                throw new EntityNotFoundException($"Post with id {postId} doesn't exist.");
+                throw new EntityNotFoundException($"Post with id {postToAddTagTo.Id} doesn't exist.");
             }
 
-            var postTag = new PostTag { PostId = postId, TagId = tag.Id };
+            var postTag = new PostTag { Post = postToAddTagTo, Tag = tag };
             this.context.PostTags.Add(postTag);
             this.context.SaveChanges();
         }
