@@ -9,5 +9,10 @@ namespace WebForum.Controllers.MVC
         {
             return View();
         }
+
+        public IActionResult About ()
+        {
+            return View();
+        }
     }
 }

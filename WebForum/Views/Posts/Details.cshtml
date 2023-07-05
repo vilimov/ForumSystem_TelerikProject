@@ -1,0 +1,70 @@
+﻿@using WebForum.Models
+@model Post
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>WebForum - @this.Model.Title</title>
+	<link rel="stylesheet" href="~/css/site.css" />
+	<style>
+		body {
+			background-image: url('/images/SPQR_gray.png');
+			background-color: rgba(20, 30, 40, 0,5);
+			background-repeat: repeat;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div>
+			<h3>
+				<a href="/Home/Index" class="nav">Home</a>
+				| <a href="/Posts/Index" class="nav">Posts</a>
+				| <a href="/Home/About" class="nav">About</a>
+				| <a href="/api/swagger" class="nav">Developer API</a>
+			</h3>
+		</div>
+	</header>
+
+	<div class="body-content">
+		<h2>@this.Model.Title</h2>
+
+		<p class="margin12">Title: @this.Model.Title</p>
+		<p class="margin12">Content: @this.Model.Content</p>
+		<p class="margin12">Created by: @this.Model.Autor.Username</p>
+
+		<h4>Comments</h4>
+
+		<ul>
+
+			@{
+				foreach (var comment in this.Model.Comments)
+				{
+					<li class="margin12">@comment.Autor.Username | @comment.Content</li>
+				}
+			}
+
+		</ul>
+		<h4>Likes</h4>
+
+		<ul>
+
+			@{
+				foreach (var likes in this.Model.LikePosts)
+				{
+					<li class="margin12">@likes.User.Username liked this post</li>
+				}
+			}
+
+		</ul>
+
+		<a href="/Posts/Index" class="nav">Go Back</a>
+	</div>
+
+	<footer>
+		<small>© Copyright @DateTime.Now.Year, WebForum</small>
+	</footer>
+</body>
+</html>

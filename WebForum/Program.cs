@@ -69,6 +69,7 @@ namespace WebForum
 
             app.UseAuthorization();
 
+            app.UseStaticFiles();
 
             app.MapDefaultControllerRoute();
 
