@@ -136,7 +136,7 @@ namespace WebForum.Services
 
             Tag tag = tagRepository.GetTagByName(tagName);
 
-            if (!post.PostTags.Any(pt => pt.TagId == tag.Id))
+            if (tag == null || !post.PostTags.Any(pt => pt.TagId == tag.Id))
             {
                 throw new EntityNotFoundException($"Tag {tagName} not found on the post.");
             }
