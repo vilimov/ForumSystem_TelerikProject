@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 using WebForum.Data;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
@@ -9,10 +10,13 @@ namespace WebForum.Repository
     public class UserRepository : IUserRepository
     {
         private readonly ForumContext context;
-
-        public UserRepository(ForumContext context)
+        private readonly IPostRepository postsRepository;
+        private readonly ICommentRepository commentRepository;
+        public UserRepository(ForumContext context, IPostRepository postsRepository, ICommentRepository commentRepository)
         {
             this.context = context;
+            this.postsRepository = postsRepository;
+            this.commentRepository = commentRepository;
         }
 
         public List<User> GetAllUsers()
@@ -53,6 +57,7 @@ namespace WebForum.Repository
             var userToDelete = context.Users
                                .Include(u => u.Posts)
                                .ThenInclude(p => p.Comments)
+                               .Include(c => c.Comments)
                                //.ThenInclude(c => c.Likes)
                                .Include(u => u.Posts)
                                //.ThenInclude(p => p.Likes)
@@ -62,7 +67,24 @@ namespace WebForum.Repository
             {
                 throw new EntityNotFoundException($"User with id {id} does not exist");
             }
+            var listOfPosts = userToDelete.Posts;
+            int i = listOfPosts.Count-1;
+            while (listOfPosts.Count > 0)
+            {
+                var post = listOfPosts[i];
+                postsRepository.DeletePost(post.Id);
+                i--;
+            }
 
+            var listOfComments = userToDelete.Comments;
+            int iComments = listOfComments.Count - 1;
+            while (listOfComments.Count > 0)
+            {
+                var comment = listOfComments[iComments];
+                commentRepository.Delete(comment.Id);
+                iComments--;
+            }
+            
             context.Users.Remove(userToDelete);
             context.SaveChanges();
 
