@@ -1,0 +1,44 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebForum.Models.ViewModels.PostViewModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8" />
+<title>WebForum - Edit Post</title>
+<head>
+	<style>
+		body {
+			background-image: url('/images/SPQR_gray.png');
+			background-repeat: repeat;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div style="margin-left: 30px; color: greenyellow;">
+			<h2>
+				<a asp-controller="Home" asp-action="Index" class="nav" style="color: greenyellow">Home</a>
+				| <a asp-controller="Posts" asp-action="Index" class="nav" style="color: greenyellow">Posts</a>
+				| <a asp-controller="Home" asp-action="About" class="nav" style="color: greenyellow">About</a>
+				| <a href="/swagger" class="nav" style="color: greenyellow">Developer API</a>
+			</h2>
+		</div>
+	</header>
+	
+
+	<h2>Delete <b>@this.Model.Title</b>?</h2>
+
+	<form asp-controller="Posts" asp-action="Delete" method="post">
+		<input type="submit" value="Delete" class="btn-danger" />
+	</form>
+
+	<br />
+	<a asp-controller="Posts" asp-action="Index" class="btn btn-outline-secondary">Back</a>
+
+
+	<footer>
+	</footer>
+</body>
+</html>

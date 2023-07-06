@@ -106,7 +106,9 @@ namespace WebForum.Services
             }
 
             var postsByTitle = this.repository.GetPostByTitle(post.Title);
-            if(postsByTitle.Count > 0)
+			var samePostChecker = postsByTitle.Where(post=>post.Id != postToUpdate.Id).ToList();
+
+			if (postsByTitle.Count > 0 && samePostChecker.Count > 0)
             {
                 throw new DuplicateEntityException(DuplicateTitleErrorMessage);
             }
