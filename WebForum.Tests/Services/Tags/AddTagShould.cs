@@ -25,7 +25,7 @@ namespace WebForum.Tests.Services.Tags
 
             var testUser = TagsHelper.GetTestUserAdmin();
             var testPost = TagsHelper.GetTestPostWithTestTag();
-            testPost.Autor = testUser;  // Set the post's author to the test user
+            testPost.Autor = testUser;
 
             postRepoMock.Setup(repo => repo.GetPostById(testPost.Id)).Returns(testPost);
             userRepoMock.Setup(repo => repo.GetUserById(testUser.Id)).Returns(testUser);
@@ -69,8 +69,8 @@ namespace WebForum.Tests.Services.Tags
             var postRepoMock = new Mock<IPostRepository>();
             var userRepoMock = new Mock<IUserRepository>();
 
-            var testUser = TagsHelper.GetTestUserNonAdmin();  // Non-admin user
-            var testPost = TagsHelper.GetTestPostWithTestTag();  // Post author is admin
+            var testUser = TagsHelper.GetTestUserNonAdmin();
+            var testPost = TagsHelper.GetTestPostWithTestTag();
 
             postRepoMock.Setup(repo => repo.GetPostById(testPost.Id)).Returns(testPost);
             userRepoMock.Setup(repo => repo.GetUserById(testUser.Id)).Returns(testUser);
