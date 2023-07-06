@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WebForum.Models;
 using WebForum.Models.Dtos;
+using WebForum.Models.ViewModels;
 
 namespace WebForum.Helpers.Mappers
 {
@@ -36,6 +37,8 @@ namespace WebForum.Helpers.Mappers
                 }).ToList()))
                 ;
 
-        }
+            CreateMap<PostViewModel, Post>();
+			CreateMap<Post, PostViewModel>();
+		}
     }
 }
