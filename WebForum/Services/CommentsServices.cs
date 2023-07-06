@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
+using WebForum.Models.LikesModels;
 using WebForum.Repository;
 using WebForum.Repository.Contracts;
 
@@ -9,7 +10,11 @@ namespace WebForum.Services
     public class CommentsServices : ICommentsServices
     {
         private const string ModifyCommentErrorMessage = "Only author or admin can update or delete a comment!";
-        private readonly ICommentRepository repository;
+        private const string InvalidCommentErrorMessage = "Invalid Comment!";
+		private const string DuplicateLikeErrorMessage = "You already gave your Like for this comment!";
+		private const string RemoveLikeErrorMessage = "You did not Like this comment!";
+
+		private readonly ICommentRepository repository;
         private readonly IPostRepository postRepository;
 
         public CommentsServices(ICommentRepository repository)
@@ -79,5 +84,38 @@ namespace WebForum.Services
             return deletedComment;
         }
 
-    }
+        public Comment AddLikeComment(Comment comment, User author)
+        {
+			if (comment == null)
+			{
+				throw new EntityNotFoundException(InvalidCommentErrorMessage);
+			};
+			if (comment.CommentLikes.Any(l => l.UserId == author.Id))
+			{
+				throw new DuplicateEntityException(DuplicateLikeErrorMessage);
+			}
+			var commentLike = new CommentLike { Comment = comment, User = author };
+			this.repository.AddLikeComment(comment, commentLike);
+
+			return comment;
+		}
+		public Comment RemoveLikeComment(Comment comment, User author)
+		{
+
+			if (comment == null)
+			{
+				throw new EntityNotFoundException(InvalidCommentErrorMessage);
+			}
+
+			var commentLike = comment.CommentLikes.FirstOrDefault(lp => lp.UserId == author.Id);
+			if (commentLike == null)
+			{
+				throw new EntityNotFoundException(RemoveLikeErrorMessage);
+			}
+
+			this.repository.RemoveLikeComment(comment, commentLike);
+
+			return comment;
+		}
+	}
 }

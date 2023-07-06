@@ -16,7 +16,6 @@ namespace WebForum.Tests.TestHelper
                 Id = 1,
                 Content = "TestContent",
                 CreatedAt = DateTime.Now,
-                Likes = 5,
                 AutorId = 1,
                 PostId = 1
             };
@@ -31,7 +30,6 @@ namespace WebForum.Tests.TestHelper
                 Id = 1,
                 Content = "TestContent 1",
                 CreatedAt = DateTime.Now,
-                Likes = 1,
                 AutorId = 1,
                 PostId = 1
                 },
@@ -41,7 +39,6 @@ namespace WebForum.Tests.TestHelper
                 Id = 2,
                 Content = "TestContent 2",
                 CreatedAt = DateTime.Now,
-                Likes = 2,
                 AutorId = 2,
                 PostId = 2
                 },
@@ -51,7 +48,6 @@ namespace WebForum.Tests.TestHelper
                 Id = 3,
                 Content = "TestContent 3",
                 CreatedAt = DateTime.Now,
-                Likes = 3,
                 AutorId = 3,
                 PostId = 3
                 },
@@ -61,7 +57,6 @@ namespace WebForum.Tests.TestHelper
                 Id = 4,
                 Content = "TestContent 4",
                 CreatedAt = DateTime.Now,
-                Likes = 1,
                 AutorId = 1,
                 PostId = 1
                 },

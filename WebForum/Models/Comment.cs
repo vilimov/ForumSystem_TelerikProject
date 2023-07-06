@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using WebForum.Models.LikesModels;
 using WebForum.Repository;
 
 namespace WebForum.Models
 {
     public class Comment
     {
+        private int likes;
         public int Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "The {0} field is required and must not be an empty string.")]
@@ -21,10 +24,13 @@ namespace WebForum.Models
         
         public User Autor { get; set; }
 
-        public int Likes { get; set; }
-        //public List<Rating> Rating { get; set; }
-                
-        public int? PostId { get; set; }
+		[JsonIgnore]
+		public List<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();
+
+		[JsonIgnore]
+		public int Likes => CommentLikes.Count;
+
+		public int? PostId { get; set; }
         public Post Post { get; set; }
     }
 }

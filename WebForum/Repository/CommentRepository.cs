@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using WebForum.Data;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
+using WebForum.Models.LikesModels;
 using WebForum.Repository.Contracts;
 
 namespace WebForum.Repository
@@ -19,7 +20,9 @@ namespace WebForum.Repository
         {
             IEnumerable<Comment> result = context.Comments
                                                   .Include(c => c.Autor)
-                                                  .Include(c => c.Post);
+                                                  .Include(c => c.Post)
+                                                  .Include(l => l.CommentLikes)
+                                                    .ThenInclude(l => l.User);
             return result.ToList() ?? throw new EntityNotFoundException($"No comments were found!");
         }
 
@@ -66,7 +69,7 @@ namespace WebForum.Repository
                 commentToUpdate.Content = comment.Content;
                 commentToUpdate.CreatedAt = DateTime.Now;
             }
-            commentToUpdate.Likes = comment.Likes;
+            //commentToUpdate.Likes = comment.Likes;
 
             context.Update(commentToUpdate);
             context.SaveChanges();
@@ -86,7 +89,9 @@ namespace WebForum.Repository
         {
             IEnumerable<Comment> result = context.Comments
                                                   .Include(c => c.Autor)
-                                                  .Include(c => c.Post);
+                                                  .Include(c => c.Post)
+												  .Include(l => l.CommentLikes)
+													.ThenInclude(l => l.User); ;
 
             result = FilterByContent(result, filterParameters.Content);
             result = FilterByMinLikes(result, filterParameters.MinLikes);
@@ -150,5 +155,24 @@ namespace WebForum.Repository
         {
             return (string.Equals(sortOrder, "desc", StringComparison.InvariantCultureIgnoreCase)) ? comments.Reverse() : comments;
         }
-    }
+
+
+		public Comment AddLikeComment(Comment comment, CommentLike commentLike)
+		{
+			comment.CommentLikes.Add(commentLike);
+			comment.CommentLikes.Add(commentLike);
+			this.context.SaveChanges();
+
+			return comment;
+		}
+
+		public Comment RemoveLikeComment(Comment comment, CommentLike commentLike)
+		{
+			comment.CommentLikes.Remove(commentLike);
+			this.context.CommentLikes.Remove(commentLike);
+			this.context.SaveChanges();
+
+			return comment;
+		}
+	}
 }

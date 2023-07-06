@@ -44,6 +44,8 @@ namespace WebForum.Models
         public List<Comment> Comments { get; set; }
         [JsonIgnore]
         public List<LikePost> LikePosts { get; set; } = new List<LikePost>();
+		[JsonIgnore]
+		public List<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();
 
     }
 }

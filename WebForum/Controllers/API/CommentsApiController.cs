@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using WebForum.Helpers.Authentication;
 using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
@@ -176,6 +177,61 @@ namespace WebForum.Controllers.Api
             {
                 return StatusCode(StatusCodes.Status400BadRequest, e.Message);
             }
-        }
-    }
+		}
+
+
+		[HttpPost("{commentId}/likes")]
+		public IActionResult AddLike([FromHeader] string credentials, int commentId)
+		{
+			try
+			{
+				User user = authManager.TryGetUser(credentials);
+				Comment commentToBeLiked = commentServices.GetCommentById(commentId);
+				Comment likedCommment = commentServices.AddLikeComment(commentToBeLiked, user);
+				CommentsShowDTO result = new CommentsShowDTO(likedCommment);
+				return StatusCode(StatusCodes.Status200OK, result);
+			}
+			catch (DuplicateEntityException e)
+			{
+				return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+			}
+			catch (UnauthorizedOperationException e)
+			{
+				return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+			}
+			catch (UnauthenticatedOperationException e)
+			{
+				return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+			}
+			catch (EntityNotFoundException e)
+			{
+				return StatusCode(StatusCodes.Status404NotFound, e.Message);
+			}
+		}
+
+		[HttpDelete("{commentId}/likes")]
+		public IActionResult RemoveLike([FromHeader] string credentials, int commentId)
+		{
+			try
+			{
+				User user = authManager.TryGetUser(credentials);
+				Comment commentToRemoveLikeFrom = commentServices.GetCommentById(commentId);
+				Comment dislikedComment = commentServices.RemoveLikeComment(commentToRemoveLikeFrom, user);
+				CommentsShowDTO result = new CommentsShowDTO(dislikedComment);
+				return StatusCode(StatusCodes.Status200OK, result);
+			}
+			catch (UnauthorizedOperationException e)
+			{
+				return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+			}
+			catch (UnauthenticatedOperationException e)
+			{
+				return StatusCode(StatusCodes.Status401Unauthorized, e.Message);
+			}
+			catch (EntityNotFoundException e)
+			{
+				return StatusCode(StatusCodes.Status404NotFound, e.Message);
+			}
+		}
+	}
 }

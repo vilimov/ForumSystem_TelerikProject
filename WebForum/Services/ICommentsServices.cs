@@ -20,5 +20,9 @@ namespace WebForum.Services
         
         Comment Delete(int id, User author);
 
-    }
+        Comment AddLikeComment(Comment comment, User author);
+
+        Comment RemoveLikeComment(Comment comment, User author);
+
+	}
 }

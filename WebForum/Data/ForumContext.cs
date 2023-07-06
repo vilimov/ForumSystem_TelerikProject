@@ -11,15 +11,18 @@ namespace WebForum.Data
         public ForumContext(DbContextOptions<ForumContext> options) : base(options)
         {
 
-        }
-        public DbSet<User> Users { get; set; }
+		}
+		public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<LikePost> LikePosts { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<PostTag> PostTags { get; set; }
+        public DbSet<CommentLike> CommentLikes { get; set; }
 
-        /*protected override void OnModelCreating(ModelBuilder modelBuilder)
+		//JuliusCaesar:Cleopatra
+
+		/*protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
            *base.OnModelCreating(modelBuilder);
 
@@ -53,24 +56,24 @@ namespace WebForum.Data
             modelBuilder.Entity<User>().HasData(users);
         }*/
 
-        //new User { Id = 1, FirstName = "Pesho", LastName = "Peshov", Email = "Pesho123@example.com",
-        //               Username = "PesheP", Password = "password123", IsAdmin = false, IsBlocked = false},
-        //    new User { Id = 2, FirstName = "Tosho", LastName = "Toshov", Email = "Tosho123@example.com",
-        //               Username = "ToshoT", Password = "password456", IsAdmin = false, IsBlocked = false},
-        //    new User
-        //    {
-        //        Id = 3,
-        //        FirstName = "Gosho",
-        //        LastName = "Goshov",
-        //        Email = "Gosho123@example.com",
-        //        Username = "GoshoG",
-        //        Password = "password789",
-        //        IsAdmin = true,
-        //        IsBlocked = false
-        //
-        //
-        //   },
-        /*new User { Id = 1, FirstName = "Julius", LastName = "Caesar", Username = "JuliusCaesar", Email = "JC@roman.im", Salt = salt, Password = "Cleopatra", HashedPassword = AuthManager.HashPassword("Cleopatra", salt), IsAdmin = true },
+		//new User { Id = 1, FirstName = "Pesho", LastName = "Peshov", Email = "Pesho123@example.com",
+		//               Username = "PesheP", Password = "password123", IsAdmin = false, IsBlocked = false},
+		//    new User { Id = 2, FirstName = "Tosho", LastName = "Toshov", Email = "Tosho123@example.com",
+		//               Username = "ToshoT", Password = "password456", IsAdmin = false, IsBlocked = false},
+		//    new User
+		//    {
+		//        Id = 3,
+		//        FirstName = "Gosho",
+		//        LastName = "Goshov",
+		//        Email = "Gosho123@example.com",
+		//        Username = "GoshoG",
+		//        Password = "password789",
+		//        IsAdmin = true,
+		//        IsBlocked = false
+		//
+		//
+		//   },
+		/*new User { Id = 1, FirstName = "Julius", LastName = "Caesar", Username = "JuliusCaesar", Email = "JC@roman.im", Salt = salt, Password = "Cleopatra", HashedPassword = AuthManager.HashPassword("Cleopatra", salt), IsAdmin = true },
                 new User { Id = 2, FirstName = "Marcus", LastName = "Aurelius", Username = "MarcusAurelius", Email = "MA@roman.im", Salt = salt, Password = "Antoninus", HashedPassword = AuthManager.HashPassword("Antoninus", salt), IsAdmin = true },
                 new User { Id = 3, FirstName = "MarcusTullius", LastName = "Cicero", Username = "MarcusTulliusCicero", Email = "MTC@roman.im", Salt = salt, Password = "Tullius123", HashedPassword = AuthManager.HashPassword("Tullius123", salt), IsAdmin = false },
                 new User { Id = 4, FirstName = "Hippocrates", LastName = "ofKos", Username = "Hippocrates", Email = "Hipo@roman.im", Salt = salt, Password = "CorpusHippocraticum", HashedPassword = AuthManager.HashPassword("CorpusHippocraticum", salt), IsAdmin = false },
@@ -80,7 +83,7 @@ namespace WebForum.Data
                 new User { Id = 8, FirstName = "LuciusAnnaeus", LastName = "Seneca", Username = "LuciusAnnaeusSeneca", Email = "Seneca@roman.im", Salt = salt, Password = "EpistulaeMorales", HashedPassword = AuthManager.HashPassword("EpistulaeMorales", salt), IsAdmin = false }
             
          */
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             var salt = AuthManager.GenerateSalt();
@@ -101,7 +104,7 @@ namespace WebForum.Data
 
             List<Post> posts = new List<Post>()
             {
-                new Post { Id = 1, Title = "Omnium Rerum Principia Parva Sunt", Content = "The beginnings of all things are small.", AutorId = 3, CreatedAt = DateTime.Now},
+                new Post { Id = 1, Title = "Omnium Rerum Principia Parva Sunt", Content = "The beginnings of all things are small.", AutorId = 3, CreatedAt = DateTime.Now },
                 new Post { Id = 2, Title = "Semper Idem", Content = "Always the same.", AutorId = 3, CreatedAt = DateTime.Now},
                 new Post { Id = 3, Title = "Ars Longa, Vita Brevis", Content = "Art is long, life is short.", AutorId = 4, CreatedAt = DateTime.Now},
                 new Post { Id = 4, Title = "Acta est Fabula, Plaudite!", Content = "The play is over, applaud!", AutorId = 5, CreatedAt = DateTime.Now},
@@ -111,15 +114,30 @@ namespace WebForum.Data
 
             List<Comment> comments = new List<Comment>()
             {
-                new Comment { Id = 1, Content = "Exitus Acta Probat – The result justifies the deed", AutorId = 7, PostId = 1, CreatedAt = DateTime.Now, Likes = 8 },
-                new Comment { Id = 2, Content = "Veritas Odit Moras – Truth hates delay", AutorId = 8, PostId = 1, CreatedAt = DateTime.Now, Likes = 2 },
-                new Comment { Id = 3, Content = "Timendi Causa Est Nescire – The cause of fear is ignorance", AutorId = 8, PostId = 1, CreatedAt = DateTime.Now, Likes = 3 },
-                new Comment { Id = 4, Content = "Vivamus, Moriendum Est – Let us live, since we must die", AutorId = 8, PostId = 2, CreatedAt = DateTime.Now, Likes = 1 },
-                new Comment { Id = 5, Content = "Nemo Sine Vitio Est – No one is without fault", AutorId = 8, PostId = 2, CreatedAt = DateTime.Now, Likes = 5 },
-                new Comment { Id = 6, Content = "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery", AutorId = 8, PostId = 3, CreatedAt = DateTime.Now, Likes = 1 },
-                new Comment { Id = 7, Content = "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", AutorId = 1, PostId = 3, CreatedAt = DateTime.Now, Likes = 7 },
+                new Comment { Id = 1, Content = "Exitus Acta Probat – The result justifies the deed", AutorId = 7, PostId = 1, CreatedAt = DateTime.Now },
+                new Comment { Id = 2, Content = "Veritas Odit Moras – Truth hates delay", AutorId = 8, PostId = 1, CreatedAt = DateTime.Now },
+                new Comment { Id = 3, Content = "Timendi Causa Est Nescire – The cause of fear is ignorance", AutorId = 8, PostId = 1, CreatedAt = DateTime.Now },
+                new Comment { Id = 4, Content = "Vivamus, Moriendum Est – Let us live, since we must die", AutorId = 8, PostId = 2, CreatedAt = DateTime.Now},
+                new Comment { Id = 5, Content = "Nemo Sine Vitio Est – No one is without fault", AutorId = 8, PostId = 2, CreatedAt = DateTime.Now},
+                new Comment { Id = 6, Content = "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery", AutorId = 8, PostId = 3, CreatedAt = DateTime.Now},
+                new Comment { Id = 7, Content = "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", AutorId = 1, PostId = 3, CreatedAt = DateTime.Now },
             };
             modelBuilder.Entity<Comment>().HasData(comments);
+
+			List<CommentLike> commentLikes = new List<CommentLike>()
+			{
+				new CommentLike { Id = 1, CommentId = 1, UserId = 8},
+				new CommentLike { Id = 2, CommentId = 1, UserId = 7},
+				new CommentLike { Id = 3, CommentId = 1, UserId = 6},
+				new CommentLike { Id = 4, CommentId = 1, UserId = 5},
+				new CommentLike { Id = 5, CommentId = 2, UserId = 4},
+				new CommentLike { Id = 6, CommentId = 2, UserId = 3},
+				new CommentLike { Id = 7, CommentId = 2, UserId = 2},
+				new CommentLike { Id = 8, CommentId = 3, UserId = 1},
+				new CommentLike { Id = 9, CommentId = 3, UserId = 2},
+				new CommentLike { Id = 10, CommentId = 4, UserId = 3},
+			};
+			modelBuilder.Entity<CommentLike>().HasData(commentLikes);
 
             List<LikePost> list = new List<LikePost>()
             {
@@ -151,6 +169,8 @@ namespace WebForum.Data
                 new PostTag { Id = 6, PostId = 5, TagId = 4 },
             };
             modelBuilder.Entity<PostTag>().HasData(postTags);
-        }
-    }
+
+
+		}
+	}
 }
