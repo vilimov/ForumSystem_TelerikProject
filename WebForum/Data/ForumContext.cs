@@ -20,69 +20,19 @@ namespace WebForum.Data
         public DbSet<PostTag> PostTags { get; set; }
         public DbSet<CommentLike> CommentLikes { get; set; }
 
-		//JuliusCaesar:Cleopatra
+		//-----------------------------------------------------------------
+		// CREDENTIALS:
+		//-----------------------------------------------------------------
+		// JuliusCaesar:Cleopatra - IsAdmin
+		// MarcusAurelius:Antoninus - IsAdmin
+		// MarcusTulliusCicero:MarcusTulliusCicero
+		// Hippocrates:CorpusHippocraticum
+		// CaesarAugustus:GaiusOctavius
+		// MarcusJuniusBrutus:MeToo - IsBlocked
+		// PubliusOvidiusNaso:Metamorphoses
+		// LuciusAnnaeusSeneca:EpistulaeMorales
+		//-----------------------------------------------------------------
 
-		/*protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-           *base.OnModelCreating(modelBuilder);
-
-            List<User> users = new List<User>()
-            {
-                 new User { Id = 1, Username = "goshoG", 
-                                    Email = "goshoG@example.com", 
-                                    FirstName = "Gosho", 
-                                    LastName = "Georgiev", 
-                                    Password = "password123", 
-                                    IsAdmin = true, 
-                                    IsBlocked = false },
-
-                 new User { Id = 2, Username = "peshoP", 
-                                    Email = "peshoP@example.com", 
-                                    FirstName = "Pesho", 
-                                    LastName = "Peshov", 
-                                    Password = "password456", 
-                                    IsAdmin = false, 
-                                    IsBlocked = false },
-
-                 new User { Id = 3, Username = "toshoT", 
-                                    Email = "toshoT@example.com", 
-                                    FirstName = "Tosho", 
-                                    LastName = "Toshov", 
-                                    Password = "password789", 
-                                    IsAdmin = false, 
-                                    IsBlocked = false }
-            };
-
-            modelBuilder.Entity<User>().HasData(users);
-        }*/
-
-		//new User { Id = 1, FirstName = "Pesho", LastName = "Peshov", Email = "Pesho123@example.com",
-		//               Username = "PesheP", Password = "password123", IsAdmin = false, IsBlocked = false},
-		//    new User { Id = 2, FirstName = "Tosho", LastName = "Toshov", Email = "Tosho123@example.com",
-		//               Username = "ToshoT", Password = "password456", IsAdmin = false, IsBlocked = false},
-		//    new User
-		//    {
-		//        Id = 3,
-		//        FirstName = "Gosho",
-		//        LastName = "Goshov",
-		//        Email = "Gosho123@example.com",
-		//        Username = "GoshoG",
-		//        Password = "password789",
-		//        IsAdmin = true,
-		//        IsBlocked = false
-		//
-		//
-		//   },
-		/*new User { Id = 1, FirstName = "Julius", LastName = "Caesar", Username = "JuliusCaesar", Email = "JC@roman.im", Salt = salt, Password = "Cleopatra", HashedPassword = AuthManager.HashPassword("Cleopatra", salt), IsAdmin = true },
-                new User { Id = 2, FirstName = "Marcus", LastName = "Aurelius", Username = "MarcusAurelius", Email = "MA@roman.im", Salt = salt, Password = "Antoninus", HashedPassword = AuthManager.HashPassword("Antoninus", salt), IsAdmin = true },
-                new User { Id = 3, FirstName = "MarcusTullius", LastName = "Cicero", Username = "MarcusTulliusCicero", Email = "MTC@roman.im", Salt = salt, Password = "Tullius123", HashedPassword = AuthManager.HashPassword("Tullius123", salt), IsAdmin = false },
-                new User { Id = 4, FirstName = "Hippocrates", LastName = "ofKos", Username = "Hippocrates", Email = "Hipo@roman.im", Salt = salt, Password = "CorpusHippocraticum", HashedPassword = AuthManager.HashPassword("CorpusHippocraticum", salt), IsAdmin = false },
-                new User { Id = 5, FirstName = "Caesar", LastName = "Augustus", Username = "CaesarAugustus", Email = "CA@roman.im", Salt = salt, Password = "GaiusOctavius", HashedPassword = AuthManager.HashPassword("GaiusOctavius", salt), IsAdmin = false },
-                new User { Id = 6, FirstName = "MarcusJunius", LastName = "Brutus", Username = "MarcusJuniusBrutus", Email = "BrutusIAm@roman.im", Salt = salt, Password = "MeToo", HashedPassword = AuthManager.HashPassword("MeToo", salt), IsAdmin = false, IsBlocked = true },
-                new User { Id = 7, FirstName = "PubliusOvidius", LastName = "Naso", Username = "PubliusOvidiusNaso", Email = "Ovid@roman.im", Salt = salt, Password = "Metamorphoses", HashedPassword = AuthManager.HashPassword("Metamorphoses", salt), IsAdmin = false },
-                new User { Id = 8, FirstName = "LuciusAnnaeus", LastName = "Seneca", Username = "LuciusAnnaeusSeneca", Email = "Seneca@roman.im", Salt = salt, Password = "EpistulaeMorales", HashedPassword = AuthManager.HashPassword("EpistulaeMorales", salt), IsAdmin = false }
-            
-         */
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
