@@ -1,0 +1,30 @@
+﻿@model WebForum.Models.ViewModels.PostViewModel
+
+<form asp-controller="Posts" asp-action="@this.ViewData["Action"]" method="post">
+	<div>
+		<div>
+			@{
+				if (ViewData["ErrorMessage"] != null)
+				{
+					<span style="color: Red">@ViewData["ErrorMessage"]</span>
+				}
+			}
+			<div style="display: @this.ViewData["TitleVisibility"]">
+				<label asp-for="Title"></label><br />
+				<input asp-for="Title" type="text" /><br />
+				<span asp-validation-for="Title" class="form-error"></span>
+			</div>
+		</div>
+
+		<div>
+			<label asp-for="Content"></label><br />
+			<input asp-for="Content" type="text" /><br />
+			<span asp-validation-for="Content" class="form-error"></span>
+		</div>
+
+		<div>
+			<input type="submit" value="@this.ViewData["ButtonText"]" />
+		</div>
+	</div>
+
+</form>

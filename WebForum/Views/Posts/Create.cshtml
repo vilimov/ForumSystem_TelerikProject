@@ -1,59 +1,11 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model WebForum.Models.ViewModels.PostViewModel
+﻿@model WebForum.Models.ViewModels.PostViewModel
 
+@{
+	this.ViewData["PageTitle"] = "Create Post";
+	this.ViewData["Action"] = "Create";
+	this.ViewData["ButtonText"] = "Create";
+	this.ViewData["TitleVisibility"] = "block";
+}
 
-<!DOCTYPE html>
-<html lang="en">
-<meta charset="utf-8" />
-<title>WebForum - Create Post</title>
-<head>
-	<style>
-		body {
-			background-image: url('/images/SPQR_gray.png');
-			background-repeat: repeat;
-			background-size: cover;
-		}
-	</style>
-</head>
-<body>
-	<header>
-		<div style="margin-left: 30px; color: greenyellow;">
-			<h2>
-				<a asp-controller="Home" asp-action="Index" class="nav" style="color: greenyellow">Home</a>
-				| <a asp-controller="Posts" asp-action="Index" class="nav" style="color: greenyellow">Posts</a>
-				| <a asp-controller="Home" asp-action="About" class="nav" style="color: greenyellow">About</a>
-				| <a href="/swagger" class="nav" style="color: greenyellow">Developer API</a>
-			</h2>
-		</div>
-	</header>
-	<form asp-controller="Posts" asp-action="Create" method="post">
-		<div>
-			<div>
-				@{
-					if(ViewData["ErrorMessage"] != null)
-					{
-						<span style="color: Red">@ViewData["ErrorMessage"]</span>
-					}
-				}
-				<label asp-for="Title"></label><br />
-				<input asp-for="Title" type="text" /><br />
-				<span asp-validation-for="Title" class="form-error"></span>
-			</div>
-
-			<div>
-				<label asp-for="Content"></label><br />
-				<input asp-for="Content" type="text" /><br />
-				<span asp-validation-for="Content" class="form-error"></span>
-			</div>
-
-			<div>
-				<input type="submit" value="Submit" />
-			</div>
-		</div>
-		
-	</form>
-
-	<footer>
-	</footer>
-</body>
-</html>
+<p>Create post</p>
+<partial name="_PostForm" />

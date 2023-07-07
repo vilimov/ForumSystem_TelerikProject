@@ -1,0 +1,38 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>WebForum - @this.ViewData["PageTitle"]</title>
+	<link rel="stylesheet" href="~/css/site.css" />
+	<style>
+		body {
+			background-image: url('/images/SPQR_gray.png');
+			background-color: rgba(20, 30, 40, 0,5);
+			background-repeat: repeat;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div style="margin-left: 30px; color: greenyellow;">
+			<h2>
+				<a asp-controller="Home" asp-action="Index" class="nav" style="color: greenyellow">Home</a>
+				| <a asp-controller="Posts" asp-action="Index" class="nav" style="color: greenyellow">Posts</a>
+				| <a asp-controller="Home" asp-action="About" class="nav" style="color: greenyellow">About</a>
+				| <a href="/swagger" class="nav" style="color: greenyellow">Developer API</a>
+			</h2>
+		</div>
+	</header>
+
+
+	<div class="body-content">
+		@RenderBody()
+	</div>
+
+	<footer>
+		<small>© Copyright @DateTime.Now.Year, Web Forum</small>
+	</footer>
+</body>
+</html>

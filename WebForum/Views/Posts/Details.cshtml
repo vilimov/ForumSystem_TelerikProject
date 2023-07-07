@@ -1,34 +1,9 @@
-﻿@using WebForum.Models
+﻿
+@using WebForum.Models
 @model Post
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<title>WebForum - @this.Model.Title</title>
-	<link rel="stylesheet" href="~/css/site.css" />
-	<style>
-		body {
-			background-image: url('/images/SPQR_gray.png');
-			background-color: rgba(20, 30, 40, 0,5);
-			background-repeat: repeat;
-			background-size: cover;
-		}
-	</style>
-</head>
-<body>
-	<header>
-		<div>
-			<h3>
-				<a href="/Home/Index" class="nav">Home</a>
-				| <a href="/Posts/Index" class="nav">Posts</a>
-				| <a href="/Home/About" class="nav">About</a>
-				| <a href="/api/swagger" class="nav">Developer API</a>
-			</h3>
-		</div>
-	</header>
-
-	<div class="body-content">
+@{
+	this.ViewData["PageTitle"] = "Details";
+}
 		<h2>@this.Model.Title</h2>
 
 		<p class="margin12">Title: @this.Model.Title</p>
@@ -60,11 +35,5 @@
 
 		</ul>
 
-		<a href="/Posts/Index" class="nav">Go Back</a>
-	</div>
-
-	<footer>
-		<small>© Copyright @DateTime.Now.Year, WebForum</small>
-	</footer>
-</body>
-</html>
+		<a asp-controller="Posts" asp-action="Index" class="nav">Go Back</a>
+	

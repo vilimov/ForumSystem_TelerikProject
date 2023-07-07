@@ -1,66 +1,32 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using WebForum.Models;
+﻿@using WebForum.Models;
 @model List<Post>;
+@{
+	this.ViewData["PageTitle"] = "Posts";
+}
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-	<title>WebForum - Posts</title>
-	<link rel="stylesheet" href="~/css/site.css"/>
-	<style>
-		body {
-			background-image: url('/images/SPQR_gray.png');
-			background-color: rgba(20, 30, 40, 0,5);
-			background-repeat: repeat;
-			background-size: cover;
-		}
-	</style>
-	</head>
-	<body>
-		<header>
-				<div style="margin-left: 30px; color: greenyellow;">
-					<h2>
-						<a href="/Home/Index" class="nav" style="color: greenyellow">Home</a>
-						| <a href="/Posts/Index" class="nav" style="color: greenyellow">Posts</a>
-						| <a href="/Home/About" class="nav" style="color: greenyellow">About</a>
-						| <a href="/api/swagger" class="nav" style="color: greenyellow">Developer API</a>
-			</h2>
-		</div>
-		</header>
-
-
-	<div class="body-content">
-		<h2>Posts</h2>
-		<a asp-controller="Posts" asp-action="Create">Create Post</a>
-		<div class="table">
-			<div class="header">
-				<div class="header-cell">Title</div>
-				<div class="header-cell">Content</div>
-				<div class="header-cell">Autor</div>
-				<div class="header-cell">Actions</div>
-			</div>
-
-			@{
-				foreach (var post in this.Model)
-				{
-					<div class="row">
-						<div class="cell">@post.Title</div>
-						<div class="cell">@post.Content</div>
-						<div class="cell">@post.Autor.Username</div>
-						<div class="cell">
-							<a asp-controller="Posts" asp-action="Details" , asp-route-id="@post.Id" class="nav">Details</a>
-							<a asp-controller="Posts" asp-action="Edit" , asp-route-id="@post.Id" class="nav">Edit</a>
-							<a asp-controller="Posts" asp-action="Delete" , asp-route-id="@post.Id" class="nav">Delete</a>
-						</div>
-					</div>
-				}
-			}
-		</div>
+<h2>Posts</h2>
+<a asp-controller="Posts" asp-action="Create">Create Post</a>
+<div class="table">
+	<div class="header">
+		<div class="header-cell">Title</div>
+		<div class="header-cell">Content</div>
+		<div class="header-cell">Autor</div>
+		<div class="header-cell">Actions</div>
 	</div>
 
-	<footer>
-		<small>© Copyright @DateTime.Now.Year, Web Forum</small>
-	</footer>
-	</body>
-</html>
+	@{
+		foreach (var post in this.Model)
+		{
+			<div class="row">
+				<div class="cell">@post.Title</div>
+				<div class="cell">@post.Content</div>
+				<div class="cell">@post.Autor.Username</div>
+				<div class="cell">
+					<a asp-controller="Posts" asp-action="Details" , asp-route-id="@post.Id" class="nav">Details</a>
+					<a asp-controller="Posts" asp-action="Edit" , asp-route-id="@post.Id" class="nav">Edit</a>
+					<a asp-controller="Posts" asp-action="Delete" , asp-route-id="@post.Id" class="nav">Delete</a>
+				</div>
+			</div>
+		}
+	}
+</div>

@@ -1,39 +1,4 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
-
-<!DOCTYPE html>
-<html lang="en">
-	<meta charset="utf-8" />
-	<title>WebForum - Home</title>
-	<head>
-	<style>
-		body {
-				background-image: url('/images/SPQR_gray.png');
-			background-repeat: repeat;
-			background-size: cover;
-		}
-	</style>
-	</head>
-<body>
-	<header>
-			<div style="margin-left: 30px; color: greenyellow;">
-			<h2>
-				<!--Plain html
-					<a href="/Home/Index" class="nav" style="color: greenyellow">Home</a>
-					| <a href="/Posts/Index" class="nav" style="color: greenyellow">Posts</a>
-					| <a href="/Home/About" class="nav" style="color: greenyellow">About</a>
-					| <a href="/swagger" class="nav" style="color: greenyellow">Developer API</a>
-				-->
-
-				<!--using tag helpers-->
-				<a asp-controller = "Home" asp-action = "Index" class="nav" style="color: greenyellow">Home</a>
-				| <a asp-controller="Posts" asp-action="Index" class="nav" style="color: greenyellow">Posts</a>
-				| <a asp-controller="Home" asp-action="About" class="nav" style="color: greenyellow">About</a>
-				| <a href="/swagger" class="nav" style="color: greenyellow">Developer API</a>
-			</h2>
-		</div>
-	</header>
-	<footer>
-	</footer>
-	</body>
-</html>
+﻿@{
+	this.ViewData["PageTitle"] = "Home";
+}
+<h2>Hello to the Roma Forum</h2>
