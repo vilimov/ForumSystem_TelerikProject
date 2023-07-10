@@ -166,15 +166,6 @@
                     <p>People are looking at your profile. Find out who.</p>
                 </div>
 
-                <!-- Adds -->
-                <div class="w3-card w3-round w3-green w3-padding-3 w3-center" style="overflow:hidden">  
-                @*<div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">*@
-                    <p id="adTitle" class="passing-text">Newly Renovated Houses in Gallia</p>
-                    <img id="adImage" src="~/images/Adds/02_NewlyRenovatedHouses.png" alt="HomesInGallia" style="width:100%;">
-                    <p id="adDetails" class="passing-text">Get your dream house in Gallia - contact Obelix</p>
-                    <a href="https://example.com" class="hyperlink" style="color:darkblue">"GALLIA PROPERTIES"</a>
-                </div>
-
                 <!-- End Left Column -->
             </div>
 
@@ -183,19 +174,21 @@
 
                 
                 @RenderBody()
-                
+               
                 <!-- End Middle Column -->
             </div>
 
             <!-- Right Column -->
             <div class="w3-col m2">
-                <div class="w3-card w3-round w3-white w3-center">
+                <div class="w3-card w3-round w3-green w3-center" style="overflow:hidden">
                     <div class="w3-container">
                         <p>Upcoming Events:</p>
-                        <img src="/w3images/forest.jpg" alt="Forest" style="width:100%;">
-                        <p><strong>Holiday</strong></p>
+                        <p id="eventTitle" class="passing-text">WELCOME to the COLOSSEUM!</p>
+                        <img id="eventImage" src="/images/Events/01_Colosseum.png" alt="Colosseum" style="width:100%;">                        
+                        @*<img src="/w3images/forest.jpg" alt="Forest" style="width:100%;">
+                        <p><strong>Holiday</strong></p>*@
                         <p>Friday 15:00</p>
-                        <p><button class="w3-button w3-block w3-theme-l4">Info</button></p>
+                        <p><button class="w3-button w3-block w3-theme-l4">Buy Ticket</button></p>
                     </div>
                 </div>
                 <br>
@@ -216,19 +209,12 @@
                     </div>
                 </div>
                 <br>
-                                
+
+                <!-- Adds -->              
                 <div class="w3-card w3-round w3-green w3-padding-3 w3-center" style="overflow:hidden">  
                     <p id="adTitle" class="passing-text">SALE! Homes in Gallia for SALE!</p>
                     <img id="adImage" src="~/images/Adds/01_Homes.png" alt="HomesInGallia" style="width:100%;">
                     <p id="adDetails" class="passing-text">For details - contact Asterix</p>
-                    <a href="https://example.com" class="hyperlink" style="color:darkblue">"GALLIA PROPERTIES"</a>
-                </div>
-                <br>
-
-                <div class="w3-card w3-round w3-green w3-padding-3 w3-center" style="overflow:hidden">  
-                    <p id="adTitle" class="passing-text">Luxurious Castles in Gallia</p>
-                    <img id="adImage" src="~/images/Adds/03_LuxuriousCastles.png" alt="HomesInGallia" style="width:100%;">
-                    <p id="adDetails" class="passing-text">Experience luxury living - contact Falbala</p>
                     <a href="https://example.com" class="hyperlink" style="color:darkblue">"GALLIA PROPERTIES"</a>
                 </div>
                 <br>
@@ -319,6 +305,91 @@
           }
         }
     </script>
+    
+    <script>
+        // Array of ad data
+        var events = [
+          {
+            title: "WELCOME to the COLOSSEUM!",
+            image: "/images/Events/01_Colosseum.png",            
+          },
+          {
+            title: "ATTEND the GLADIATOR FIGHT!",
+            image: "/images/Events/02_Fight.png",
+          },
+          {
+            title: "GUESS the WINNER!",
+            image: "/images/Events/03_Winner.png",
+          },
+          {
+            title: "WIN the PRIZE!",
+            image: "/images/Events/04_Price.png",
+          }
+        ];
+        
+        var eventIndex = 0;
+        var eventTitle = document.getElementById("eventTitle");
+        var eventImage = document.getElementById("eventImage");
+        
+        // Function to change the ad content
+        function changeEventContent() {
+          var event = events[eventIndex];
+        
+          eventTitle.textContent = event.title;
+          eventImage.src = event.image;
+        
+          eventIndex = (eventIndex + 1) % events.length;
+        }
+        
+        // Call the changeAdContent function initially
+        changeEventContent();
+        
+        // Change the ad content every 5 seconds
+        setInterval(changeEventContent, 8000);
+    </script>  
+
+    <script>
+        // Array of ad data
+        var ads = [
+          {
+            title: "SALE! Homes in Gallia for SALE!",
+            image: "/images/Adds/01_Homes.png",
+            details: "For details - contact Asterix"
+          },
+          {
+            title: "Newly Renovated Houses in Gallia",
+            image: "/images/Adds/02_NewlyRenovatedHouses.png",
+            details: "Get your dream house in Gallia - contact Obelix"
+          },
+          {
+            title: "Luxurious Castles in Gallia",
+            image: "/images/Adds/03_LuxuriousCastles.png",
+            details: "Experience luxury living - contact Falbala"
+          }
+        ];
+        
+        var adIndex = 0;
+        var adTitle = document.getElementById("adTitle");
+        var adImage = document.getElementById("adImage");
+        var adDetails = document.getElementById("adDetails");
+        
+        // Function to change the ad content
+        function changeAdContent() {
+          var ad = ads[adIndex];
+        
+          adTitle.textContent = ad.title;
+          adImage.src = ad.image;
+          adDetails.textContent = ad.details;
+        
+          adIndex = (adIndex + 1) % ads.length;
+        }
+        
+        // Call the changeAdContent function initially
+        changeAdContent();
+        
+        // Change the ad content every 5 seconds
+        setInterval(changeAdContent, 8000);
+    </script>  
 
 </body>
 </html>
