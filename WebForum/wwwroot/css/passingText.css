@@ -1,0 +1,18 @@
+﻿.passing-text {
+    animation: passToLeft 8s linear infinite;
+    white-space: wrap;
+    overflow: nohidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+
+@keyframes passToLeft {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+

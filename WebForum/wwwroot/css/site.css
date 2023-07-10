@@ -91,3 +91,19 @@ a.nav {
 .label-error {
     color: red
 }
+
+.passing-text {
+    animation: passToLeft 10s linear infinite;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@keyframes passToLeft {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
