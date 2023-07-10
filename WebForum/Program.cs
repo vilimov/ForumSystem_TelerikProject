@@ -18,7 +18,7 @@ namespace WebForum
             // Register AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-            //Test
+            //Login
             builder.Services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.
