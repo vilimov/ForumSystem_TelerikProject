@@ -93,9 +93,11 @@ a.nav {
 }
 
 .passing-text {
-    animation: passToLeft 10s linear infinite;
-    white-space: nowrap;
+    animation: passToLeft 8s linear infinite;
+    white-space: wrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
 }
 
 @keyframes passToLeft {
@@ -107,3 +109,4 @@ a.nav {
         transform: translateX(-100%);
     }
 }
+
