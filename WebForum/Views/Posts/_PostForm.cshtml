@@ -1,30 +1,45 @@
 ﻿@model WebForum.Models.ViewModels.PostViewModel
 
-<form asp-controller="Posts" asp-action="@this.ViewData["Action"]" method="post">
-	<div>
-		<div>
-			@{
-				if (ViewData["ErrorMessage"] != null)
-				{
-					<span style="color: Red">@ViewData["ErrorMessage"]</span>
-				}
-			}
-			<div style="display: @this.ViewData["TitleVisibility"]">
-				<label asp-for="Title"></label><br />
-				<input asp-for="Title" type="text" /><br />
-				<span asp-validation-for="Title" class="form-error"></span>
+<div class="w3-row-padding">
+	<div class="w3-col m12">
+		<div class="w3-card w3-round w3-white">
+			<div class="w3-container w3-padding">
+				<h3 class="w3-opacity">@this.ViewData["Action"] post</h3>
+				<hr class="w3-clear">
+				<form asp-controller="Posts" asp-action="@this.ViewData["Action"]" method="post" >
+					<div>
+						<div>
+							
+							<div style="display: @this.ViewData["TitleVisibility"]">
+								<label asp-for="Title" class="w3-opacity"></label><br />
+								@{
+									if (ViewData["ErrorMessage"] != null)
+									{
+										<span style="color: Red">@ViewData["ErrorMessage"]</span>
+									}
+								}
+								
+								<span asp-validation-for="Title" class="form-error" style="color: Red"></span>
+								<input asp-for="Title" type="text" class="w3-border w3-padding w3-input" /><br />
+							</div>
+						</div>
+
+						<div>
+							<label asp-for="Content" class="w3-opacity"></label><br />
+							<span asp-validation-for="Content" class="form-error" style="color: Red"></span>
+							<textarea asp-for="Content" class="w3-border w3-padding w3-input w3-auto form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+						</div>
+						<div >
+							<input type="submit" value="@this.ViewData["ButtonText"]" class="w3-button w3-theme w3-margin-top w3-round" />
+						</div>
+					</div>
+
+				</form>
+
 			</div>
 		</div>
-
-		<div>
-			<label asp-for="Content"></label><br />
-			<input asp-for="Content" type="text" /><br />
-			<span asp-validation-for="Content" class="form-error"></span>
-		</div>
-
-		<div>
-			<input type="submit" value="@this.ViewData["ButtonText"]" />
-		</div>
 	</div>
+</div>
 
-</form>
+
+

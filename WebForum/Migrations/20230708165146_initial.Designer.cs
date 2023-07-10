@@ -12,7 +12,7 @@ using WebForum.Data;
 namespace WebForum.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20230705070921_initial")]
+    [Migration("20230708165146_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -44,9 +44,6 @@ namespace WebForum.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Likes")
-                        .HasColumnType("int");
-
                     b.Property<int?>("PostId")
                         .HasColumnType("int");
 
@@ -64,8 +61,7 @@ namespace WebForum.Migrations
                             Id = 1,
                             AutorId = 7,
                             Content = "Exitus Acta Probat – The result justifies the deed",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8203),
-                            Likes = 8,
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9227),
                             PostId = 1
                         },
                         new
@@ -73,8 +69,7 @@ namespace WebForum.Migrations
                             Id = 2,
                             AutorId = 8,
                             Content = "Veritas Odit Moras – Truth hates delay",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8207),
-                            Likes = 2,
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9231),
                             PostId = 1
                         },
                         new
@@ -82,8 +77,7 @@ namespace WebForum.Migrations
                             Id = 3,
                             AutorId = 8,
                             Content = "Timendi Causa Est Nescire – The cause of fear is ignorance",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8210),
-                            Likes = 3,
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9233),
                             PostId = 1
                         },
                         new
@@ -91,8 +85,7 @@ namespace WebForum.Migrations
                             Id = 4,
                             AutorId = 8,
                             Content = "Vivamus, Moriendum Est – Let us live, since we must die",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8211),
-                            Likes = 1,
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9234),
                             PostId = 2
                         },
                         new
@@ -100,8 +93,7 @@ namespace WebForum.Migrations
                             Id = 5,
                             AutorId = 8,
                             Content = "Nemo Sine Vitio Est – No one is without fault",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8213),
-                            Likes = 5,
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9236),
                             PostId = 2
                         },
                         new
@@ -109,8 +101,7 @@ namespace WebForum.Migrations
                             Id = 6,
                             AutorId = 8,
                             Content = "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8216),
-                            Likes = 1,
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9238),
                             PostId = 3
                         },
                         new
@@ -118,9 +109,93 @@ namespace WebForum.Migrations
                             Id = 7,
                             AutorId = 1,
                             Content = "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8217),
-                            Likes = 7,
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9241),
                             PostId = 3
+                        });
+                });
+
+            modelBuilder.Entity("WebForum.Models.LikesModels.CommentLike", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CommentLikes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CommentId = 1,
+                            UserId = 8
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CommentId = 1,
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CommentId = 1,
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CommentId = 1,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CommentId = 2,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CommentId = 2,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CommentId = 2,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CommentId = 3,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CommentId = 3,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CommentId = 4,
+                            UserId = 3
                         });
                 });
 
@@ -222,7 +297,7 @@ namespace WebForum.Migrations
                             Id = 1,
                             AutorId = 3,
                             Content = "The beginnings of all things are small.",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8045),
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9128),
                             Title = "Omnium Rerum Principia Parva Sunt"
                         },
                         new
@@ -230,7 +305,7 @@ namespace WebForum.Migrations
                             Id = 2,
                             AutorId = 3,
                             Content = "Always the same.",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8088),
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9176),
                             Title = "Semper Idem"
                         },
                         new
@@ -238,7 +313,7 @@ namespace WebForum.Migrations
                             Id = 3,
                             AutorId = 4,
                             Content = "Art is long, life is short.",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8160),
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9178),
                             Title = "Ars Longa, Vita Brevis"
                         },
                         new
@@ -246,7 +321,7 @@ namespace WebForum.Migrations
                             Id = 4,
                             AutorId = 5,
                             Content = "The play is over, applaud!",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8162),
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9180),
                             Title = "Acta est Fabula, Plaudite!"
                         },
                         new
@@ -254,7 +329,7 @@ namespace WebForum.Migrations
                             Id = 5,
                             AutorId = 1,
                             Content = "The die is cast.",
-                            CreatedAt = new DateTime(2023, 7, 5, 10, 9, 21, 60, DateTimeKind.Local).AddTicks(8165),
+                            CreatedAt = new DateTime(2023, 7, 8, 19, 51, 46, 207, DateTimeKind.Local).AddTicks(9182),
                             Title = "Alea Jacta Est"
                         });
                 });
@@ -412,8 +487,8 @@ namespace WebForum.Migrations
                             IsAdmin = true,
                             IsBlocked = false,
                             LastName = "Caesar",
-                            Password = "MaBx8ElZld0zqhTEFvTaJz62d5sHRWD8etQzCYIbMTo=",
-                            Salt = "+9cP8kFPuFfh12LpDISG6w==",
+                            Password = "DI6jyKLfMmgS1s97luGjAO35NT4EpC4yAQQpcdH0B68=",
+                            Salt = "LO/ZEhLbGy8yEKir3lWA7g==",
                             Username = "JuliusCaesar"
                         },
                         new
@@ -424,8 +499,8 @@ namespace WebForum.Migrations
                             IsAdmin = true,
                             IsBlocked = false,
                             LastName = "Aurelius",
-                            Password = "m/D/XBA+MTSnOARtYBtaJvhamHrNHkwxVM2DBqsA1hs=",
-                            Salt = "+9cP8kFPuFfh12LpDISG6w==",
+                            Password = "VfnYP9fRcyPgoeZaai5qpUvzZYORGYJxFDLfCqgvkiE=",
+                            Salt = "LO/ZEhLbGy8yEKir3lWA7g==",
                             Username = "MarcusAurelius"
                         },
                         new
@@ -436,8 +511,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Cicero",
-                            Password = "XwF0D9KBjUcWAfJcwgjESx2BPGG30mMCm/jGmm5i5jY=",
-                            Salt = "+9cP8kFPuFfh12LpDISG6w==",
+                            Password = "cUcMjo8nARv0Q+L3wRzTxQm4SIQvhszdQKMl0EDDRxc=",
+                            Salt = "LO/ZEhLbGy8yEKir3lWA7g==",
                             Username = "MarcusTulliusCicero"
                         },
                         new
@@ -448,8 +523,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "ofKos",
-                            Password = "E4XEmjaoAlb+aGy22hqEj+N2LtPLxD4Nr7iKQYUAFds=",
-                            Salt = "+9cP8kFPuFfh12LpDISG6w==",
+                            Password = "OvrsxZrsysvbtZv5wrF9VQQ3tMcEdjTJcpQb8vRXkrE=",
+                            Salt = "LO/ZEhLbGy8yEKir3lWA7g==",
                             Username = "Hippocrates"
                         },
                         new
@@ -460,8 +535,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Augustus",
-                            Password = "IjeSoAFmxzz02F/MXKgUXouIWeiOvhdktupzhH7dxms=",
-                            Salt = "+9cP8kFPuFfh12LpDISG6w==",
+                            Password = "lGDBuvWpXYNYhyFZmGMB93whCjltHz959u780I8KR7o=",
+                            Salt = "LO/ZEhLbGy8yEKir3lWA7g==",
                             Username = "CaesarAugustus"
                         },
                         new
@@ -472,8 +547,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = true,
                             LastName = "Brutus",
-                            Password = "kKlTqTa1b5eXRNHg1hjNsCb7qIORJig/nlgd80uaJRk=",
-                            Salt = "+9cP8kFPuFfh12LpDISG6w==",
+                            Password = "MWeO6UaSZIhehwTloO+ps2TZVupWTilCaoBOQ2oeywo=",
+                            Salt = "LO/ZEhLbGy8yEKir3lWA7g==",
                             Username = "MarcusJuniusBrutus"
                         },
                         new
@@ -484,8 +559,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Naso",
-                            Password = "/rSdnmsQ6rj4T/TzvLbRN1JZ9lz845C7b7+SRC5OhtA=",
-                            Salt = "+9cP8kFPuFfh12LpDISG6w==",
+                            Password = "EoGDCXKmeF6sxatqK2wLwVySkK0XTbdHLOLLACUP0II=",
+                            Salt = "LO/ZEhLbGy8yEKir3lWA7g==",
                             Username = "PubliusOvidiusNaso"
                         },
                         new
@@ -496,8 +571,8 @@ namespace WebForum.Migrations
                             IsAdmin = false,
                             IsBlocked = false,
                             LastName = "Seneca",
-                            Password = "e2k79CL+zoyO1u4wWAtfU10eLBIVa3ei5FAi2wj8ivw=",
-                            Salt = "+9cP8kFPuFfh12LpDISG6w==",
+                            Password = "/RYx0TLnyxy+WVUp6O7Jjs5ceMWZk4IE6b1aDlZsVdw=",
+                            Salt = "LO/ZEhLbGy8yEKir3lWA7g==",
                             Username = "LuciusAnnaeusSeneca"
                         });
                 });
@@ -515,6 +590,21 @@ namespace WebForum.Migrations
                     b.Navigation("Autor");
 
                     b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("WebForum.Models.LikesModels.CommentLike", b =>
+                {
+                    b.HasOne("WebForum.Models.Comment", "Comment")
+                        .WithMany("CommentLikes")
+                        .HasForeignKey("CommentId");
+
+                    b.HasOne("WebForum.Models.User", "User")
+                        .WithMany("CommentLikes")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Comment");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WebForum.Models.LikesModels.LikePost", b =>
@@ -562,6 +652,11 @@ namespace WebForum.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("WebForum.Models.Comment", b =>
+                {
+                    b.Navigation("CommentLikes");
+                });
+
             modelBuilder.Entity("WebForum.Models.Post", b =>
                 {
                     b.Navigation("Comments");
@@ -578,6 +673,8 @@ namespace WebForum.Migrations
 
             modelBuilder.Entity("WebForum.Models.User", b =>
                 {
+                    b.Navigation("CommentLikes");
+
                     b.Navigation("Comments");
 
                     b.Navigation("LikePosts");

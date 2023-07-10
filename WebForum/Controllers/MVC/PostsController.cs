@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using System.Linq;
 using WebForum.Helpers.Authentication;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
+using WebForum.Models.LikesModels;
 using WebForum.Models.ViewModels;
 using WebForum.Services;
 
@@ -163,6 +166,43 @@ namespace WebForum.Controllers.MVC
 				this.ViewData["ErrorMessage"] = e.Message;
 				//return View("Error");             this will return the Error page
 				return View("Error");      // this will retur the same object and keep us on the same page
+			}
+		}
+
+		[HttpPost]
+		public IActionResult ToggleLike([FromRoute] int id)
+		{
+			try
+			{
+				// TODO: Change to real user
+				var user = authManager.TryGetUser("PubliusOvidiusNaso:Metamorphoses");
+				var post = postService.GetPostById(id);
+
+				var likePost = post.LikePosts.FirstOrDefault(lp => lp.UserId == user.Id);
+				if (likePost == null)
+				{
+					this.postService.AddLikePost(post, user);
+					//post.Likes++; // Increment like count by 1
+				}
+				else
+				{
+					this.postService.RemoveLikePost(post, user);
+					//post.Likes--; // Decrement like count by 1
+				}
+
+				return Ok(); // Return success response
+			}
+			catch (UnauthorizedOperationException e)
+			{
+				this.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+				this.ViewData["ErrorMessage"] = e.Message;
+				return View("Error");
+			}
+			catch (EntityNotFoundException e)
+			{
+				this.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+				this.ViewData["ErrorMessage"] = e.Message;
+				return View("Error");
 			}
 		}
 

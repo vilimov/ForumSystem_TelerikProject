@@ -25,7 +25,7 @@ namespace WebForum.Data
 		//-----------------------------------------------------------------
 		// JuliusCaesar:Cleopatra - IsAdmin
 		// MarcusAurelius:Antoninus - IsAdmin
-		// MarcusTulliusCicero:MarcusTulliusCicero
+		// MarcusTulliusCicero:Tullius123
 		// Hippocrates:CorpusHippocraticum
 		// CaesarAugustus:GaiusOctavius
 		// MarcusJuniusBrutus:MeToo - IsBlocked

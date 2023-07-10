@@ -16,7 +16,7 @@ namespace WebForum.Helpers.Mappers
 
             CreateMap<Comment, CommentToPostDto>()
                 .ForMember(dto => dto.Content, opt => opt.MapFrom(comment => comment.Content))
-                .ForMember(dto => dto.Likes, opt => opt.MapFrom(comment => comment.Likes))
+                .ForMember(dto => dto.Likes, opt => opt.MapFrom(comment => comment.CommentLikes.Count))
                 .ForMember(dto => dto.CreatedAt, opt => opt.MapFrom(comment => comment.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")))
                 .ForMember(dto => dto.Autor, opt => opt.MapFrom(comment => comment.Autor.Username));
 

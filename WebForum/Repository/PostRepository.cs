@@ -52,11 +52,13 @@ namespace WebForum.Repository
                                      .Include(u => u.Autor)
                                      .Include(c => c.Comments)
                                         .ThenInclude(a=>a.Autor)
-                                     .Include(l => l.LikePosts)
+									 .Include(l => l.LikePosts)
                                         .ThenInclude(likeUser => likeUser.User)
                                     .Include(pt=>pt.PostTags)
                                         .ThenInclude(tag=>tag.Tag)
-                                    .ToList();
+									.Include(cl => cl.Comments)
+                                    .ThenInclude(dd=>dd.CommentLikes)
+									.ToList();
         }
 
         public IList<Post> FilterPostsBy(PostFilterQueryParameters filterQueryParameters)
@@ -98,7 +100,9 @@ namespace WebForum.Repository
                     .ThenInclude(c => c.Autor)
                 .Include(p => p.LikePosts)
                     .ThenInclude(lp => lp.User)
-                .Include(p => p.PostTags) // Include the PostTags
+				.Include(cl => cl.Comments)
+					.ThenInclude(dd => dd.CommentLikes)
+				.Include(p => p.PostTags) // Include the PostTags
                     .ThenInclude(pt => pt.Tag) // Include the related Tag for each PostTag
                 .FirstOrDefault(p => p.Id == id);
 
