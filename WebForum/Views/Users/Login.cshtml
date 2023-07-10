@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+@model WebForum.Models.ViewModels.LoginViewModel
+
+<div class="w3-row-padding">
+    <div class="w3-col m12">
+        <div class="w3-card w3-round w3-white">
+            <div class="w3-container w3-padding">
+                <h3 class="w3-opacity">Login</h3>
+                <hr class="w3-clear">
+                <form asp-action="Login" method="post">
+                    <div>
+                        @if (ViewData.ModelState[""]?.Errors.Count > 0)
+                        {
+                            <div class="w3-panel w3-red">
+                                <p>@ViewData.ModelState[""].Errors.FirstOrDefault()?.ErrorMessage</p>
+                            </div>
+                        }
+                        <label asp-for="Username" class="w3-opacity"></label><br />
+                        <span asp-validation-for="Username" class="form-error" style="color: Red"></span>
+                        <input asp-for="Username" type="text" class="w3-border w3-padding w3-input" /><br />
+                    </div>
+
+                    <div>
+                        <label asp-for="Password" class="w3-opacity"></label><br />
+                        <span asp-validation-for="Password" class="form-error" style="color: Red"></span>
+                        <input asp-for="Password" type="password" class="w3-border w3-padding w3-input" /><br />
+                    </div>
+
+                    <div>
+                        <input type="submit" value="Login" class="w3-button w3-theme w3-margin-top w3-round" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

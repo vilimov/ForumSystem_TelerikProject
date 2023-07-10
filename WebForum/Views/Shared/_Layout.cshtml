@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    var isLogged = Context.Session.Keys.Contains("LoggedUser");
+}
+<!DOCTYPE html>
 <html>
 <head>
     <title>WebForum - @this.ViewData["PageTitle"]</title>
@@ -67,6 +71,15 @@
                 <img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
                
             </a>
+            @if (isLogged)
+            {
+                <a asp-controller="Users" asp-action="Logout" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-red" title="Logout"><i></i>Logout</a>
+            }
+            else
+            {
+                <a asp-controller="Users" asp-action="Register" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-green" title="Register"><i></i>Register</a>
+                <a asp-controller="Users" asp-action="Login" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="Login"><i></i>Login</a>
+            }
         </div>
     </div>
 

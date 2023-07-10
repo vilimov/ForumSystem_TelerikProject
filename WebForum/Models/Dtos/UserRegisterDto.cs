@@ -5,12 +5,12 @@ namespace WebForum.Models.Dtos
     public class UserRegisterDto
     {
         [Required]
-        [MinLength(4, ErrorMessage = "The {0} field must be at least {1} characters.")]
+        [MinLength(2, ErrorMessage = "The {0} field must be at least {1} characters.")]
         [MaxLength(32, ErrorMessage = "The {0} field must be less than {1} characters.")]
         public string FirstName { get; set; }
         
         [Required]
-        [MinLength(4, ErrorMessage = "The {0} field must be at least {1} characters.")]
+        [MinLength(2, ErrorMessage = "The {0} field must be at least {1} characters.")]
         [MaxLength(32, ErrorMessage = "The {0} field must be less than {1} characters.")]
         public string LastName { get; set; }
 
