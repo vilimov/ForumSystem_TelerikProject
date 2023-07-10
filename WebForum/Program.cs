@@ -18,6 +18,17 @@ namespace WebForum
             // Register AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+            //Test
+            builder.Services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+
+            });
+            builder.Services.AddHttpContextAccessor();
+
             // Add services to the container.
 
             builder.Services.AddControllersWithViews();
@@ -25,8 +36,8 @@ namespace WebForum
             {
 
 
-                //string connectionString = @"Server=FREAKY\MSSQLSERVER2022;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
-                string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
+                string connectionString = @"Server=FREAKY\MSSQLSERVER2022;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
+                //string connectionString = @"Server=MILA-V15G2\SQLEXPRESS;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
                 //string connectionString = @"Server=VILIMOV-PC;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
                 //string connectionString = @"Server=localhost;Database=ForumDataBase;Trusted_Connection=True;Encrypt=False;";
 
@@ -66,6 +77,8 @@ namespace WebForum
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseSession();
 
             app.UseAuthorization();
 
