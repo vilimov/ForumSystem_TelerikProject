@@ -6,10 +6,10 @@ namespace WebForum.Models.Dtos
     {
         public int Id { get; set; }
 
-        [MinLength(4), MaxLength(32)]
+        [MinLength(2), MaxLength(32)]
         public string FirstName { get; set; }
 
-        [MinLength(4), MaxLength(32)]
+        [MinLength(2), MaxLength(32)]
         public string LastName { get; set; }
 
         [Required]
