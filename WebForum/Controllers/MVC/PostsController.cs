@@ -28,14 +28,21 @@ namespace WebForum.Controllers.MVC
         [HttpGet]
         public IActionResult Index()
         {
+            if (this.HttpContext.Session.GetString("LoggedUser") == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             List<Post> posts = this.postService.GetAllPosts().ToList();
-
             return View(posts);
         }
 
 		[HttpGet]
 		public IActionResult Details(int id) 
         {
+            if (this.HttpContext.Session.GetString("LoggedUser") == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             try
             {
 				var post = postService.GetPostById(id);
@@ -55,6 +62,10 @@ namespace WebForum.Controllers.MVC
 		[HttpGet]
         public IActionResult Create() 
         {
+			if (this.HttpContext.Session.GetString("LoggedUser") == null)
+			{
+				return RedirectToAction("Login", "Users");
+			}
             var postViewModel = new PostViewModel();
             return View(postViewModel);
         }
@@ -90,6 +101,10 @@ namespace WebForum.Controllers.MVC
         [HttpGet]
         public IActionResult Edit([FromRoute]int id)
         {
+            if (this.HttpContext.Session.GetString("LoggedUser") == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             try
             {
 				var post = postService.GetPostById(id);
@@ -137,7 +152,11 @@ namespace WebForum.Controllers.MVC
         [HttpGet]
         public IActionResult Delete([FromRoute]int id)
         {
-			try
+            if (this.HttpContext.Session.GetString("LoggedUser") == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
+            try
 			{
 				var post = postService.GetPostById(id);
 				var newPost = mapper.Map<PostViewModel>(post);

@@ -1,6 +1,10 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebForum.Helpers.Authentication
+
 @{
     var isLogged = Context.Session.Keys.Contains("LoggedUser");
+    string username = Context.Session.GetString("LoggedUser");
+    bool isAdmin = AuthManager.TryGetUser(username)?.IsAdmin ?? false;
 }
 <!DOCTYPE html>
 <html>
@@ -53,11 +57,13 @@
         <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
             <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
             <a asp-controller="Home" asp-action="Index" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-university"></i> Home</a>
-            <a asp-controller="Posts" asp-action="Create" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Post"><i class="fa fa-pencil"></i></a>
-            <a asp-controller="Posts" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Posts"><i class="fa fa-newspaper-o" aria-hidden="true"></i></a>
-            <a asp-controller="Home" asp-action="About" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Abaut"><i class="fa fa-globe"></i></a>
-            <a asp-controller="Tag" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Tags"><i class="fa fa-tags" aria-hidden="true"></i></a>
-            
+            @if (isLogged)
+            {
+                <a asp-controller="Posts" asp-action="Create" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Post"><i class="fa fa-pencil"></i></a>
+                <a asp-controller="Posts" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Posts"><i class="fa fa-newspaper-o" aria-hidden="true"></i></a>
+                <a asp-controller="Home" asp-action="About" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Abaut"><i class="fa fa-globe"></i></a>
+                <a asp-controller="Tag" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Tags"><i class="fa fa-tags" aria-hidden="true"></i></a>
+            }
 
             <a href="/swagger" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Swagger"><i class="fa fa-home w3-margin-right"></i></a>
             <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>

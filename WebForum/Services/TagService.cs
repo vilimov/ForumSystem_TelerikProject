@@ -129,7 +129,7 @@ namespace WebForum.Services
             User user = userRepository.GetUserById(userId);
             Post post = postRepository.GetPostById(postId);
 
-            if (post.AutorId != user.Id)
+            if (post.AutorId != user.Id && !user.IsAdmin)
             {
                 throw new UnauthorizedOperationException("Users can only remove tags from their own posts.");
             }

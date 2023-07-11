@@ -71,7 +71,5 @@ namespace WebForum.Helpers.Authentication
                 return Convert.ToBase64String(hashBytes);
             }
         }
-
-
     }
 }

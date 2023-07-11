@@ -162,9 +162,6 @@ namespace WebForum.Controllers.MVC
             }
         }
 
-
-
-
         [HttpPost]
         public IActionResult AddTagToPost(int postId, List<string> tagIds)
         {
@@ -182,6 +179,42 @@ namespace WebForum.Controllers.MVC
             return RedirectToAction("Edit", "Posts", new { id = postId });
         }
 
+
+        public IActionResult ListTags(int postId)
+        {
+            try
+            {
+				var postTags = postService.GetPostById(postId).PostTags.ToList();
+                var tagsOfThePost = postTags.Select(t => t.Tag).ToList();
+                var viewModel = new SelectTagsViewModel { PostId = postId, Tags = tagsOfThePost };
+                return View(viewModel);
+            }
+            catch (DuplicateEntityException e)
+            {
+                this.HttpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+                this.ViewData["ErrorMessage"] = e.Message;
+                var viewModel = new SelectTagsViewModel { PostId = postId, Tags = new List<Tag>() }; // Empty tag list
+
+                return View(viewModel);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult RemoveTagFromPost(int postId, List<string> tagIds)
+        {
+            //TODO change to real user
+            var user = authManager.TryGetUser("JuliusCaesar:Cleopatra");
+            // Perform logic to associate the tags with the post in your data layer
+            foreach (var tagId in tagIds)
+            {
+                int tagTempId = int.Parse(tagId);
+
+                var tagText = tagService.GetTagById(tagTempId).Name;
+                this.tagService.RemoveTagFromPost(postId, tagText, user.Id);
+            }
+            // Redirect back to the Edit action of the Posts controller
+            return RedirectToAction("Edit", "Posts", new { id = postId });
+        }
 
     }
 }

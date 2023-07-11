@@ -1,0 +1,38 @@
+﻿@model WebForum.Models.ViewModels.SelectTagsViewModel
+
+@{
+    this.ViewData["ButtonText"] = "Save";
+}
+
+<div class="w3-row-padding">
+    <div class="w3-col m12">
+        <div class="w3-card w3-round w3-white">
+            <div class="w3-container w3-padding">
+                <h3>Select Tags to Remove</h3>
+                <hr class="w3-clear">
+                <form asp-controller="Tag" asp-action="RemoveTagFromPost" method="post">
+                    @{
+                        if (Model.Tags.Count < 1)
+                        {
+                            <p>No tags in the list</p>
+                            this.ViewData["ButtonText"] = "Back";
+                        }
+                        foreach (var tag in Model.Tags)
+                        {
+                            <div>
+
+                                <input type="checkbox" name="tagIds" value="@tag.Id" />
+                                <label>@tag.Name</label>
+                            </div>
+                        }
+                    }
+                    <input type="hidden" name="postId" value="@Model.PostId" />
+                    <input type="submit" value=@this.ViewData["ButtonText"] class="w3-button w3-theme w3-margin-top w3-round" />
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -34,6 +34,9 @@
 					<a asp-controller="Tag" asp-action="SelectTags" asp-route-postId=@ViewContext.RouteData.Values["id"] class="w3-button w3-theme w3-margin-top w3-round">
 						<i class="fa fa-tags" aria-hidden="true">&nbsp;Add Tags</i>
 					</a>
+					<a asp-controller="Tag" asp-action="ListTags" asp-route-postId=@ViewContext.RouteData.Values["id"] class="w3-button w3-theme w3-margin-top w3-round">
+						<i class="fa fa-trash" aria-hidden="true">&nbsp;Remove Tags</i>
+					</a>
 
 					</div>
 
