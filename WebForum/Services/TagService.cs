@@ -41,7 +41,7 @@ namespace WebForum.Services
             {
                 throw new EntityNotFoundException("Post or User not found");
             }
-            if (post.Autor.Id != userId)
+            if (post.Autor.Id != userId && !user.IsAdmin)
             {
                 throw new UnauthorizedOperationException("Only the author of the post can add tags");
             }

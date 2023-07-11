@@ -16,11 +16,13 @@ namespace WebForum.Controllers.MVC
         private readonly IPostServices postService;
         private readonly AuthManager authManager;
 		private readonly IMapper mapper;
-		public PostsController(IPostServices postService,AuthManager authManager, IMapper mapper)
+		private readonly ITagService tagService;
+		public PostsController(IPostServices postService,AuthManager authManager, IMapper mapper, ITagService tagService)
         {
             this.postService = postService;
             this.authManager = authManager;
             this.mapper = mapper;
+			this.tagService = tagService;
         }
 
         [HttpGet]
@@ -116,12 +118,14 @@ namespace WebForum.Controllers.MVC
 				var user = authManager.TryGetUser("JuliusCaesar:Cleopatra");
 				var newPost = mapper.Map<Post>(postViewModel);
 				var createdPost = postService.UpdatePost(id, newPost, user);
+				var alltags = tagService.GetAllTags();
+                this.ViewData["postId"] = id;
 
 				this.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
 				//return RedirectToAction("Index", "Posts");
 				return RedirectToAction("Details", "Posts", new { id = createdPost.Id });
 			}
-			catch (DuplicateEntityException e)
+			catch (InvalidOperationException e)
 			{
 				this.HttpContext.Response.StatusCode = StatusCodes.Status409Conflict;
 				this.ViewData["ErrorMessage"] = e.Message;
@@ -205,6 +209,5 @@ namespace WebForum.Controllers.MVC
 				return View("Error");
 			}
 		}
-
 	}
 }
