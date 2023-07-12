@@ -12,13 +12,11 @@ namespace WebForum.Controllers.MVC
 	{
 		private readonly IUserServices userService;
 		private readonly AuthManager authManager;
-		private readonly IHttpContextAccessor httpContextAccessor;
 
-		public UsersController(IUserServices userService, AuthManager authManager, IHttpContextAccessor httpContextAccessor)
+		public UsersController(IUserServices userService, AuthManager authManager)
 		{
 			this.userService = userService;
 			this.authManager = authManager;
-			this.httpContextAccessor = httpContextAccessor;
 		}
 
 		[HttpGet]
@@ -52,6 +50,7 @@ namespace WebForum.Controllers.MVC
 				};
 
 				userService.Register(user);
+				Console.WriteLine($"Model pw: {model.Password}");
 
 				return RedirectToAction("Login");
 			}
@@ -79,6 +78,8 @@ namespace WebForum.Controllers.MVC
 			try
 			{
 				var user = authManager.TryGetUser($"{model.Username}:{model.Password}");
+				Console.WriteLine($"Model username: {model.Username}");
+                Console.WriteLine($"Model username: {model.Password}");
                 this.HttpContext.Session.SetString("LoggedUser", user.Username);
                 this.HttpContext.Session.SetString("IsAdmin", user.IsAdmin ? "True" : "False");
 
@@ -109,116 +110,6 @@ namespace WebForum.Controllers.MVC
 		{
 			this.HttpContext.Session.Clear();
 			return RedirectToAction("Login", "Users");
-		}
-
-        [HttpGet]
-        public IActionResult EditProfile()
-        {
-            try
-            {
-                string username = HttpContext.Session.GetString("LoggedUser");
-                User user = userService.GetByUsername(username);
-
-                if (user == null)
-                {
-                    throw new EntityNotFoundException($"User with username {username} not found");
-                }
-
-                var model = new EditProfileViewModel
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName
-                };
-
-                return View(model);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return RedirectToAction("Error", new { message = ex.Message });
-            }
-        }
-
-		[HttpPost]
-		public IActionResult EditProfile(EditProfileViewModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				//Console.WriteLine("ModelState Invalid");
-				return View(model);
-			}
-
-			var user = userService.GetByUsername(this.HttpContext.Session.GetString("LoggedUser"));
-			//Console.WriteLine("UserName: {0}", this.HttpContext.Session.GetString("LoggedUser"));
-			if (user == null)
-			{
-				return NotFound($"Unable to locate user with username {User.Identity.Name}");
-			}
-
-			if (!string.IsNullOrWhiteSpace(model.Password))
-			{
-				try
-				{
-					userService.UpdatePassword(user.Id, model.Password);
-					//Console.WriteLine("Updated password.");
-					//Console.WriteLine("Model Value: {0}", model.Password);
-				}
-				catch (EntityNotFoundException ex)
-				{
-					ModelState.AddModelError("", "An error occurred while updating the password");
-					return View(model);
-				}
-			}
-
-			if (!string.IsNullOrWhiteSpace(model.FirstName))
-			{
-				user.FirstName = model.FirstName;
-			}
-
-			if (!string.IsNullOrWhiteSpace(model.LastName))
-			{
-				user.LastName = model.LastName;
-			}
-
-			try
-			{
-				userService.UpdateProfile(user);
-			}
-			catch (EntityNotFoundException ex)
-			{
-				ModelState.AddModelError("", "An error occurred while updating the profile");
-				return View(model);
-			}
-
-			return RedirectToAction("Profile", new { username = user.Username });
-		}
-		[HttpGet]
-		public IActionResult Profile()
-		{
-			try
-			{
-				var user = userService.GetByUsername(this.HttpContext.Session.GetString("LoggedUser"));
-				if (user == null)
-				{
-
-					return RedirectToAction("Login");
-				}
-
-				var userProfileViewModel = new ProfileViewModel
-				{
-
-					Username = user.Username,
-					Email = user.Email,
-					FirstName = user.FirstName,
-					LastName = user.LastName
-				};
-
-				return View(userProfileViewModel);
-
-			}
-			catch (EntityNotFoundException ex)
-			{
-				return View("Error");
-			}
 		}
 	}
 }

@@ -81,7 +81,7 @@
             </a>-->
             @if (isLogged && isAdmin)
             {
-                <a asp-controller="Users" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
+                <a asp-controller="Profiles" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
                     <img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
                 </a>
                 <a asp-controller="Admin" asp-action="Dashboard" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-blue" title="Admin Dashboard"><i></i>Admin Dashboard</a>
@@ -89,7 +89,7 @@
             }
             else if (isLogged)
             {
-                <a asp-controller="Users" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
+                <a asp-controller="Profiles" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
                     <img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
                 </a>
                 <a asp-controller="Users" asp-action="Logout" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-red" title="Logout"><i></i>Logout</a>
