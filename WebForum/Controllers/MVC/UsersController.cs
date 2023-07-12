@@ -79,8 +79,9 @@ namespace WebForum.Controllers.MVC
 			try
 			{
 				var user = authManager.TryGetUser($"{model.Username}:{model.Password}");
-                this.HttpContext.Session.SetString("LoggedUser", user.Username);
-                this.HttpContext.Session.SetString("IsAdmin", user.IsAdmin ? "True" : "False");
+				this.HttpContext.Session.SetString("LoggedUser", user.Username);
+                this.HttpContext.Session.SetString("IsAdmin", user.IsAdmin.ToString());
+                this.HttpContext.Session.SetString("UserId", user.Id.ToString());
 
                 return RedirectToAction("Index", "Home");
 			}
