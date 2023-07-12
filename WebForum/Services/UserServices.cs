@@ -86,31 +86,54 @@ namespace WebForum.Services
             return user;
         }
 
-        public User UpdateProfile(User userUpdate)
-        {
-            var existingUser = userRepository.GetUserById(userUpdate.Id);
+		public User UpdateProfile(User userUpdate)
+		{
+			var existingUser = userRepository.GetUserById(userUpdate.Id);
 
-            if (existingUser == null)
-            {
-                throw new EntityNotFoundException($"User with id {userUpdate.Id} does not exist.");
-            }
+			if (existingUser == null)
+			{
+				throw new EntityNotFoundException($"User with id {userUpdate.Id} does not exist.");
+			}
 
-            if (userUpdate.Password != null)
-            {
-                // Generate new salt
-                string newSalt = AuthManager.GenerateSalt();
+			// Check if the first name is updated
+			if (!string.IsNullOrEmpty(userUpdate.FirstName))
+			{
+				existingUser.FirstName = userUpdate.FirstName;
+			}
 
-                // Hash the new password with the new salt
-                string newHashedPassword = AuthManager.HashPassword(userUpdate.Password, newSalt);
+			// Check if the last name is updated
+			if (!string.IsNullOrEmpty(userUpdate.LastName))
+			{
+				existingUser.LastName = userUpdate.LastName;
+			}
 
-                // Update the user's salt and hashed password
-                existingUser.Salt = newSalt;
-                existingUser.Password = newHashedPassword;
-            }
+			return userRepository.UpdateUser(existingUser);
+		}
+		public void UpdatePassword(int userId, string plainTextPassword)
+		{
+			var existingUser = userRepository.GetUserById(userId);
 
-            return userRepository.UpdateUser(userUpdate);
-        }
-        public void DeleteUser(int id)
+			if (existingUser == null)
+			{
+				throw new EntityNotFoundException($"User with id {userId} does not exist.");
+			}
+
+			if (plainTextPassword.Length >= 8 && plainTextPassword.Length <= 20)
+			{
+				// Generate new salt
+				string newSalt = AuthManager.GenerateSalt();
+
+				// Hash the new password with the new salt
+				string newHashedPassword = AuthManager.HashPassword(plainTextPassword, newSalt);
+
+				// Update the user's salt and hashed password
+				existingUser.Salt = newSalt;
+				existingUser.Password = newHashedPassword;
+
+				userRepository.UpdateUser(existingUser);
+			}
+		}
+		public void DeleteUser(int id)
         {
             var user = GetUserById(id);
             if (user == null)
