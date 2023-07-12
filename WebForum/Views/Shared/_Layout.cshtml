@@ -14,9 +14,6 @@
 	}
 }
 
-    var isLogged = Context.Session.Keys.Contains("LoggedUser");
-    var isAdmin = Context.Session.GetString("IsAdmin") == "True";
-}
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,10 +77,7 @@
 				<a asp-controller="Tag" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Tags"><i class="fa fa-tags" aria-hidden="true"></i></a>
 				<a href="/swagger" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Swagger"><i class="fa fa-file-o "></i></a>
 			}
-
-            <a href="/swagger" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Swagger"><i class="fa fa-home w3-margin-right"></i></a>
-            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
-            
+   
             <div class="w3-dropdown-hover w3-hide-small">
                 <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>
                 <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
