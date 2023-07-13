@@ -1,0 +1,114 @@
+﻿@using WebForum.Models;
+@model List<Post>;
+@{
+	this.ViewData["PageTitle"] = "Posts";
+	this.ViewData["CreatedAtText"] = "Cteared at:";
+
+	var isLogged = Context.Session.Keys.Contains("LoggedUser");
+	string username;
+	bool isAdmin = false;
+	int userId = 0;
+	if (isLogged)
+	{
+		username = Context.Session.GetString("LoggedUser");
+		isAdmin = Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
+		userId = int.Parse(Context.Session.GetString("UserId"));
+	}
+}
+
+@{
+	if (this.Model.Count < 1)
+	{
+		<div class="w3-row-padding">
+			<div class="w3-col m12">
+				<div class="w3-card w3-round w3-white">
+
+					<div class="w3-container w3-padding">
+
+
+						<h4>No matches found</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	}
+	foreach (var post in this.Model)
+	{
+		<div class="w3-row-padding">
+			<div class="w3-col m12">
+				<div class="w3-card w3-round w3-white">
+
+					<div class="w3-container w3-padding">
+						<img src="~/images/avatars/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+						<span class="w3-right w3-opacity">@this.ViewData["CreatedAtText"] <br>@post.CreatedAt</span>
+						<h4>@post.Autor.Username</h4>
+
+						<br>
+						<hr class="w3-clear">
+						<div class="w3-container w3-light-grey w3-card">
+							<h5>@post.Title</h5>
+							@{
+								if (isAdmin || post.Autor.Id == userId)
+								{
+									<a asp-controller="Posts" asp-action="Edit" , asp-route-id="@post.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray">
+										<i class="fa fa-pencil">&nbsp;Edit</i>
+									</a>
+									<a asp-controller="Posts" asp-action="Delete" , asp-route-id="@post.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray">
+										<i class="fa fa-trash">&nbsp;Delete</i>
+									</a>
+								}
+							}
+							<a asp-controller="Posts" asp-action="Details" , asp-route-id="@post.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray">
+								<i class="fa fa-info">&nbsp;Details</i>
+							</a>
+						</div>
+
+						<div class="w3-container w3-medium w3-card w3-round" style="overflow-wrap: break-word;">
+							<p>@post.Content</p>
+						</div>
+
+						@{
+							if (post.Comments.Count < 1)
+							{
+								<p class="w3-tag w3-small w3-theme-l5">No Comments</p>
+							}
+							else
+							{
+								<p class="w3-tag w3-small w3-theme-l5">Comments:</p>
+							}
+							foreach (var comment in post.Comments)
+							{
+								<div class="w3-panel w3-leftbar w3-sand w3-serif w3-medium w3-margin-left w3-margin-right  w3-card w3-round" style="overflow-wrap: break-word;">
+									@*<div class="w3-panel w3-leftbar w3-sand w3-serif w3-medium w3-margin-left w3-margin-right" style="overflow-wrap: break-word;">*@
+									<div class="w3-container w3-card">
+										@comment.Autor.Username
+										<span class="w3-right w3-opacity">@comment.CreatedAt</span><br>
+									</div>
+									<p>@comment.Content</p>
+									<a asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Edit</i></a>
+									<a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>
+									@*<a asp-controller="Comments" asp-action="Details" , asp-route-id="@post.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-info">&nbsp;Details</i></a>*@
+									<span class="w3-right w3-opacity"><a class="w3-tag w3-small w3-yellow w3-hover-blue-gray w3-card w3-round"><i class="fa fa-thumbs-up"></i>&nbsp;@comment.Likes</a></span>
+
+								</div>
+							}
+						}
+
+						<div class="w3-row-padding" style="margin:0 -16px">
+							<div class="w3-half">
+								@*<a asp-controller="Posts" asp-action="ToggleLike" class="w3-button w3-theme-d1 w3-margin-bottom w3-round"><i class="fa fa-thumbs-up"></i>&nbsp;@post.Likes</a>*@
+								<button class="like-button w3-button w3-theme-d1 w3-margin-bottom w3-round" data-post-id="@post.Id" data-likes="@post.Likes">
+									<i class="fa fa-thumbs-up"></i>&nbsp;<span class="like-count">@post.Likes</span>
+								</button>
+
+								<a asp-controller="Comments" asp-action="Create" asp-route-id="@post.Id" class="w3-button w3-theme-d2 w3-margin-bottom w3-round" title="Create Comment"><i class="fa fa-comment"></i>&nbsp;Comment</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br />
+	}
+}

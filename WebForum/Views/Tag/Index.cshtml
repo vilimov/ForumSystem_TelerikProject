@@ -1,5 +1,19 @@
 ﻿@using WebForum.Models;
 @model List<Tag>;
+@{
+	this.ViewData["ButtonText"] = "Save";
+
+	var isLogged = Context.Session.Keys.Contains("LoggedUser");
+	string username;
+	bool isAdmin = false;
+	int userId = 0;
+	if (isLogged)
+	{
+		username = Context.Session.GetString("LoggedUser");
+		isAdmin = Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
+		userId = int.Parse(Context.Session.GetString("UserId"));
+	}
+}
 
 <div class="w3-row-padding">
 	<div class="w3-col m12">
@@ -13,8 +27,11 @@
 						foreach (var tag in this.Model)
 						{
 							<div><span class="w3-tag w3-small w3-theme-d5">@tag.Name</span></div>
-							<a asp-controller="Tag" asp-action="Edit" , asp-route-id="@tag.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Edit</i></a>
-							<a asp-controller="Tag" asp-action="Delete" , asp-route-id="@tag.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>
+								if (isAdmin)
+								{
+									<a asp-controller="Tag" asp-action="Edit" , asp-route-id="@tag.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Edit</i></a>
+									<a asp-controller="Tag" asp-action="Delete" , asp-route-id="@tag.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>
+								}
 						}
 					}
 					</p>

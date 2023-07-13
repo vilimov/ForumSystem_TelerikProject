@@ -1,23 +1,27 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using WebForum.Helpers.Authentication
+@using System.Security.Claims
 
 @{
 	var isLogged = Context.Session.Keys.Contains("LoggedUser");
-	string username;
+	string username = "";
 	bool isAdmin = false;
-	int userId;
+	int userId = 0;
 	if (isLogged)
 	{
 		username = Context.Session.GetString("LoggedUser");
 		isAdmin = Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
 		userId = int.Parse(Context.Session.GetString("UserId"));
 	}
+	
+	this.ViewData["PageTitle"] = "";
+	this.ViewData["Avatar"] = "~/images/avatars/avatar9.png";
 }
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>WebForum - @this.ViewData["PageTitle"]</title>
+	<title>WebForum @this.ViewData["PageTitle"]</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -118,7 +122,7 @@
             @if (isLogged && isAdmin)
             {
                 <a asp-controller="Profiles" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
-                    <img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+					<img src= "~/images/avatars/avatar9.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
                 </a>
 				<a asp-controller="Admins" asp-action="AllUsers" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-blue" title="Admin Dashboard"><i></i>Admin Dashboard</a>
                 <a asp-controller="Users" asp-action="Logout" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-red" title="Logout"><i></i>Logout</a>
@@ -126,7 +130,7 @@
             else if (isLogged)
             {
                 <a asp-controller="Profiles" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
-                    <img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+					<img src="~/images/avatars/avatar9.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
                 </a>
                 <a asp-controller="Users" asp-action="Logout" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-red" title="Logout"><i></i>Logout</a>
             }
@@ -164,12 +168,12 @@
 					<div class="w3-container">
 						@if (isLogged)
 						{
-							<h4 class="w3-center">My Profile</h4>
+							<h4 class="w3-center">Hello @username</h4>
 							<p class="w3-center"><img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
 							<hr>
-							<p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
-							<p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-							<p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+							<p><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>@username</p>
+							<p><i class="fa fa-id-card fa-fw w3-margin-right w3-text-theme"></i> @username</p>
+							<p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i>@username</p>
 						}
 						else
 						{
@@ -190,37 +194,17 @@
 				<!-- Accordion -->
 				<div class="w3-card w3-round">
 					<div class="w3-white">
-						<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Groups</button>
+						<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> Search by post title</button>
 						<div id="Demo1" class="w3-hide w3-container">
-							<p>Some text..</p>
+							<partial name="_Search" />
 						</div>
-						<button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events</button>
+						<button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> Search by tag</button>
 						<div id="Demo2" class="w3-hide w3-container">
-							<p>Some other text..</p>
+							<partial name="_Search" />
 						</div>
-						<button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
+						<button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> Search by Username</button>
 						<div id="Demo3" class="w3-hide w3-container">
-							<div class="w3-row-padding">
-								<br>
-								<div class="w3-half">
-									<img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
-								</div>
-								<div class="w3-half">
-									<img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-								</div>
-								<div class="w3-half">
-									<img src="/w3images/mountains.jpg" style="width:100%" class="w3-margin-bottom">
-								</div>
-								<div class="w3-half">
-									<img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
-								</div>
-								<div class="w3-half">
-									<img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-								</div>
-								<div class="w3-half">
-									<img src="/w3images/snow.jpg" style="width:100%" class="w3-margin-bottom">
-								</div>
-							</div>
+							<partial name="_Search" />
 						</div>
 					</div>
 				</div>
@@ -253,8 +237,8 @@
 					<span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
 						<i class="fa fa-remove"></i>
 					</span>
-					<p><strong>Hey!</strong></p>
-					<p>People are looking at your profile. Find out who.</p>
+					<p class="h4shadow"><strong>Hello!</strong></p>
+					<p class="h4shadow">Check the new posts and activities in the forum and the advertising secion.</p>
 				</div>
 
 				<!-- End Left Column -->
@@ -284,23 +268,6 @@
 				</div>
 				<br>
 
-				<div class="w3-card w3-round w3-white w3-center">
-					<div class="w3-container">
-						<p>Friend Request</p>
-						<img src="/w3images/avatar6.png" alt="Avatar" style="width:50%"><br>
-						<span>Jane Doe</span>
-						<div class="w3-row w3-opacity">
-							<div class="w3-half">
-								<button class="w3-button w3-block w3-green w3-section" title="Accept"><i class="fa fa-check"></i></button>
-							</div>
-							<div class="w3-half">
-								<button class="w3-button w3-block w3-red w3-section" title="Decline"><i class="fa fa-remove"></i></button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<br>
-
 				<!-- Adds -->
 				<div class="w3-card w3-round w3-green w3-padding-3 w3-center" style="overflow:hidden">
 					<p id="adTitle" class="passing-text">SALE! Homes in Gallia for SALE!</p>
@@ -309,11 +276,6 @@
 					<a href="https://example.com" class="hyperlink" style="color:darkblue">"GALLIA PROPERTIES"</a>
 				</div>
 				<br>
-
-				<div class="w3-card w3-round w3-white w3-padding-32 w3-center">
-					<p><i class="fa fa-bug w3-xxlarge"></i></p>
-				</div>
-
 				<!-- End Right Column -->
 			</div>
 

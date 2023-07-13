@@ -6,6 +6,7 @@ using WebForum.Helpers.Authentication;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
 using WebForum.Models.LikesModels;
+using WebForum.Models.QueryParameters;
 using WebForum.Models.ViewModels;
 using WebForum.Services;
 
@@ -31,7 +32,7 @@ namespace WebForum.Controllers.MVC
         public IActionResult Index()
         {
 			if (!IsUserLogged())
-			{
+ 			{
 				return RedirectToAction("Login", "Users");
 			}
 			List<Post> posts = this.postService.GetAllPosts().ToList();
@@ -39,6 +40,20 @@ namespace WebForum.Controllers.MVC
 
 			return View(posts);
         }
+
+		[HttpGet]
+		public IActionResult Searches(PostFilterQueryParameters searchFor)
+		{
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
+
+			List<Post> posts = this.postService.FilterPostsBy(searchFor).ToList();
+			posts.Reverse();
+			return View(posts);
+			//return RedirectToAction("Index", "Posts");
+		}
 
 		[HttpGet]
 		public IActionResult Details(int id) 
