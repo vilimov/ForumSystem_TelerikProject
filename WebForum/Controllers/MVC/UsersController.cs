@@ -76,8 +76,7 @@ namespace WebForum.Controllers.MVC
 				this.HttpContext.Session.SetString("LoggedUser", user.Username);
                 this.HttpContext.Session.SetString("IsAdmin", user.IsAdmin.ToString());
                 this.HttpContext.Session.SetString("UserId", user.Id.ToString());
-
-                return RedirectToAction("Index", "Home");
+				return RedirectToAction("Index", "Home");
 			}
 			catch (InvalidPasswordException ex)
 			{
