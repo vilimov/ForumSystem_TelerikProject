@@ -61,6 +61,27 @@
 		});
 	</script>
 
+	<script>
+		$(document).ready(function () {
+			$('.comment-like-button').on('click', function () {
+				var button = $(this);
+				var commentId = button.data('comment-id');
+
+				$.ajax({
+					type: 'POST',
+					url: '/Comments/ToggleLike/' + commentId,
+					success: function () {
+						// Reload the page to reflect the updated like count
+						location.reload();
+					},
+					error: function (xhr, status, error) {
+						console.error(xhr.responseText);
+						// Handle the error or display an error message
+					}
+				});
+			});
+		});
+	</script>
 
 
 

@@ -31,6 +31,7 @@ namespace WebForum.Data
 		// MarcusJuniusBrutus:MeToo - IsBlocked
 		// PubliusOvidiusNaso:Metamorphoses
 		// LuciusAnnaeusSeneca:EpistulaeMorales
+		// Admin:123 - IsAdmin
 		//-----------------------------------------------------------------
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,8 +47,9 @@ namespace WebForum.Data
                 new User { Id = 5, FirstName = "Caesar", LastName = "Augustus", Username = "CaesarAugustus", Email = "CA@roman.im", Salt = salt, Password = AuthManager.HashPassword("GaiusOctavius", salt), IsAdmin = false },
                 new User { Id = 6, FirstName = "MarcusJunius", LastName = "Brutus", Username = "MarcusJuniusBrutus", Email = "BrutusIAm@roman.im", Salt = salt, Password = AuthManager.HashPassword("MeToo", salt), IsAdmin = false, IsBlocked = true },
                 new User { Id = 7, FirstName = "PubliusOvidius", LastName = "Naso", Username = "PubliusOvidiusNaso", Email = "Ovid@roman.im", Salt = salt, Password = AuthManager.HashPassword("Metamorphoses", salt), IsAdmin = false },
-                new User { Id = 8, FirstName = "LuciusAnnaeus", LastName = "Seneca", Username = "LuciusAnnaeusSeneca", Email = "Seneca@roman.im", Salt = salt, Password = AuthManager.HashPassword("EpistulaeMorales", salt), IsAdmin = false }
-            };
+                new User { Id = 8, FirstName = "LuciusAnnaeus", LastName = "Seneca", Username = "LuciusAnnaeusSeneca", Email = "Seneca@roman.im", Salt = salt, Password = AuthManager.HashPassword("EpistulaeMorales", salt), IsAdmin = false },
+				new User { Id = 9, FirstName = "Ad", LastName = "Min", Username = "Admin", Email = "admin@adm.in", Salt = salt, Password = AuthManager.HashPassword("123", salt), IsAdmin = true }
+			};
             modelBuilder.Entity<User>().HasData(users);
 
 

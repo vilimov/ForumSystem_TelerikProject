@@ -6,6 +6,8 @@ using WebForum.Helpers.Mappers;
 using WebForum.Models;
 using WebForum.Models.Dtos;
 using WebForum.Models.ViewModels;
+using WebForum.Controllers.MVC;
+
 using WebForum.Services;
 
 namespace WebForum.Controllers.MVC
@@ -17,14 +19,16 @@ namespace WebForum.Controllers.MVC
         private readonly AuthManager authManager;
         private readonly CommentMapper commentMapper;
 		private readonly IMapper mapper;
+		private readonly IUserServices userService;
 
-		public CommentsController(ICommentsServices commentServices, IPostServices postServices, AuthManager authManager, CommentMapper commentMapper, IMapper mapper)
+		public CommentsController(ICommentsServices commentServices, IPostServices postServices, AuthManager authManager, CommentMapper commentMapper, IMapper mapper, IUserServices userService)
         {
             this.commentService = commentServices;
             this.postService = postServices;
             this.authManager = authManager;
             this.commentMapper = commentMapper;
 			this.mapper = mapper;
+			this.userService = userService;
         }
 
         [HttpGet]
@@ -177,6 +181,66 @@ namespace WebForum.Controllers.MVC
 				//return View("Error");             this will return the Error page
 				return View("Error");      // this will retur the same object and keep us on the same page
 			}
+		}
+
+		[HttpPost]
+		public IActionResult ToggleLike([FromRoute] int id)
+		{
+			try
+			{
+				var user = GetLoggedUser();
+				var comment = commentService.GetCommentById(id);
+
+				var likeComment = comment.CommentLikes.FirstOrDefault(lp => lp.UserId == user.Id);
+				if (likeComment == null)
+				{
+					this.commentService.AddLikeComment(comment, user);
+				}
+				else
+				{
+					this.commentService.RemoveLikeComment(comment, user);
+				}
+
+				return Ok();
+			}
+			catch (UnauthorizedOperationException e)
+			{
+				this.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+				this.ViewData["ErrorMessage"] = e.Message;
+				return View("Error");
+			}
+			catch (EntityNotFoundException e)
+			{
+				this.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+				this.ViewData["ErrorMessage"] = e.Message;
+				return View("Error");
+			}
+		}
+
+		private bool IsUserLogged()
+		{
+			if (this.HttpContext.Session.GetString("LoggedUser") == null)
+			{
+				return false;
+			}
+			return true;
+		}
+
+		private User GetLoggedUser()
+		{
+			IsUserLogged();
+			var getUserName = this.HttpContext.Session.GetString("LoggedUser");
+			var loggedUser = userService.GetByUsername(getUserName);
+			return loggedUser;
+		}
+		private bool IsUserAuthor(User user, Post post)
+		{
+			var loggedUser = GetLoggedUser();
+			if (user.Username == post.Autor.Username)
+			{
+				return true;
+			}
+			return false;
 		}
 	}
 }
