@@ -6,6 +6,9 @@ using WebForum.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using WebForum.Helpers.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using WebForum.Models;
 
 namespace WebForum
 {
@@ -29,9 +32,9 @@ namespace WebForum
             });
             builder.Services.AddHttpContextAccessor();
 
-            // Add services to the container.
+			// Add services to the container.
 
-            builder.Services.AddControllersWithViews();
+			builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ForumContext>(options =>
             {
 
@@ -46,8 +49,8 @@ namespace WebForum
 
             });
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
+			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+			builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             // Repository
@@ -77,10 +80,11 @@ namespace WebForum
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+			app.UseSession();
 
-            app.UseSession();
+			app.UseAuthentication();
 
-            app.UseAuthorization();
+			app.UseAuthorization();
 
             app.UseStaticFiles();
 

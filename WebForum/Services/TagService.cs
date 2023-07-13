@@ -41,7 +41,7 @@ namespace WebForum.Services
             {
                 throw new EntityNotFoundException("Post or User not found");
             }
-            if (post.Autor.Id != userId)
+            if (post.Autor.Id != userId && !user.IsAdmin)
             {
                 throw new UnauthorizedOperationException("Only the author of the post can add tags");
             }
@@ -129,7 +129,7 @@ namespace WebForum.Services
             User user = userRepository.GetUserById(userId);
             Post post = postRepository.GetPostById(postId);
 
-            if (post.AutorId != user.Id)
+            if (post.AutorId != user.Id && !user.IsAdmin)
             {
                 throw new UnauthorizedOperationException("Users can only remove tags from their own posts.");
             }

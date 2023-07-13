@@ -3,6 +3,7 @@ using WebForum.Helpers.Exceptions;
 using WebForum.Helpers.Mappers;
 using WebForum.Models;
 using WebForum.Models.Dtos;
+using WebForum.Models.ViewModels;
 using WebForum.Repository.Contracts;
 
 namespace WebForum.Services
@@ -86,31 +87,54 @@ namespace WebForum.Services
             return user;
         }
 
-        public User UpdateProfile(User userUpdate)
-        {
-            var existingUser = userRepository.GetUserById(userUpdate.Id);
+		public User UpdateProfile(User userUpdate)
+		{
+			var existingUser = userRepository.GetUserById(userUpdate.Id);
 
-            if (existingUser == null)
-            {
-                throw new EntityNotFoundException($"User with id {userUpdate.Id} does not exist.");
-            }
+			if (existingUser == null)
+			{
+				throw new EntityNotFoundException($"User with id {userUpdate.Id} does not exist.");
+			}
 
-            if (userUpdate.Password != null)
-            {
-                // Generate new salt
-                string newSalt = AuthManager.GenerateSalt();
+			// Check if the first name is updated
+			if (!string.IsNullOrEmpty(userUpdate.FirstName))
+			{
+				existingUser.FirstName = userUpdate.FirstName;
+			}
 
-                // Hash the new password with the new salt
-                string newHashedPassword = AuthManager.HashPassword(userUpdate.Password, newSalt);
+			// Check if the last name is updated
+			if (!string.IsNullOrEmpty(userUpdate.LastName))
+			{
+				existingUser.LastName = userUpdate.LastName;
+			}
 
-                // Update the user's salt and hashed password
-                existingUser.Salt = newSalt;
-                existingUser.Password = newHashedPassword;
-            }
+			return userRepository.UpdateUser(existingUser);
+		}
+		public void UpdatePassword(int userId, string plainTextPassword)
+		{
+			var existingUser = userRepository.GetUserById(userId);
 
-            return userRepository.UpdateUser(userUpdate);
-        }
-        public void DeleteUser(int id)
+			if (existingUser == null)
+			{
+				throw new EntityNotFoundException($"User with id {userId} does not exist.");
+			}
+
+			if (plainTextPassword.Length >= 8 && plainTextPassword.Length <= 20)
+			{
+				// Generate new salt
+				string newSalt = AuthManager.GenerateSalt();
+
+				// Hash the new password with the new salt
+				string newHashedPassword = AuthManager.HashPassword(plainTextPassword, newSalt);
+
+				// Update the user's salt and hashed password
+				existingUser.Salt = newSalt;
+				existingUser.Password = newHashedPassword;
+
+				userRepository.UpdateUser(existingUser);
+			}
+		}
+		public void DeleteUser(int id)
         {
             var user = GetUserById(id);
             if (user == null)
@@ -121,6 +145,44 @@ namespace WebForum.Services
             userRepository.DeleteUser(id);
         }
 
+        public void PromoteToAdmin(int userId, User currentUser)
+        {
+            if (!currentUser.IsAdmin)
+            {
+                throw new UnauthorizedAccessException("Only admins can promote users to admin status.");
+            }
+
+            var userToPromote = userRepository.GetUserById(userId);
+
+            if (userToPromote == null)
+            {
+                throw new EntityNotFoundException($"User with id {userId} does not exist.");
+            }
+
+            userToPromote.IsAdmin = true;
+
+            userRepository.UpdateUser(userToPromote);
+        }
+
+        public void DemoteFromAdmin(int userId, User currentUser)
+        {
+            if (!currentUser.IsAdmin)
+            {
+                throw new UnauthorizedAccessException("Only admins can demote users from admin status.");
+            }
+
+            var userToDemote = userRepository.GetUserById(userId);
+
+            if (userToDemote == null)
+            {
+                throw new EntityNotFoundException($"User with id {userId} does not exist.");
+            }
+
+            userToDemote.IsAdmin = false;
+
+            userRepository.UpdateUser(userToDemote);
+        }
+
         public IList<Post> GetUserPosts(int userId)
         {
             return postRepository.GetPostByUserId(userId);
@@ -129,6 +191,29 @@ namespace WebForum.Services
         public IList<Post> GetAllPosts()
         {
             return postRepository.GetAllPosts();
+        }
+        public List<UserViewModel> GetAllUserViewModels()
+        {
+            var users = userRepository.GetAllUsers();
+            return users.Select(UserMapperView.MapToViewModel).ToList();
+        }
+
+        public UserViewModel GetUserViewModelById(int id)
+        {
+            var user = userRepository.GetUserById(id);
+            return UserMapperView.MapToViewModel(user);
+        }
+
+        public UserViewModel GetUserViewModelByUsername(string username)
+        {
+            var user = userRepository.GetByUsername(username);
+            return UserMapperView.MapToViewModel(user);
+        }
+
+        public UserViewModel GetUserViewModelByEmail(string email)
+        {
+            var user = userRepository.GetByEmail(email);
+            return UserMapperView.MapToViewModel(user);
         }
     }
 }

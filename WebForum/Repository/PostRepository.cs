@@ -76,13 +76,16 @@ namespace WebForum.Repository
             {
                 posts = posts.OrderBy(p => p.Comments.Count).ToList();
                 posts.Reverse();
-            }
+				posts = posts.Take(3).ToList();
+			}
 
             if (!string.IsNullOrEmpty(filterQueryParameters.OrderByDate))
             {
                 posts = posts.OrderBy(p => p.CreatedAt).ToList();
                 posts.Reverse();
-            }
+				posts = posts.Take(3).ToList();
+
+			}
 
             if (!string.IsNullOrEmpty(filterQueryParameters.OrderByLikes))
             {

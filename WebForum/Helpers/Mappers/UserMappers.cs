@@ -1,5 +1,6 @@
 ﻿using WebForum.Models.Dtos;
 using WebForum.Models;
+using WebForum.Models.ViewModels;
 
 namespace WebForum.Helpers.Mappers
 {

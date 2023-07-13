@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebForum.Helpers.Authentication;
 using WebForum.Helpers.Exceptions;
 using WebForum.Models;
@@ -11,13 +12,11 @@ namespace WebForum.Controllers.MVC
 	{
 		private readonly IUserServices userService;
 		private readonly AuthManager authManager;
-		private readonly IHttpContextAccessor httpContextAccessor;
 
-		public UsersController(IUserServices userService, AuthManager authManager, IHttpContextAccessor httpContextAccessor)
+		public UsersController(IUserServices userService, AuthManager authManager)
 		{
 			this.userService = userService;
 			this.authManager = authManager;
-			this.httpContextAccessor = httpContextAccessor;
 		}
 
 		[HttpGet]
@@ -26,42 +25,38 @@ namespace WebForum.Controllers.MVC
 			return View(new RegisterViewModel());
 		}
 
-		[HttpPost]
-		public IActionResult Register(RegisterViewModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				return View(model);
-			}
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-			try
-			{
-				var salt = AuthManager.GenerateSalt();
-				var hashedPassword = AuthManager.HashPassword(model.Password, salt);
+            try
+            {
+                var user = new User
+                {
+                    Username = model.Username,
+                    Password = model.Password,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    // ProfileImage = model.ProfileImage
+                };
 
-				var user = new User
-				{
-					Username = model.Username,
-					Password = hashedPassword,
-					Salt = salt,
-					Email = model.Email,
-					FirstName = model.FirstName,
-					LastName = model.LastName,
-					// ProfileImage = model.ProfileImage
-				};
+                userService.Register(user);
 
-				userService.Register(user);
+                return RedirectToAction("Login");
+            }
+            catch (DuplicateEntityException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View(model);
+            }
+        }
 
-				return RedirectToAction("Login");
-			}
-			catch (DuplicateEntityException ex)
-			{
-				ModelState.AddModelError("", ex.Message);
-				return View(model);
-			}
-		}
-
-		[HttpGet]
+        [HttpGet]
 		public IActionResult Login()
 		{
 			return View(new LoginViewModel());
@@ -79,8 +74,10 @@ namespace WebForum.Controllers.MVC
 			{
 				var user = authManager.TryGetUser($"{model.Username}:{model.Password}");
 				this.HttpContext.Session.SetString("LoggedUser", user.Username);
+                this.HttpContext.Session.SetString("IsAdmin", user.IsAdmin.ToString());
+                this.HttpContext.Session.SetString("UserId", user.Id.ToString());
 
-				return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
 			}
 			catch (InvalidPasswordException ex)
 			{
@@ -103,11 +100,6 @@ namespace WebForum.Controllers.MVC
 				return View(model);
 			}
 		}
-		//private void SignIn(User user)
-		//{
-		//    this.HttpContext.Session.SetString("username", user.Username);
-		//}
-
 		public IActionResult Logout()
 		{
 			this.HttpContext.Session.Clear();

@@ -1,4 +1,68 @@
-﻿@{
+﻿@using WebForum.Models;
+@model List<Post>;
+
+@{
 	this.ViewData["PageTitle"] = "Home";
+	this.ViewData["CreatedAtText"] = "Cteared at:";
+	this.ViewData["MostRecent"] = "Most recent posts";
+	this.ViewData["MostCommented"] = "Most commented posts";
 }
-<h2>Hello to the Roma Forum</h2>
+
+<div class="w3-row-padding">
+	<div class="w3-col m12">
+		<div class="w3-card w3-round w3-white">
+			<div class="w3-container w3-padding">
+				<span class="w3-tag w3-theme-l1 w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-gray w3-card w3-round"><h4 class="w3-serif h4shadow">@this.ViewData["MostRecent"]</h4></span>
+				@{
+					int counter = 0;
+					foreach (var post in this.Model)
+					{
+						counter++;
+						if (counter > 3)
+						{
+							break;
+						}
+						<div class="w3-panel w3-leftbar w3-sand w3-serif w3-medium w3-margin-left w3-margin-right w3-card w3-round">
+							<div class="w3-container w3-card">
+								@post.Autor.Username
+								<span class="w3-right w3-opacity">@post.CreatedAt</span><br>
+							</div>
+							<p>@post.Title</p>
+							<p>@post.Content</p>
+
+						</div>
+					}
+
+				}
+			</div>
+		</div>
+	</div>
+
+</div>
+<br />
+<div class="w3-row-padding">
+	<div class="w3-col m12">
+		<div class="w3-card w3-round w3-white">
+			<div class="w3-container w3-padding">
+				<span class="w3-tag w3-theme-l1 w3-panel w3-pale-blue w3-leftbar w3-rightbar w3-border-gray w3-card w3-round"><h4 class="w3-serif h4shadow">@this.ViewData["MostCommented"]</h4></span>
+				@{
+
+					for (int i = 3; i < this.Model.Count; i++)
+					{
+						var post = this.Model[i];
+						<div class="w3-panel w3-leftbar w3-sand w3-serif w3-medium w3-margin-left w3-margin-right w3-card w3-round">
+							<div class="w3-container w3-card">
+								@post.Autor.Username
+								<span class="w3-right w3-opacity">@post.CreatedAt</span><br>
+							</div>
+							<p>@post.Title</p>
+							<p>@post.Content</p>
+
+						</div>
+					}
+				}
+			</div>
+		</div>
+	</div>
+
+</div>

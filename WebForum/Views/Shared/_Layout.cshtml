@@ -1,65 +1,83 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using WebForum.Helpers.Authentication
+
 @{
-    var isLogged = Context.Session.Keys.Contains("LoggedUser");
+	var isLogged = Context.Session.Keys.Contains("LoggedUser");
+	string username;
+	bool isAdmin = false;
+	int userId;
+	if (isLogged)
+	{
+		username = Context.Session.GetString("LoggedUser");
+		isAdmin = Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
+		userId = int.Parse(Context.Session.GetString("UserId"));
+	}
 }
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WebForum - @this.ViewData["PageTitle"]</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/css/site.css">
-    <link rel="stylesheet" href="~/css/passingText.css">
-    <style>
-        html, body, h1, h2, h3, h4, h5 {
-            font-family: "Open Sans", sans-serif
-        }
-    </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.like-button').on('click', function () {
-                var button = $(this);
-                var postId = button.data('post-id');
+	<title>WebForum - @this.ViewData["PageTitle"]</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="~/css/passingText.css">
+	<style>
+		html, body, h1, h2, h3, h4, h5 {
+			font-family: "Open Sans", sans-serif
+		}
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/Posts/ToggleLike/' + postId,
-                    success: function () {
-                        // Reload the page to reflect the updated like count
-                        location.reload();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                        // Handle the error or display an error message
-                    }
-                });
-            });
-        });
-    </script>
+		.h4shadow {
+			text-shadow: 1px 1px #616161;
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('.like-button').on('click', function () {
+				var button = $(this);
+				var postId = button.data('post-id');
 
-   
+				$.ajax({
+					type: 'POST',
+					url: '/Posts/ToggleLike/' + postId,
+					success: function () {
+						// Reload the page to reflect the updated like count
+						location.reload();
+					},
+					error: function (xhr, status, error) {
+						console.error(xhr.responseText);
+						// Handle the error or display an error message
+					}
+				});
+			});
+		});
+	</script>
+
+
 
 
 
 </head>
 <body class="w3-theme-l5">
 
-    <!-- Navbar -->
-    <div class="w3-top">
-        <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
-            <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-            <a asp-controller="Home" asp-action="Index" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-university"></i> Home</a>
-            <a asp-controller="Posts" asp-action="Create" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Post"><i class="fa fa-pencil"></i></a>
-            <a asp-controller="Posts" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Posts"><i class="fa fa-newspaper-o" aria-hidden="true"></i></a>
-            <a asp-controller="Home" asp-action="About" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Abaut"><i class="fa fa-globe"></i></a>
-            <a href="/swagger" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Swagger"><i class="fa fa-home w3-margin-right"></i></a>
-            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
-            
+	<!-- Navbar -->
+	<div class="w3-top">
+		<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+			<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+			<a asp-controller="Home" asp-action="Index" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-university"></i> Home</a>
+			@if (isLogged)
+			{
+				<a asp-controller="Posts" asp-action="Create" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Post"><i class="fa fa-pencil"></i></a>
+				<a asp-controller="Posts" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Posts"><i class="fa fa-newspaper-o" aria-hidden="true"></i></a>
+				<a asp-controller="Home" asp-action="About" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Abaut"><i class="fa fa-globe"></i></a>
+				<a asp-controller="Tag" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Tags"><i class="fa fa-tags" aria-hidden="true"></i></a>
+				<a href="/swagger" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Swagger"><i class="fa fa-file-o "></i></a>
+			}
+   
             <div class="w3-dropdown-hover w3-hide-small">
                 <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>
                 <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
@@ -68,12 +86,23 @@
                     <a href="#" class="w3-bar-item w3-button">Jane likes your post</a>
                 </div>
             </div>
-            <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+            <!--<a href="/Users/Profile" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
                 <img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
                
-            </a>
-            @if (isLogged)
+            </a>-->
+            @if (isLogged && isAdmin)
             {
+                <a asp-controller="Profiles" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
+                    <img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+                </a>
+				<a asp-controller="Admins" asp-action="AllUsers" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-blue" title="Admin Dashboard"><i></i>Admin Dashboard</a>
+                <a asp-controller="Users" asp-action="Logout" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-red" title="Logout"><i></i>Logout</a>
+            }
+            else if (isLogged)
+            {
+                <a asp-controller="Profiles" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
+                    <img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+                </a>
                 <a asp-controller="Users" asp-action="Logout" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-red" title="Logout"><i></i>Logout</a>
             }
             else
@@ -84,326 +113,347 @@
         </div>
     </div>
 
-    <!-- Navbar on small screens -->
-    <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
-        <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
-    </div>
+	<!-- Navbar on small screens -->
+	<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
+		@if (isLogged)
+		{
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
+			<a asp-controller="Users" asp-action="Logout" class="w3-bar-item w3-button w3-padding-large" title="Logout"><i></i>Logout</a>
+		}
+		else
+		{
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile2</a>
+			<a asp-controller="Users" asp-action="Register" class="w3-bar-item w3-button w3-padding-large" title="Register"><i></i>Register</a>
+			<a asp-controller="Users" asp-action="Login" class="w3-bar-item w3-button w3-padding-large" title="Login"><i></i>Login</a>
+		}
+	</div>
 
-    <!-- Page Container -->
-    <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
-        <!-- The Grid -->
-        <div class="w3-row">
-            <!-- Left Column -->
-            <div class="w3-col m3">
-                <!-- Profile -->
-                <div class="w3-card w3-round w3-white">
-                    <div class="w3-container">
-                        <h4 class="w3-center">My Profile</h4>
-                        <p class="w3-center"><img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
-                        <hr>
-                        <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
-                        <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-                        <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
-                    </div>
-                </div>
-                <br>
+	<!-- Page Container -->
+	<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+		<!-- The Grid -->
+		<div class="w3-row">
+			<!-- Left Column -->
+			<div class="w3-col m3">
+				<!-- Profile -->
+				<div class="w3-card w3-round w3-white">
+					<div class="w3-container">
+						@if (isLogged)
+						{
+							<h4 class="w3-center">My Profile</h4>
+							<p class="w3-center"><img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+							<hr>
+							<p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
+							<p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
+							<p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+						}
+						else
+						{
+							
+							<h4 class="h4shadow">
+								WELCOME TO THE ROMAN FORUM
+								<hr class="w3-clear">
+								PLEASE <a asp-controller="Users" asp-action="Login" class="w3-button w3-light-grey w3-card" title="Login"><i></i>LOGIN</a> TO ACCESS ALL POSTS AND ACTIVITIES
+								<hr class="w3-clear">
+								DON'T HAVE AN ACCOUNT YET? <a asp-controller="Users" asp-action="Register" class="w3-button w3-light-grey w3-card" title="Register"><i></i>REGISTER</a> NOW
+							</h4>
+						}
+						
+					</div>
+				</div>
+				<br>
+				<div><partial name="_Calendar" /></div>
+				<!-- Accordion -->
+				<div class="w3-card w3-round">
+					<div class="w3-white">
+						<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Groups</button>
+						<div id="Demo1" class="w3-hide w3-container">
+							<p>Some text..</p>
+						</div>
+						<button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events</button>
+						<div id="Demo2" class="w3-hide w3-container">
+							<p>Some other text..</p>
+						</div>
+						<button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
+						<div id="Demo3" class="w3-hide w3-container">
+							<div class="w3-row-padding">
+								<br>
+								<div class="w3-half">
+									<img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
+								</div>
+								<div class="w3-half">
+									<img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
+								</div>
+								<div class="w3-half">
+									<img src="/w3images/mountains.jpg" style="width:100%" class="w3-margin-bottom">
+								</div>
+								<div class="w3-half">
+									<img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
+								</div>
+								<div class="w3-half">
+									<img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
+								</div>
+								<div class="w3-half">
+									<img src="/w3images/snow.jpg" style="width:100%" class="w3-margin-bottom">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
 
-                <!-- Accordion -->
-                <div class="w3-card w3-round">
-                    <div class="w3-white">
-                        <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Groups</button>
-                        <div id="Demo1" class="w3-hide w3-container">
-                            <p>Some text..</p>
-                        </div>
-                        <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events</button>
-                        <div id="Demo2" class="w3-hide w3-container">
-                            <p>Some other text..</p>
-                        </div>
-                        <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
-                        <div id="Demo3" class="w3-hide w3-container">
-                            <div class="w3-row-padding">
-                                <br>
-                                <div class="w3-half">
-                                    <img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
-                                </div>
-                                <div class="w3-half">
-                                    <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-                                </div>
-                                <div class="w3-half">
-                                    <img src="/w3images/mountains.jpg" style="width:100%" class="w3-margin-bottom">
-                                </div>
-                                <div class="w3-half">
-                                    <img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
-                                </div>
-                                <div class="w3-half">
-                                    <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-                                </div>
-                                <div class="w3-half">
-                                    <img src="/w3images/snow.jpg" style="width:100%" class="w3-margin-bottom">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
+				<!-- Interests -->
+				<div class="w3-card w3-round w3-white w3-hide-small">
+					<div class="w3-container">
+						<p>Interests</p>
+						<p>
+							<span class="w3-tag w3-small w3-theme-d5">News</span>
+							<span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
+							<span class="w3-tag w3-small w3-theme-d3">Labels</span>
+							<span class="w3-tag w3-small w3-theme-d2">Games</span>
+							<span class="w3-tag w3-small w3-theme-d1">Friends</span>
+							<span class="w3-tag w3-small w3-theme">Games</span>
+							<span class="w3-tag w3-small w3-theme-l1">Friends</span>
+							<span class="w3-tag w3-small w3-theme-l2">Food</span>
+							<span class="w3-tag w3-small w3-theme-l3">Design</span>
+							<span class="w3-tag w3-small w3-theme-l4">Art</span>
+							<span class="w3-tag w3-small w3-theme-l5">Photos</span>
+						</p>
+					</div>
+				</div>
+				<br>
 
-                <!-- Interests -->
-                <div class="w3-card w3-round w3-white w3-hide-small">
-                    <div class="w3-container">
-                        <p>Interests</p>
-                        <p>
-                            <span class="w3-tag w3-small w3-theme-d5">News</span>
-                            <span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
-                            <span class="w3-tag w3-small w3-theme-d3">Labels</span>
-                            <span class="w3-tag w3-small w3-theme-d2">Games</span>
-                            <span class="w3-tag w3-small w3-theme-d1">Friends</span>
-                            <span class="w3-tag w3-small w3-theme">Games</span>
-                            <span class="w3-tag w3-small w3-theme-l1">Friends</span>
-                            <span class="w3-tag w3-small w3-theme-l2">Food</span>
-                            <span class="w3-tag w3-small w3-theme-l3">Design</span>
-                            <span class="w3-tag w3-small w3-theme-l4">Art</span>
-                            <span class="w3-tag w3-small w3-theme-l5">Photos</span>
-                        </p>
-                    </div>
-                </div>
-                <br>
+				<!-- Alert Box -->
+				<div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+					<span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
+						<i class="fa fa-remove"></i>
+					</span>
+					<p><strong>Hey!</strong></p>
+					<p>People are looking at your profile. Find out who.</p>
+				</div>
 
-                <!-- Alert Box -->
-                <div class="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
-                    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-theme-l3 w3-display-topright">
-                        <i class="fa fa-remove"></i>
-                    </span>
-                    <p><strong>Hey!</strong></p>
-                    <p>People are looking at your profile. Find out who.</p>
-                </div>
+				<!-- End Left Column -->
+			</div>
 
-                <!-- End Left Column -->
-            </div>
+			<!-- Middle Column -->
+			<div class="w3-col m7">
 
-            <!-- Middle Column -->
-            <div class="w3-col m7">
 
-                
-                @RenderBody()
-               
-                <!-- End Middle Column -->
-            </div>
+				@RenderBody()
 
-            <!-- Right Column -->
-            <div class="w3-col m2">
-                <div class="w3-card w3-round w3-green w3-center" style="overflow:hidden">
-                    <div class="w3-container">
-                        <p>Upcoming Events:</p>
-                        <p id="eventTitle" class="passing-text">WELCOME to the COLOSSEUM!</p>
-                        <img id="eventImage" src="/images/Events/01_Colosseum.png" alt="Colosseum" style="width:100%;">                        
-                        @*<img src="/w3images/forest.jpg" alt="Forest" style="width:100%;">
-                        <p><strong>Holiday</strong></p>*@
-                        <p>Friday 15:00</p>
-                        <p><button class="w3-button w3-block w3-theme-l4">Buy Ticket</button></p>
-                    </div>
-                </div>
-                <br>
+				<!-- End Middle Column -->
+			</div>
 
-                <div class="w3-card w3-round w3-white w3-center">
-                    <div class="w3-container">
-                        <p>Friend Request</p>
-                        <img src="/w3images/avatar6.png" alt="Avatar" style="width:50%"><br>
-                        <span>Jane Doe</span>
-                        <div class="w3-row w3-opacity">
-                            <div class="w3-half">
-                                <button class="w3-button w3-block w3-green w3-section" title="Accept"><i class="fa fa-check"></i></button>
-                            </div>
-                            <div class="w3-half">
-                                <button class="w3-button w3-block w3-red w3-section" title="Decline"><i class="fa fa-remove"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
+			<!-- Right Column -->
+			<div class="w3-col m2">
+				<div class="w3-card w3-round w3-green w3-center" style="overflow:hidden">
+					<div class="w3-container">
+						<p>Upcoming Events:</p>
+						<p id="eventTitle" class="passing-text">WELCOME to the COLOSSEUM!</p>
+						<img id="eventImage" src="/images/Events/01_Colosseum.png" alt="Colosseum" style="width:100%;">
+						@*<img src="/w3images/forest.jpg" alt="Forest" style="width:100%;">
+						<p><strong>Holiday</strong></p>*@
+						<p>Friday 15:00</p>
+						<p><button class="w3-button w3-block w3-theme-l4">Buy Ticket</button></p>
+					</div>
+				</div>
+				<br>
 
-                <!-- Adds -->              
-                <div class="w3-card w3-round w3-green w3-padding-3 w3-center" style="overflow:hidden">  
-                    <p id="adTitle" class="passing-text">SALE! Homes in Gallia for SALE!</p>
-                    <img id="adImage" src="~/images/Adds/01_Homes.png" alt="HomesInGallia" style="width:100%;">
-                    <p id="adDetails" class="passing-text">For details - contact Asterix</p>
-                    <a href="https://example.com" class="hyperlink" style="color:darkblue">"GALLIA PROPERTIES"</a>
-                </div>
-                <br>
+				<div class="w3-card w3-round w3-white w3-center">
+					<div class="w3-container">
+						<p>Friend Request</p>
+						<img src="/w3images/avatar6.png" alt="Avatar" style="width:50%"><br>
+						<span>Jane Doe</span>
+						<div class="w3-row w3-opacity">
+							<div class="w3-half">
+								<button class="w3-button w3-block w3-green w3-section" title="Accept"><i class="fa fa-check"></i></button>
+							</div>
+							<div class="w3-half">
+								<button class="w3-button w3-block w3-red w3-section" title="Decline"><i class="fa fa-remove"></i></button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
 
-                <div class="w3-card w3-round w3-white w3-padding-32 w3-center">
-                    <p><i class="fa fa-bug w3-xxlarge"></i></p>
-                </div>
+				<!-- Adds -->
+				<div class="w3-card w3-round w3-green w3-padding-3 w3-center" style="overflow:hidden">
+					<p id="adTitle" class="passing-text">SALE! Homes in Gallia for SALE!</p>
+					<img id="adImage" src="~/images/Adds/01_Homes.png" alt="HomesInGallia" style="width:100%;">
+					<p id="adDetails" class="passing-text">For details - contact Asterix</p>
+					<a href="https://example.com" class="hyperlink" style="color:darkblue">"GALLIA PROPERTIES"</a>
+				</div>
+				<br>
 
-                <!-- End Right Column -->
-            </div>
+				<div class="w3-card w3-round w3-white w3-padding-32 w3-center">
+					<p><i class="fa fa-bug w3-xxlarge"></i></p>
+				</div>
 
-            <!-- End Grid -->
-        </div>
+				<!-- End Right Column -->
+			</div>
 
-        <!-- End Page Container -->
-    </div>
-    <br>
+			<!-- End Grid -->
+		</div>
 
-    <!-- Footer     -->
-    <footer class="w3-container w3-theme-d3 w3-padding-16">
-        
-    </footer>
+		<!-- End Page Container -->
+	</div>
+	<br>
 
-    <footer class="w3-theme-d5 w3-small w3-center ">
-        <div class="w3-card w3-round">
-            <div class="w3-container">
-                <p>
-                    <span class="w3-tag w3-small w3-theme-d5">This web forum is created by</span><br />
-                    <span class="w3-tag w3-small w3-theme-d5">
-                        Team 13 * Alpha C# 47 * 
-                        <a href=" https://www.telerikacademy.com/" target="_blank" class="w3-bar-item w3-round" title="Telerik Academy" style="text-decoration:none">
-                            Telerik Academy
-                         </a>
-                    </span>
-                
-                </p>
-                <span class="w3-tag w3-small w3-theme-d4 w3-text-blue-grey w3-hover-indigo">
-                    
-                    <a href="https://www.linkedin.com/in/mila-tsenkova-772534102" target="_blank" class="w3-bar-item w3-round" title="Tsvetomila Tsenkova" style="text-decoration:none">
-                        Tsvetomila Tsenkova <i class="fa fa-linkedin-square" aria-hidden="true"></i>
-                        <img src="https://media.licdn.com/dms/image/D4D03AQH1uNgmZXWK4g/profile-displayphoto-shrink_400_400/0/1683886871197?e=1694649600&v=beta&t=_QrvCF1z817ohCVUkRjd7bo9Qkj_fxyn0qsMawEO0-w" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
-                    </a>
-                </span>
-                <span class="w3-tag w3-small w3-theme-d4 w3-text-blue-grey w3-hover-indigo">
-                    
-                    <a href="https://www.linkedin.com/in/milko-tomov-a988971a2/" target="_blank" class="w3-bar-item w3-round" title="Milko Tomov" style="text-decoration:none">
-                        Milko Tomov <i class="fa fa-linkedin-square" aria-hidden="true"></i>
-                        <img src="https://media.licdn.com/dms/image/C4D03AQFgzRjk7B9jyw/profile-displayphoto-shrink_100_100/0/1581689488663?e=1694649600&v=beta&t=22RUFAY593fP2uBhvovbD-DPFNscNzUpitNAt1md3mU" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
-                    </a>
-                </span>
-                <span class="w3-tag w3-small w3-theme-d4 w3-text-blue-grey w3-hover-indigo">
-                    <a href="https://www.linkedin.com/in/milko-tomov-a988971a2/" target="_blank" class="w3-bar-item w3-round" title="Kostadin Palchev" style="text-decoration:none">
-                        Kostadin Palchev <i class="fa fa-linkedin-square" aria-hidden="true"></i>
-                        <img src="https://media.licdn.com/dms/image/C4D03AQFgzRjk7B9jyw/profile-displayphoto-shrink_100_100/0/1581689488663?e=1694649600&v=beta&t=22RUFAY593fP2uBhvovbD-DPFNscNzUpitNAt1md3mU" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
-                    </a>
-                </span>
-                <p>
-                    <span class="text-center text-muted">© 2023 July </span>
-                    <span class="w3-padding-small">Template is Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></span>
-                    <span class="w3-padding-small">Theme is inspired by <a href="https://www.gog.com/en/game/caesar_3" target="_blank">Caesar III</a></span>
-                    
-                </p>
-            </div>
-        </div>
-    </footer>
+	<!-- Footer     -->
+	<footer class="w3-container w3-theme-d3 w3-padding-16">
+	</footer>
 
-    <script>
-        // Accordion
-        function myFunction(id) {
-          var x = document.getElementById(id);
-          if (x.className.indexOf("w3-show") == -1) {
-            x.className += " w3-show";
-            x.previousElementSibling.className += " w3-theme-d1";
-          } else {
-            x.className = x.className.replace("w3-show", "");
-            x.previousElementSibling.className =
-            x.previousElementSibling.className.replace(" w3-theme-d1", "");
-          }
-        }
+	<footer class="w3-theme-d5 w3-small w3-center ">
+		<div class="w3-card w3-round">
+			<div class="w3-container">
+				<p>
+					<span class="w3-tag w3-small w3-theme-d5">This web forum is created by</span><br />
+					<span class="w3-tag w3-small w3-theme-d5">
+						Team 13 * Alpha C# 47 *
+						<a href=" https://www.telerikacademy.com/" target="_blank" class="w3-bar-item w3-round" title="Telerik Academy" style="text-decoration:none">
+							Telerik Academy
+						</a>
+					</span>
 
-        // Used to toggle the menu on smaller screens when clicking on the menu button
-        function openNav() {
-          var x = document.getElementById("navDemo");
-          if (x.className.indexOf("w3-show") == -1) {
-            x.className += " w3-show";
-          } else {
-            x.className = x.className.replace(" w3-show", "");
-          }
-        }
-    </script>
-    
-    <script>
-        // Array of ad data
-        var events = [
-          {
-            title: "WELCOME to the COLOSSEUM!",
-            image: "/images/Events/01_Colosseum.png",            
-          },
-          {
-            title: "ATTEND the GLADIATOR FIGHT!",
-            image: "/images/Events/02_Fight.png",
-          },
-          {
-            title: "GUESS the WINNER!",
-            image: "/images/Events/03_Winner.png",
-          },
-          {
-            title: "WIN the PRIZE!",
-            image: "/images/Events/04_Price.png",
-          }
-        ];
-        
-        var eventIndex = 0;
-        var eventTitle = document.getElementById("eventTitle");
-        var eventImage = document.getElementById("eventImage");
-        
-        // Function to change the ad content
-        function changeEventContent() {
-          var event = events[eventIndex];
-        
-          eventTitle.textContent = event.title;
-          eventImage.src = event.image;
-        
-          eventIndex = (eventIndex + 1) % events.length;
-        }
-        
-        // Call the changeAdContent function initially
-        changeEventContent();
-        
-        // Change the ad content every 5 seconds
-        setInterval(changeEventContent, 8000);
-    </script>  
+				</p>
+				<span class="w3-tag w3-small w3-theme-d4 w3-text-blue-grey w3-hover-indigo">
 
-    <script>
-        // Array of ad data
-        var ads = [
-          {
-            title: "SALE! Homes in Gallia for SALE!",
-            image: "/images/Adds/01_Homes.png",
-            details: "For details - contact Asterix"
-          },
-          {
-            title: "Newly Renovated Houses in Gallia",
-            image: "/images/Adds/02_NewlyRenovatedHouses.png",
-            details: "Get your dream house in Gallia - contact Obelix"
-          },
-          {
-            title: "Luxurious Castles in Gallia",
-            image: "/images/Adds/03_LuxuriousCastles.png",
-            details: "Experience luxury living - contact Falbala"
-          }
-        ];
-        
-        var adIndex = 0;
-        var adTitle = document.getElementById("adTitle");
-        var adImage = document.getElementById("adImage");
-        var adDetails = document.getElementById("adDetails");
-        
-        // Function to change the ad content
-        function changeAdContent() {
-          var ad = ads[adIndex];
-        
-          adTitle.textContent = ad.title;
-          adImage.src = ad.image;
-          adDetails.textContent = ad.details;
-        
-          adIndex = (adIndex + 1) % ads.length;
-        }
-        
-        // Call the changeAdContent function initially
-        changeAdContent();
-        
-        // Change the ad content every 5 seconds
-        setInterval(changeAdContent, 8000);
-    </script>  
+					<a href="https://www.linkedin.com/in/mila-tsenkova-772534102" target="_blank" class="w3-bar-item w3-round" title="Tsvetomila Tsenkova" style="text-decoration:none">
+						Tsvetomila Tsenkova <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+						<img src="https://media.licdn.com/dms/image/D4D03AQH1uNgmZXWK4g/profile-displayphoto-shrink_400_400/0/1683886871197?e=1694649600&v=beta&t=_QrvCF1z817ohCVUkRjd7bo9Qkj_fxyn0qsMawEO0-w" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+					</a>
+				</span>
+				<span class="w3-tag w3-small w3-theme-d4 w3-text-blue-grey w3-hover-indigo">
+
+					<a href="https://www.linkedin.com/in/milko-tomov-a988971a2/" target="_blank" class="w3-bar-item w3-round" title="Milko Tomov" style="text-decoration:none">
+						Milko Tomov <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+						<img src="https://media.licdn.com/dms/image/C4D03AQFgzRjk7B9jyw/profile-displayphoto-shrink_100_100/0/1581689488663?e=1694649600&v=beta&t=22RUFAY593fP2uBhvovbD-DPFNscNzUpitNAt1md3mU" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+					</a>
+				</span>
+				<span class="w3-tag w3-small w3-theme-d4 w3-text-blue-grey w3-hover-indigo">
+					<a href="https://www.linkedin.com/in/milko-tomov-a988971a2/" target="_blank" class="w3-bar-item w3-round" title="Kostadin Palchev" style="text-decoration:none">
+						Kostadin Palchev <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+						<img src="https://media.licdn.com/dms/image/C4D03AQFgzRjk7B9jyw/profile-displayphoto-shrink_100_100/0/1581689488663?e=1694649600&v=beta&t=22RUFAY593fP2uBhvovbD-DPFNscNzUpitNAt1md3mU" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+					</a>
+				</span>
+				<p>
+					<span class="text-center text-muted">© 2023 July </span>
+					<span class="w3-padding-small">Template is Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></span>
+					<span class="w3-padding-small">Theme is inspired by <a href="https://www.gog.com/en/game/caesar_3" target="_blank">Caesar III</a></span>
+
+				</p>
+			</div>
+		</div>
+	</footer>
+
+	<script>
+		// Accordion
+		function myFunction(id) {
+			var x = document.getElementById(id);
+			if (x.className.indexOf("w3-show") == -1) {
+				x.className += " w3-show";
+				x.previousElementSibling.className += " w3-theme-d1";
+			} else {
+				x.className = x.className.replace("w3-show", "");
+				x.previousElementSibling.className =
+					x.previousElementSibling.className.replace(" w3-theme-d1", "");
+			}
+		}
+
+		// Used to toggle the menu on smaller screens when clicking on the menu button
+		function openNav() {
+			var x = document.getElementById("navDemo");
+			if (x.className.indexOf("w3-show") == -1) {
+				x.className += " w3-show";
+			} else {
+				x.className = x.className.replace(" w3-show", "");
+			}
+		}
+	</script>
+
+	<script>
+		// Array of ad data
+		var events = [
+			{
+				title: "WELCOME to the COLOSSEUM!",
+				image: "/images/Events/01_Colosseum.png",
+			},
+			{
+				title: "ATTEND the GLADIATOR FIGHT!",
+				image: "/images/Events/02_Fight.png",
+			},
+			{
+				title: "GUESS the WINNER!",
+				image: "/images/Events/03_Winner.png",
+			},
+			{
+				title: "WIN the PRIZE!",
+				image: "/images/Events/04_Price.png",
+			}
+		];
+
+		var eventIndex = 0;
+		var eventTitle = document.getElementById("eventTitle");
+		var eventImage = document.getElementById("eventImage");
+
+		// Function to change the ad content
+		function changeEventContent() {
+			var event = events[eventIndex];
+
+			eventTitle.textContent = event.title;
+			eventImage.src = event.image;
+
+			eventIndex = (eventIndex + 1) % events.length;
+		}
+
+		// Call the changeAdContent function initially
+		changeEventContent();
+
+		// Change the ad content every 5 seconds
+		setInterval(changeEventContent, 8000);
+	</script>
+
+	<script>
+		// Array of ad data
+		var ads = [
+			{
+				title: "SALE! Homes in Gallia for SALE!",
+				image: "/images/Adds/01_Homes.png",
+				details: "For details - contact Asterix"
+			},
+			{
+				title: "Newly Renovated Houses in Gallia",
+				image: "/images/Adds/02_NewlyRenovatedHouses.png",
+				details: "Get your dream house in Gallia - contact Obelix"
+			},
+			{
+				title: "Luxurious Castles in Gallia",
+				image: "/images/Adds/03_LuxuriousCastles.png",
+				details: "Experience luxury living - contact Falbala"
+			}
+		];
+
+		var adIndex = 0;
+		var adTitle = document.getElementById("adTitle");
+		var adImage = document.getElementById("adImage");
+		var adDetails = document.getElementById("adDetails");
+
+		// Function to change the ad content
+		function changeAdContent() {
+			var ad = ads[adIndex];
+
+			adTitle.textContent = ad.title;
+			adImage.src = ad.image;
+			adDetails.textContent = ad.details;
+
+			adIndex = (adIndex + 1) % ads.length;
+		}
+
+		// Call the changeAdContent function initially
+		changeAdContent();
+
+		// Change the ad content every 5 seconds
+		setInterval(changeAdContent, 8000);
+	</script>
 
 </body>
 </html>

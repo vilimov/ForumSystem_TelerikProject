@@ -1,0 +1,26 @@
+﻿@using WebForum.Models;
+@model List<Tag>;
+
+<div class="w3-row-padding">
+	<div class="w3-col m12">
+		<div class="w3-card w3-round w3-white">
+
+			<div class="w3-card w3-round w3-white">
+				<div class="w3-container w3-padding">
+					<p class="w3-small w3-theme-l5">Tags:</p>
+					<a asp-controller="Tag" asp-action="CreateTag" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Create Tag</i></a>
+					@{
+						foreach (var tag in this.Model)
+						{
+							<div><span class="w3-tag w3-small w3-theme-d5">@tag.Name</span></div>
+							<a asp-controller="Tag" asp-action="Edit" , asp-route-id="@tag.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Edit</i></a>
+							<a asp-controller="Tag" asp-action="Delete" , asp-route-id="@tag.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>
+						}
+					}
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

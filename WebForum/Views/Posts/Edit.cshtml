@@ -9,3 +9,38 @@
 }
 
 <partial name="_PostForm" />
+<br />
+
+<div class="w3-row-padding">
+	<div class="w3-col m12">
+		<div class="w3-card w3-round w3-white">
+			<div class="w3-container w3-padding">
+					<div class="w3-container w3-padding">
+						<p class="w3-small w3-theme-l5">Tags used:</p>
+						<p>
+							@{
+								if (this.Model.PostTags.Count < 1)
+								{
+									<span class="w3-tag w3-small w3-theme-d5">No tags added</span>
+								}
+
+								foreach (var tag in this.Model.PostTags)
+								{
+								<span class="w3-tag w3-small w3-theme-d5">@tag.Tag.Name</span>
+							}
+						}
+					</p>
+
+					<a asp-controller="Tag" asp-action="SelectTags" asp-route-postId=@ViewContext.RouteData.Values["id"] class="w3-button w3-theme w3-margin-top w3-round">
+						<i class="fa fa-tags" aria-hidden="true">&nbsp;Add Tags</i>
+					</a>
+					<a asp-controller="Tag" asp-action="ListTags" asp-route-postId=@ViewContext.RouteData.Values["id"] class="w3-button w3-theme w3-margin-top w3-round">
+						<i class="fa fa-trash" aria-hidden="true">&nbsp;Remove Tags</i>
+					</a>
+
+					</div>
+
+			</div>
+		</div>
+	</div>
+</div>

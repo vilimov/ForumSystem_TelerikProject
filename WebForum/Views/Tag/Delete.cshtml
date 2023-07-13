@@ -1,0 +1,25 @@
+﻿@model WebForum.Models.Tag;
+@{
+	this.ViewData["PageTitle"] = "Delete Tag";
+}
+
+<div class="w3-row-padding">
+	<div class="w3-col m12">
+		<div class="w3-card w3-round w3-white">
+			<div class="w3-container w3-padding">
+				<h3>@this.ViewData["PageTitle"]:</h3>
+				<hr class="w3-clear">
+				<h4 class="w3-opacity"> <b>@this.Model.Name</b></h4>
+				
+				<hr class="w3-clear">
+				<div class="w3-container w3-half">
+					<p>Do you want to delete this tag?</p>
+					<form asp-controller="Tag" asp-action="Delete" method="post">
+						<input type="submit" value="Delete" class="w3-button w3-block w3-red w3-section w3-half w3-card w3-round" />
+					</form>
+					<a asp-controller="Tag" asp-action="Index" class="w3-button w3-block w3-green w3-section w3-half w3-card w3-round">Back</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,190 @@
+﻿@using System.Globalization;
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    body {
+        font-family: Verdana, sans-serif;
+    }
+
+    .month {
+        padding: 20px 25px;
+        width: 100%;
+        background: #607d8b;
+        text-align: center;
+    }
+
+        .month ul {
+            margin: 0;
+            padding: 0;
+        }
+
+            .month ul li {
+                color: white;
+                font-size: 20px;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+            }
+
+        .month .prev {
+            float: left;
+            padding-top: 10px;
+        }
+
+        .month .next {
+            float: right;
+            padding-top: 10px;
+        }
+
+    .weekdays {
+        margin: 0;
+        padding: 10px 0;
+        background-color: #ddd;
+    }
+
+        .weekdays li {
+            display: inline-block;
+            width: 12%;
+            color: #666;
+            text-align: center;
+        }
+
+    .days {
+        padding: 10px 0;
+        background: #eee;
+        margin: 0;
+    }
+
+        .days li {
+            list-style-type: none;
+            display: inline-block;
+            width: 12%;
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: #777;
+        }
+
+            .days li .active {
+                padding: 5px;
+                background: #1abc9c;
+                color: white !important
+            }
+
+    /* Add media queries for smaller screens */
+    media screen and (max-width:720px) {
+        .weekdays li, .days li
+
+    {
+        width: 13.1%;
+    }
+
+    }
+
+    media screen and (max-width: 420px) {
+        .weekdays li, .days li
+
+    {
+        width: 12.5%;
+    }
+
+    .days li .active {
+        padding: 2px;
+    }
+
+    }
+
+    media screen and (max-width: 290px) {
+        .weekdays li, .days li
+
+    {
+        width: 12.2%;
+    }
+
+    }
+</style>
+
+@{
+    string month = DateTime.Now.ToString("MMMM");
+    string year = DateTime.Now.ToString("yyy");
+    DayOfWeek today = DateTime.Now.DayOfWeek;
+
+    DateTime now = DateTime.Now;
+    int currentDay = now.Day;
+    DateTime startOfMonth = new DateTime(now.Year, now.Month, 1);
+    int days = DateTime.DaysInMonth(now.Year, now.Month);
+    DayOfWeek firstDayWeek = startOfMonth.DayOfWeek;
+    string theDay = firstDayWeek.ToString();
+    int startOfLoop = 0;
+    switch (theDay)
+    {
+        case "Monday":
+            startOfLoop = 1;
+            break;
+        case "Tuesday":
+            startOfLoop = 0;
+            break;
+        case "Wednesday":
+            startOfLoop = -1;
+            break;
+        case "Thursday":
+            startOfLoop = -2;
+            break;
+        case "Friday":
+            startOfLoop = -3;
+            break;
+        case "Saturday":
+            startOfLoop = -4;
+            break;
+        case "Sunday":
+            startOfLoop = -5;
+            break;
+    }
+}
+
+<div class="month">
+    <ul>
+        <li>
+            @month<br />
+            <span style="font-size:18px">@year</span>
+        </li>
+    </ul>
+</div>
+
+<ul class="weekdays">
+    <li>Mo</li>
+    <li>Tu</li>
+    <li>We</li>
+    <li>Th</li>
+    <li>Fr</li>
+    <li>Sa</li>
+    <li>Su</li>
+</ul>
+
+<ul class="days">
+    @{
+        for (int i = startOfLoop; i <= days; i++)
+        {
+            if (i <= 0)
+            {
+                <li> </li>
+            }
+            else if (i == currentDay)
+            {
+                <li><span class="active">@i</span></li>
+            }
+            else
+            {
+                <li>@i</li>
+            }
+
+        }
+    }
+
+</ul>
+<br>
