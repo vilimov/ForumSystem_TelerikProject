@@ -1,0 +1,36 @@
+﻿@using WebForum.Models.ViewModels
+@model List<UserViewModel>
+<div class="w3-row-padding">
+    <div class="w3-col m12">
+        <div class="w3-card w3-round w3-white">
+            <div class="w3-container w3-padding">
+                <h3 class="w3-opacity">All Users</h3>
+                <hr class="w3-clear">
+                @foreach (var user in Model)
+                {
+                    <div class="w3-container w3-card w3-white w3-round w3-margin">
+                        <br>
+                        <span class="w3-right w3-opacity">@user.IsAdmin</span>
+                        <h4><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>@user.Username</h4><br>
+                        <hr class="w3-clear">
+                        <p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i>@user.Email</p>
+                        @if (!user.IsAdmin)
+                        {
+                            <form asp-controller="Admins" asp-action="PromoteUser" method="post">
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit" class="w3-button w3-theme-d1 w3-margin-bottom">Promote to Admin</button>
+                            </form>
+                        }
+                        @if (user.IsAdmin)
+                        {
+                            <form asp-controller="Admins" asp-action="DemoteUser" method="post">
+                                <input type="hidden" name="id" value="@user.Id" />
+                                <button type="submit" class="w3-button w3-theme-d2 w3-margin-bottom">Demote to User</button>
+                            </form>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

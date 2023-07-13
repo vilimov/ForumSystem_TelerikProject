@@ -25,43 +25,38 @@ namespace WebForum.Controllers.MVC
 			return View(new RegisterViewModel());
 		}
 
-		[HttpPost]
-		public IActionResult Register(RegisterViewModel model)
-		{
-			if (!ModelState.IsValid)
-			{
-				return View(model);
-			}
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-			try
-			{
-				var salt = AuthManager.GenerateSalt();
-				var hashedPassword = AuthManager.HashPassword(model.Password, salt);
+            try
+            {
+                var user = new User
+                {
+                    Username = model.Username,
+                    Password = model.Password,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    // ProfileImage = model.ProfileImage
+                };
 
-				var user = new User
-				{
-					Username = model.Username,
-					Password = hashedPassword,
-					Salt = salt,
-					Email = model.Email,
-					FirstName = model.FirstName,
-					LastName = model.LastName,
-					// ProfileImage = model.ProfileImage
-				};
+                userService.Register(user);
 
-				userService.Register(user);
-				Console.WriteLine($"Model pw: {model.Password}");
+                return RedirectToAction("Login");
+            }
+            catch (DuplicateEntityException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View(model);
+            }
+        }
 
-				return RedirectToAction("Login");
-			}
-			catch (DuplicateEntityException ex)
-			{
-				ModelState.AddModelError("", ex.Message);
-				return View(model);
-			}
-		}
-
-		[HttpGet]
+        [HttpGet]
 		public IActionResult Login()
 		{
 			return View(new LoginViewModel());
