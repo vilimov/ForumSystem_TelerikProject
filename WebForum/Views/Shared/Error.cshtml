@@ -1,11 +1,11 @@
 ﻿<div class="w3-row-padding">
     <div class="w3-col m12">
-        <div class="w3-card w3-round w3-white">
-            <div class="w3-container w3-padding">
-                <p> Something went wrong! </p>
-                <p> @ViewData["ErrorMessage"]</p>
+        <div class="w3-card w3-round w3-white w3-center">
+            <div class="w3-container ">
+                <h4 class="h4shadowRed"> Something went wrong! </h4>
+                <h3 class="h4shadowRed"> @ViewData["ErrorMessage"]</h3>
                 <!--<p> @ViewBag.ErrorMessage</p>-->
-                <p> Status code: @this.Context.Response.StatusCode </p>
+                <p class="h4shadowRed"> Status code: @this.Context.Response.StatusCode </p>
             </div>
         </div>
     </div>
