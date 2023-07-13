@@ -3,6 +3,17 @@
 @{
 	this.ViewData["PageTitle"] = "Details";
 	this.ViewData["CreatedAtText"] = "Created at:";
+
+	var isLogged = Context.Session.Keys.Contains("LoggedUser");
+	string username;
+	bool isAdmin = false;
+	int userId = 0;
+	if (isLogged)
+	{
+		username = Context.Session.GetString("LoggedUser");
+		isAdmin = Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
+		userId = int.Parse(Context.Session.GetString("UserId"));
+	}
 }
 <div class="w3-row-padding">
 	<div class="w3-col m12">
@@ -15,8 +26,14 @@
 					<hr class="w3-clear">
 					<div class="w3-container w3-light-grey w3-card">
 						<h5>@this.Model.Title</h5>
-						<a asp-controller="Posts" asp-action="Edit" , asp-route-id="@this.Model.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Edit</i></a>
-						<a asp-controller="Posts" asp-action="Delete" , asp-route-id="@this.Model.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>
+					@{
+						if (isAdmin || this.Model.Autor.Id == userId)
+						{
+							<a asp-controller="Posts" asp-action="Edit" , asp-route-id="@this.Model.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Edit</i></a>
+							<a asp-controller="Posts" asp-action="Delete" , asp-route-id="@this.Model.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>
+						}
+					}
+						
 					</div>
 
 					<div class="w3-container w3-medium w3-card w3-round" style="overflow-wrap: break-word;">
@@ -39,6 +56,7 @@
 							}
 						}
 						</p>
+						<p class="w3-small w3-theme-l5 w3-right w3-opacity">To manage tags go to Edit post.</p>
 						</div>
 					</div>
 					

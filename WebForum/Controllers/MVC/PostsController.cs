@@ -17,33 +17,37 @@ namespace WebForum.Controllers.MVC
         private readonly AuthManager authManager;
 		private readonly IMapper mapper;
 		private readonly ITagService tagService;
-		public PostsController(IPostServices postService,AuthManager authManager, IMapper mapper, ITagService tagService)
+		private readonly IUserServices userService;
+		public PostsController(IPostServices postService,AuthManager authManager, IMapper mapper, ITagService tagService, IUserServices userService)
         {
             this.postService = postService;
             this.authManager = authManager;
             this.mapper = mapper;
 			this.tagService = tagService;
+			this.userService = userService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            if (this.HttpContext.Session.GetString("LoggedUser") == null)
-            {
-                return RedirectToAction("Login", "Users");
-            }
-            List<Post> posts = this.postService.GetAllPosts().ToList();
-            return View(posts);
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
+			List<Post> posts = this.postService.GetAllPosts().ToList();
+			posts.Reverse();
+
+			return View(posts);
         }
 
 		[HttpGet]
 		public IActionResult Details(int id) 
         {
-            if (this.HttpContext.Session.GetString("LoggedUser") == null)
-            {
-                return RedirectToAction("Login", "Users");
-            }
-            try
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
+			try
             {
 				var post = postService.GetPostById(id);
 				return View(post);
@@ -52,7 +56,6 @@ namespace WebForum.Controllers.MVC
             {
                 this.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
                 this.ViewData["ErrorMessage"] = ex.Message;
-                //this.ViewBag.ErrorMessage = ex.Message;
 
                 return View("Error");               
             }
@@ -62,31 +65,34 @@ namespace WebForum.Controllers.MVC
 		[HttpGet]
         public IActionResult Create() 
         {
-			if (this.HttpContext.Session.GetString("LoggedUser") == null)
+			if (!IsUserLogged())
 			{
 				return RedirectToAction("Login", "Users");
 			}
-            var postViewModel = new PostViewModel();
+			var postViewModel = new PostViewModel();
             return View(postViewModel);
         }
 
         [HttpPost]
         public IActionResult Create(PostViewModel postViewModel)
         {
-            if(!this.ModelState.IsValid)
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
+			if (!this.ModelState.IsValid)
             {
                 
                 return View(postViewModel);
             }
             try
             {
-				//TODO change to real user
-				var user = authManager.TryGetUser("JuliusCaesar:Cleopatra");
+				var user = GetLoggedUser();
 				var newPost = mapper.Map<Post>(postViewModel);
 				var createdPost = postService.CreatePost(newPost, user);
 
 				this.HttpContext.Response.StatusCode = StatusCodes.Status201Created;
-				//return RedirectToAction("Index", "Posts");
+
 				return RedirectToAction("Details", "Posts", new { id = createdPost.Id });
 			}
             catch (DuplicateEntityException e)
@@ -101,11 +107,12 @@ namespace WebForum.Controllers.MVC
         [HttpGet]
         public IActionResult Edit([FromRoute]int id)
         {
-            if (this.HttpContext.Session.GetString("LoggedUser") == null)
-            {
+			if (!IsUserLogged())
+			{
                 return RedirectToAction("Login", "Users");
             }
-            try
+			
+			try
             {
 				var post = postService.GetPostById(id);
 				var postViewModel = mapper.Map<PostViewModel>(post);
@@ -116,9 +123,10 @@ namespace WebForum.Controllers.MVC
             {
                 this.HttpContext.Response.StatusCode=StatusCodes.Status404NotFound;
                 this.ViewData["ErrorMessage"] = e.Message;
-                return View("Erorr");
+                return View("Error");
             }
         }
+
         [HttpPost]
         public IActionResult Edit([FromRoute]int id, PostViewModel postViewModel)
         {
@@ -129,15 +137,14 @@ namespace WebForum.Controllers.MVC
 			}
 			try
 			{
-				//TODO change to real user
-				var user = authManager.TryGetUser("JuliusCaesar:Cleopatra");
+				var user = GetLoggedUser();
 				var newPost = mapper.Map<Post>(postViewModel);
 				var createdPost = postService.UpdatePost(id, newPost, user);
 				var alltags = tagService.GetAllTags();
-                this.ViewData["postId"] = id;
+				this.ViewData["postId"] = id;
 
 				this.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
-				//return RedirectToAction("Index", "Posts");
+
 				return RedirectToAction("Details", "Posts", new { id = createdPost.Id });
 			}
 			catch (InvalidOperationException e)
@@ -147,16 +154,23 @@ namespace WebForum.Controllers.MVC
 				//return View("Error");             this will return the Error page
 				return View(postViewModel);      // this will retur the same object and keep us on the same page
 			}
+			catch (UnauthorizedOperationException e)
+			{
+				this.HttpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+				this.ViewData["ErrorMessage"] = e.Message;
+				return View("Error");
+			}
+			
 
 		}
         [HttpGet]
         public IActionResult Delete([FromRoute]int id)
         {
-            if (this.HttpContext.Session.GetString("LoggedUser") == null)
-            {
-                return RedirectToAction("Login", "Users");
-            }
-            try
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
+			try
 			{
 				var post = postService.GetPostById(id);
 				var newPost = mapper.Map<PostViewModel>(post);
@@ -166,7 +180,7 @@ namespace WebForum.Controllers.MVC
 			{
 				this.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
 				this.ViewData["ErrorMessage"] = e.Message;
-				return View("Erorr");
+				return View("Error");
 			}
 
 		}
@@ -177,8 +191,7 @@ namespace WebForum.Controllers.MVC
 			
             try
             {
-				//TODO change to real user
-				var user = authManager.TryGetUser("PubliusOvidiusNaso:Metamorphoses");
+				var user = GetLoggedUser();
 				this.postService.DeletePost(id, user);
 				return RedirectToAction("Index", "Posts");
 			}
@@ -197,23 +210,20 @@ namespace WebForum.Controllers.MVC
 		{
 			try
 			{
-				// TODO: Change to real user
-				var user = authManager.TryGetUser("PubliusOvidiusNaso:Metamorphoses");
+				var user = GetLoggedUser();
 				var post = postService.GetPostById(id);
 
 				var likePost = post.LikePosts.FirstOrDefault(lp => lp.UserId == user.Id);
 				if (likePost == null)
 				{
 					this.postService.AddLikePost(post, user);
-					//post.Likes++; // Increment like count by 1
 				}
 				else
 				{
 					this.postService.RemoveLikePost(post, user);
-					//post.Likes--; // Decrement like count by 1
 				}
 
-				return Ok(); // Return success response
+				return Ok();
 			}
 			catch (UnauthorizedOperationException e)
 			{
@@ -227,6 +237,32 @@ namespace WebForum.Controllers.MVC
 				this.ViewData["ErrorMessage"] = e.Message;
 				return View("Error");
 			}
+		}
+
+		private bool IsUserLogged()
+		{
+			if (this.HttpContext.Session.GetString("LoggedUser") == null)
+			{
+				return false;
+			}
+			return true;
+		}
+		
+		private User GetLoggedUser()
+		{
+			IsUserLogged();
+			var getUserName = this.HttpContext.Session.GetString("LoggedUser");
+			var loggedUser = userService.GetByUsername(getUserName);
+			return loggedUser;
+		}
+		private bool IsUserAuthor(User user, Post post)
+		{
+			var loggedUser = GetLoggedUser();
+			if (user.Username == post.Autor.Username)
+			{
+				return true;
+			}
+			return false;
 		}
 	}
 }
