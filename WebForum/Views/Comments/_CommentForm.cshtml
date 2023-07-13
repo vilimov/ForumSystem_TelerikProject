@@ -1,0 +1,28 @@
+﻿@model WebForum.Models.ViewModels.CommentViewModel
+
+<div class="w3-row-padding">
+	<div class="w3-col m12">
+		<div class="w3-card w3-round w3-white">
+			<div class="w3-container w3-padding">
+				<h3 class="w3-opacity">@this.ViewData["Action"] comment</h3>
+				<hr class="w3-clear">
+				<form asp-controller="Comments" asp-action="@this.ViewData["Action"]" method="post">
+					<div>
+						<div>
+							<label asp-for="Content" class="w3-opacity"></label><br />
+							<span asp-validation-for="Content" class="form-error" style="color: Red"></span>
+							<textarea asp-for="Content" class="w3-border w3-padding w3-input w3-auto form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+						</div>
+						<div>
+							<input type="submit" value="@this.ViewData["ButtonText"]" class="w3-button w3-theme w3-margin-top w3-round" />
+						</div>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+

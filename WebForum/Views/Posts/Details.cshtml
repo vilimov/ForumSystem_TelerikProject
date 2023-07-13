@@ -19,7 +19,7 @@
 						<a asp-controller="Posts" asp-action="Delete" , asp-route-id="@this.Model.Id" class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>
 					</div>
 
-					<div class="w3-container w3-medium w3-card w3-round">
+					<div class="w3-container w3-medium w3-card w3-round" style="overflow-wrap: break-word;">
 						<p>@this.Model.Content</p>
 					</div>
 				<br>
@@ -55,13 +55,15 @@
 						}
 						foreach (var comment in this.Model.Comments)
 						{
-							<div class="w3-panel w3-leftbar w3-sand w3-serif w3-medium w3-margin-left w3-margin-right">
+						<div class="w3-panel w3-leftbar w3-sand w3-serif w3-medium w3-margin-left w3-margin-right" style="overflow-wrap: break-word;">
 								<div class="w3-container w3-card">
 									@comment.Autor.Username
 									<span class="w3-right w3-opacity">@comment.CreatedAt</span><br>
 								</div>
 								<p>@comment.Content</p>
-								<span class="w3-right w3-opacity"><a class="w3-tag w3-small w3-theme-l3 w3-hover-blue-gray w3-card w3-round"><i class="fa fa-thumbs-up"></i>&nbsp;@comment.Likes</a></span>
+								<a asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Edit</i></a>
+								<a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>					
+								<span class="w3-right w3-opacity"><a class="w3-tag w3-small w3-yellow w3-hover-blue-gray w3-card w3-round"><i class="fa fa-thumbs-up"></i>&nbsp;@comment.Likes</a></span>
 
 							</div>
 
@@ -84,7 +86,7 @@
 								</div>
 							</div>
 
-							<a class="w3-button w3-theme-d2 w3-margin-bottom w3-round"><i class="fa fa-comment"></i>&nbsp;Comment</a>
+						<a asp-controller="Comments" asp-action="Create" asp-route-id="@this.Model.Id" class="w3-button w3-theme-d2 w3-margin-bottom w3-round" title="Create Comment"><i class="fa fa-comment"></i>&nbsp;Comment</a>
 						</div>
 						<div class="w3-half">
 						</div>

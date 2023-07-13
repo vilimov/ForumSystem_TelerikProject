@@ -54,23 +54,23 @@ namespace WebForum.Data
 
             List<Post> posts = new List<Post>()
             {
-                new Post { Id = 1, Title = "Omnium Rerum Principia Parva Sunt", Content = "The beginnings of all things are small.", AutorId = 3, CreatedAt = DateTime.Now },
-                new Post { Id = 2, Title = "Semper Idem", Content = "Always the same.", AutorId = 3, CreatedAt = DateTime.Now},
-                new Post { Id = 3, Title = "Ars Longa, Vita Brevis", Content = "Art is long, life is short.", AutorId = 4, CreatedAt = DateTime.Now},
-                new Post { Id = 4, Title = "Acta est Fabula, Plaudite!", Content = "The play is over, applaud!", AutorId = 5, CreatedAt = DateTime.Now},
-                new Post { Id = 5, Title = "Alea Jacta Est", Content = "The die is cast.", AutorId = 1, CreatedAt = DateTime.Now},
+                new Post { Id = 1, Title = "Omnium Rerum Principia Parva Sunt", Content = "The beginnings of all things are small.", AutorId = 3, CreatedAt = DateTime.Now.AddDays(-1) },
+                new Post { Id = 2, Title = "Semper Idem", Content = "Always the same.", AutorId = 3, CreatedAt = DateTime.Now.AddDays(-2)},
+                new Post { Id = 3, Title = "Ars Longa, Vita Brevis", Content = "Art is long, life is short.", AutorId = 4, CreatedAt = DateTime.Now.AddDays(-3)},
+                new Post { Id = 4, Title = "Acta est Fabula, Plaudite!", Content = "The play is over, applaud!", AutorId = 5, CreatedAt = DateTime.Now.AddDays(-4)},
+                new Post { Id = 5, Title = "Alea Jacta Est", Content = "The die is cast.", AutorId = 1, CreatedAt = DateTime.Now.AddDays(-5)},
             };
             modelBuilder.Entity<Post>().HasData(posts);
 
             List<Comment> comments = new List<Comment>()
             {
-                new Comment { Id = 1, Content = "Exitus Acta Probat – The result justifies the deed", AutorId = 7, PostId = 1, CreatedAt = DateTime.Now },
-                new Comment { Id = 2, Content = "Veritas Odit Moras – Truth hates delay", AutorId = 8, PostId = 1, CreatedAt = DateTime.Now },
-                new Comment { Id = 3, Content = "Timendi Causa Est Nescire – The cause of fear is ignorance", AutorId = 8, PostId = 1, CreatedAt = DateTime.Now },
-                new Comment { Id = 4, Content = "Vivamus, Moriendum Est – Let us live, since we must die", AutorId = 8, PostId = 2, CreatedAt = DateTime.Now},
-                new Comment { Id = 5, Content = "Nemo Sine Vitio Est – No one is without fault", AutorId = 8, PostId = 2, CreatedAt = DateTime.Now},
-                new Comment { Id = 6, Content = "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery", AutorId = 8, PostId = 3, CreatedAt = DateTime.Now},
-                new Comment { Id = 7, Content = "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", AutorId = 1, PostId = 3, CreatedAt = DateTime.Now },
+                new Comment { Id = 1, Content = "Exitus Acta Probat – The result justifies the deed", AutorId = 7, PostId = 1, CreatedAt = DateTime.Now.AddDays(-1) },
+                new Comment { Id = 2, Content = "Veritas Odit Moras – Truth hates delay", AutorId = 8, PostId = 1, CreatedAt = DateTime.Now.AddDays(-2) },
+                new Comment { Id = 3, Content = "Timendi Causa Est Nescire – The cause of fear is ignorance", AutorId = 8, PostId = 1, CreatedAt = DateTime.Now.AddDays(-3) },
+                new Comment { Id = 4, Content = "Vivamus, Moriendum Est – Let us live, since we must die", AutorId = 8, PostId = 2, CreatedAt = DateTime.Now.AddDays(-4)},
+                new Comment { Id = 5, Content = "Nemo Sine Vitio Est – No one is without fault", AutorId = 8, PostId = 2, CreatedAt = DateTime.Now.AddDays(-5)},
+                new Comment { Id = 6, Content = "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery", AutorId = 8, PostId = 3, CreatedAt = DateTime.Now.AddDays(-6)},
+                new Comment { Id = 7, Content = "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", AutorId = 1, PostId = 3, CreatedAt = DateTime.Now.AddDays(-7) },
             };
             modelBuilder.Entity<Comment>().HasData(comments);
 

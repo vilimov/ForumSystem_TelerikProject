@@ -1,6 +1,6 @@
-﻿@model WebForum.Models.ViewModels.PostViewModel
+﻿@model WebForum.Models.ViewModels.CommentViewModel
 @{
-	this.ViewData["PageTitle"] = "Delete Post";
+	this.ViewData["PageTitle"] = "Delete Comment";
 }
 
 <div class="w3-row-padding">
@@ -9,13 +9,12 @@
 			<div class="w3-container w3-padding">
 				<h3>@this.ViewData["PageTitle"]:</h3>
 				<hr class="w3-clear">
-				<h4 class ="w3-opacity"> <b>@this.Model.Title</b>?</h4>
 				<h6 class="w3-opacity" style="overflow-wrap: break-word;"> <b>@this.Model.Content</b>?</h6>
 				<hr class="w3-clear">
 				<div class="w3-container w3-half">
-					<p>Do you want to delete this post?</p>
-					<form asp-controller="Posts" asp-action="Delete" method="post">
-						<input type="submit" value="Delete" class="w3-button w3-block w3-red w3-section w3-half w3-card w3-round" />	
+					<p>Do you want to delete this comment?</p>
+					<form asp-controller="Comments" asp-action="Delete" method="post">
+						<input type="submit" value="Delete" class="w3-button w3-block w3-red w3-section w3-half w3-card w3-round" />
 					</form>
 					<a asp-controller="Posts" asp-action="Index" class="w3-button w3-block w3-green w3-section w3-half w3-card w3-round">Back</a>
 				</div>

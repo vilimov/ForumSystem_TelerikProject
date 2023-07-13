@@ -39,6 +39,11 @@ namespace WebForum.Helpers.Mappers
 
             CreateMap<PostViewModel, Post>();
 			CreateMap<Post, PostViewModel>();
+
+            CreateMap<Comment, CommentViewModel>()
+				.ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content));
+			CreateMap<CommentViewModel, Comment>()
+				.ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content));
 		}
     }
 }

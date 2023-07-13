@@ -1,0 +1,16 @@
+﻿@model List<WebForum.Models.Comment>
+
+<html>
+	<body>
+		<div>
+			@foreach (var comment in this.Model)
+			{
+				<div class="row">
+					<div class="cell">@comment.Content</div>
+					<div class="cell">@comment.Autor</div>
+					<div class="cell">@comment.CommentLikes.Count</div>
+				</div>			
+			}
+		</div>
+	</body>
+</html>

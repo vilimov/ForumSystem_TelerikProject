@@ -1,0 +1,11 @@
+﻿@model WebForum.Models.ViewModels.CommentViewModel
+
+@{
+	this.ViewData["PageTitle"] = "Edit Comment";
+	this.ViewData["Action"] = "Edit";
+	this.ViewData["ButtonText"] = "Save";
+	//this.ViewData["TitleVisibility"] = "none";	//Hides the field with this style
+	this.ViewData["TitleVisibility"] = "block";     //Shows the field with this style
+}
+
+<partial name="_CommentForm" />

@@ -1,0 +1,53 @@
+﻿@using WebForum.Models;
+@using WebForum.Models.Dtos;
+@model Comment
+@{
+	this.ViewData["PageTitle"] = "Details";
+	this.ViewData["CreatedAtText"] = "Created at: ";
+}
+
+<div class="w3-row-padding">
+	<div class="w3-col m12">
+		<div class="w3-card w3-round w3-white">
+			<div class="w3-container w3-padding">
+					<br>
+					<img src="~/images/avatars/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+					<span class="w3-right w3-opacity">@this.ViewData["CreatedAtText"] <br>@this.Model.CreatedAt</span>
+					<h4>@this.Model.Autor.Username</h4><br>
+					<hr class="w3-clear">
+				<div class="w3-container w3-sand w3-card" style="overflow-wrap: break-word;">
+						<h5>@this.Model.Content</h5>
+					<a asp-controller="Comments" asp-action="Edit" , asp-route-id="@this.Model.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Edit</i></a>
+					<a asp-controller="Comment" asp-action="Delete" , asp-route-id="@this.Model.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>
+					</div>					
+				
+					<div class="w3-row-padding" style="margin:0 -16px">
+						<div class="w3-half">
+								<button class="like-button w3-button w3-theme-d1 w3-margin-bottom w3-round" data-post-id="@this.Model.Id" data-likes="@this.Model.Likes">
+								<i class="fa fa-thumbs-up"></i>&nbsp;<span class="like-count">@this.Model.Likes</span>
+							</button>
+						@if (this.Model.CommentLikes.Count > 0) 
+						{
+							<div class="w3-dropdown-hover w3-hide-small">
+								<i class="fa fa-thumbs-up"></i>&nbsp;<span class="like-count">@this.Model.Likes</span>
+								<div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
+									@foreach (var person in this.Model.CommentLikes)
+									{
+										<p class="w3-bar-item">@person.User.Username</p>
+									}
+								</div>
+							</div>
+						}
+
+						</div>
+						<div class="w3-half">
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		
+	</div>
+</div>
+

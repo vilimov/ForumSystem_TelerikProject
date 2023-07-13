@@ -94,7 +94,7 @@ a.nav {
 
 .passing-text {
     animation: passToLeft 8s linear infinite;
-    white-space: nowrap;
+    white-space: wrap;
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
@@ -109,4 +109,3 @@ a.nav {
         transform: translateX(-100%);
     }
 }
-
