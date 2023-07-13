@@ -75,17 +75,11 @@ media screen and (max-width: 600px) {
 }
 </style>
 
-  <div class="search-container w3-padding">
-      <p>Search by something...</p>
-    <form asp-controller="Posts" asp-action="Index" method="post">
-            <input type="text" placeholder="Search..." name="search">
+<div class="search-container w3-padding">
+    <p class="w3-opacity">Search by post title...</p>
+    <form asp-controller="Posts" asp-action="Searches" method="get">
+        <input type="text" placeholder="Search..." name="Title">
       <button type="submit"><i class="fa fa-search"></i></button>
     </form>
   </div>
 
-
-<div style="padding-left:16px">
-  <h2>Responsive Search Bar</h2>
-  <p>Navigation bar with a search box and a submit button inside of it.</p>
-  <p>Resize the browser window to see the responsive effect.</p>
-</div>
