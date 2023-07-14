@@ -80,6 +80,11 @@ namespace WebForum.Repository
         public Comment Delete(int id)
         {
             Comment commentToRemove = GetCommentById(id);
+            //Delete Likes for Current Comment
+            foreach (var like in commentToRemove.CommentLikes) 
+            {
+                this.context.Remove(like);
+            }
             Comment removedComment = context.Comments.Remove(commentToRemove).Entity;
             context.SaveChanges();
             return removedComment;

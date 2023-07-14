@@ -82,12 +82,23 @@
 								</div>
 								<p >@comment.Content</p>
 								<a asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Edit</i></a>
-								<a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>					
+								<a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>
+							@*@if (comment.CommentLikes.Count > 0)
+							{
+								<div class="w3-dropdown-hover w3-small w3-khaki">
+									&nbsp;<span class="like-count">Liked by</span>
+									<div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
+										@foreach (var person in comment.CommentLikes)
+										{
+											<p class="w3-bar-item">@person.User.Username</p>
+										}
+									</div>
+								</div>
+							}*@
 								@*<span class="w3-right w3-opacity"><a class="w3-tag w3-small w3-yellow w3-hover-blue-gray w3-card w3-round"><i class="fa fa-thumbs-up"></i>&nbsp;@comment.Likes</a></span>*@
 								<button class="comment-like-button w3-button w3-right w3-tag w3-khaki w3-hover-blue-gray w3-card w3-round" style="width: 50px; height: 25px; display: flex; align-items: center;" data-comment-id="@comment.Id" data-likes="@comment.Likes" title="Add/Remove Like">
 								<i class="fa fa-thumbs-up"></i>&nbsp;<span class="like-count">@comment.Likes</span>
-								</button>
-
+								</button>							
 								</div>
 
 						}

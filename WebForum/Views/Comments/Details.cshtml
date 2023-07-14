@@ -20,26 +20,12 @@
 						<h5>@this.Model.Content</h5>
 					<a asp-controller="Comments" asp-action="Edit" , asp-route-id="@this.Model.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-pencil">&nbsp;Edit</i></a>
 					<a asp-controller="Comment" asp-action="Delete" , asp-route-id="@this.Model.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray"><i class="fa fa-trash">&nbsp;Delete</i></a>
+					<a asp-controller="Posts" asp-action="Details" asp-route-id="@Model.Post.Id" class="w3-tag w3-small w3-khaki w3-hover-blue-gray">
+						Return to Post Details
+					</a>
 					</div>					
-				
 					<div class="w3-row-padding" style="margin:0 -16px">
-						<div class="w3-half">
-								<button class="like-button w3-button w3-theme-d1 w3-margin-bottom w3-round" data-post-id="@this.Model.Id" data-likes="@this.Model.Likes">
-								<i class="fa fa-thumbs-up"></i>&nbsp;<span class="like-count">@this.Model.Likes</span>
-							</button>
-						@if (this.Model.CommentLikes.Count > 0) 
-						{
-							<div class="w3-dropdown-hover w3-hide-small">
-								<i class="fa fa-thumbs-up"></i>&nbsp;<span class="like-count">@this.Model.Likes</span>
-								<div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
-									@foreach (var person in this.Model.CommentLikes)
-									{
-										<p class="w3-bar-item">@person.User.Username</p>
-									}
-								</div>
-							</div>
-						}
-
+						<div class="w3-half">	
 						</div>
 						<div class="w3-half">
 						</div>

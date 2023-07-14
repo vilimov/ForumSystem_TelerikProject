@@ -34,20 +34,24 @@ namespace WebForum.Controllers.MVC
         [HttpGet]
         public IActionResult Index()
         {
-            List<Comment> comments = this.commentService.GetAll();
-
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
+			List<Comment> comments = this.commentService.GetAll();
             return View(comments);
         }
 
         [HttpGet]
         public IActionResult Details(int id)
-        {
-            try
+		{
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
+			try
             {
-
                 Comment comment = this.commentService.GetCommentById(id);
-               // CommentsShowDTO result = new CommentsShowDTO(comment);
-
                 return View(comment);
             }
             catch (EntityNotFoundException ex)
@@ -60,9 +64,12 @@ namespace WebForum.Controllers.MVC
         }
 
         [HttpGet]public IActionResult Create([FromRoute] int id)
-        {
-            var commentViewModel = new CommentViewModel();
-
+		{
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
+			var commentViewModel = new CommentViewModel();
             return View(commentViewModel);
         }
         
@@ -70,14 +77,17 @@ namespace WebForum.Controllers.MVC
         [HttpPost]
         public IActionResult Create([FromRoute]int id, CommentViewModel commentViewModel)
         {
-            if (!this.ModelState.IsValid)
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
+			if (!this.ModelState.IsValid)
+			{
+				return View(commentViewModel);
+			}
+			try
             {
-                return View(commentViewModel);
-            }
-            try
-            {
-                //TODO change to real user
-                var user = authManager.TryGetUser("JuliusCaesar:Cleopatra");
+                var user = GetLoggedUser();
 				var post = postService.GetPostById(id);
                 Comment newComment = mapper.Map<Comment>(commentViewModel);
                 var createdComment = commentService.CreateComment(newComment, post, user);
@@ -98,6 +108,10 @@ namespace WebForum.Controllers.MVC
 		[HttpGet]
 		public IActionResult Edit([FromRoute] int id)
 		{
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
 			try
 			{
 				var comment = commentService.GetCommentById(id);
@@ -116,35 +130,37 @@ namespace WebForum.Controllers.MVC
 		[HttpPost]
 		public IActionResult Edit([FromRoute] int id, CommentViewModel commentViewModel)
 		{
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
 			if (!this.ModelState.IsValid)
 			{
-
 				return View(commentViewModel);
 			}
 			try
 			{
-				//TODO change to real user
-				var user = authManager.TryGetUser("JuliusCaesar:Cleopatra");
+				var user = GetLoggedUser();
 				var newComment = mapper.Map<Comment>(commentViewModel);
 				var createdComment = commentService.Update(id, newComment, user);
-
 				this.HttpContext.Response.StatusCode = StatusCodes.Status200OK;
-				//return RedirectToAction("Index", "Posts");
-				return RedirectToAction("Details", "Posts", new { id = createdComment.PostId });
+				return RedirectToAction("Details", "Comments", new { id = createdComment.Id });
 			}
 			catch (DuplicateEntityException e)
 			{
 				this.HttpContext.Response.StatusCode = StatusCodes.Status409Conflict;
 				this.ViewData["ErrorMessage"] = e.Message;
-				//return View("Error");             this will return the Error page
-				return View(commentViewModel);      // this will retur the same object and keep us on the same page
+				return View(commentViewModel);
 			}
-
 		}
 
 		[HttpGet]
 		public IActionResult Delete([FromRoute] int id)
 		{
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
 			try
 			{
 				var comment = commentService.GetCommentById(id);
@@ -163,34 +179,37 @@ namespace WebForum.Controllers.MVC
 		[HttpPost, ActionName("Delete")]
 		public IActionResult DeleteConfirmed([FromRoute] int id)
 		{
-
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
 			try
 			{
-				//TODO change to real user
 				Comment currentComment = commentService.GetCommentById(id);
 				var postId = commentService.GetCommentById(id).PostId;
-				var user = authManager.TryGetUser("JuliusCaesar:Cleopatra");
+				var user = GetLoggedUser();
 				this.commentService.Delete(id, user);
 				return RedirectToAction("Details", "Posts", new { id = postId});
 			}
 			catch (UnauthorizedOperationException e)
 			{
-
 				this.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
 				this.ViewData["ErrorMessage"] = e.Message;
-				//return View("Error");             this will return the Error page
-				return View("Error");      // this will retur the same object and keep us on the same page
+				return View("Error");
 			}
 		}
 
 		[HttpPost]
 		public IActionResult ToggleLike([FromRoute] int id)
 		{
+			if (!IsUserLogged())
+			{
+				return RedirectToAction("Login", "Users");
+			}
 			try
 			{
 				var user = GetLoggedUser();
 				var comment = commentService.GetCommentById(id);
-
 				var likeComment = comment.CommentLikes.FirstOrDefault(lp => lp.UserId == user.Id);
 				if (likeComment == null)
 				{
@@ -200,7 +219,6 @@ namespace WebForum.Controllers.MVC
 				{
 					this.commentService.RemoveLikeComment(comment, user);
 				}
-
 				return Ok();
 			}
 			catch (UnauthorizedOperationException e)
@@ -215,7 +233,7 @@ namespace WebForum.Controllers.MVC
 				this.ViewData["ErrorMessage"] = e.Message;
 				return View("Error");
 			}
-		}
+		}		
 
 		private bool IsUserLogged()
 		{
@@ -232,15 +250,6 @@ namespace WebForum.Controllers.MVC
 			var getUserName = this.HttpContext.Session.GetString("LoggedUser");
 			var loggedUser = userService.GetByUsername(getUserName);
 			return loggedUser;
-		}
-		private bool IsUserAuthor(User user, Post post)
-		{
-			var loggedUser = GetLoggedUser();
-			if (user.Username == post.Autor.Username)
-			{
-				return true;
-			}
-			return false;
 		}
 	}
 }
