@@ -119,7 +119,12 @@ namespace WebForum.Data
                 new Tag { Id = 4, Name = "Politics"},
 				new Tag { Id = 5, Name = "Math"},
 				new Tag { Id = 6, Name = "Commedy"},
-				new Tag { Id = 7, Name = "Tragedy"}
+				new Tag { Id = 7, Name = "Tragedy"},
+				new Tag { Id = 8, Name = "Games"},
+				new Tag { Id = 9, Name = "Friends"},
+				new Tag { Id = 10, Name = "Forum"},
+				new Tag { Id = 11, Name = "Love"},
+				new Tag { Id = 12, Name = "Fun"},
 			};
             modelBuilder.Entity<Tag>().HasData(tags);
 

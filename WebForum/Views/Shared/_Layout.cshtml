@@ -55,6 +55,10 @@
 		.h4shadowRed {
 			text-shadow: 1px 1px #b80c00;
 		}
+
+		.h4shadowBlue {
+			text-shadow: 1px 1px #7286ed;
+		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
@@ -116,12 +120,12 @@
 			{
 				<a asp-controller="Posts" asp-action="Create" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Post"><i class="fa fa-pencil"></i></a>
 				<a asp-controller="Posts" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Posts"><i class="fa fa-newspaper-o" aria-hidden="true"></i></a>
-				<a asp-controller="Home" asp-action="About" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Abaut"><i class="fa fa-globe"></i></a>
 				<a asp-controller="Tag" asp-action="Index" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Tags"><i class="fa fa-tags" aria-hidden="true"></i></a>
+				<a asp-controller="Home" asp-action="About" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Abaut"><i class="fa fa-globe"></i></a>
 				<a href="/swagger" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Swagger"><i class="fa fa-file-o "></i></a>
 			}
-   
-            <div class="w3-dropdown-hover w3-hide-small">
+
+			<!--<div class="w3-dropdown-hover w3-hide-small">
                 <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>
                 <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
                     <a href="#" class="w3-bar-item w3-button">One new friend request</a>
@@ -129,10 +133,7 @@
                     <a href="#" class="w3-bar-item w3-button">Jane likes your post</a>
                 </div>
             </div>
-            <!--<a href="/Users/Profile" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
-                <img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
-               
-            </a>-->
+            -->
             @if (isLogged && isAdmin)
             {
                 <a asp-controller="Profiles" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
@@ -261,19 +262,19 @@
 				<!-- Interests -->
 				<div class="w3-card w3-round w3-white w3-hide-small">
 					<div class="w3-container">
-						<p>Interests</p>
+						<p>Interests by tags...</p>
 						<p>
-							<span class="w3-tag w3-small w3-theme-d5">News</span>
-							<span class="w3-tag w3-small w3-theme-d4">W3Schools</span>
-							<span class="w3-tag w3-small w3-theme-d3">Labels</span>
+							<span class="w3-tag w3-small w3-theme-d5">History</span>
+							<span class="w3-tag w3-small w3-theme-d4">Philosophy</span>
+							<span class="w3-tag w3-small w3-theme-d3">Medicine</span>
 							<span class="w3-tag w3-small w3-theme-d2">Games</span>
 							<span class="w3-tag w3-small w3-theme-d1">Friends</span>
-							<span class="w3-tag w3-small w3-theme">Games</span>
-							<span class="w3-tag w3-small w3-theme-l1">Friends</span>
-							<span class="w3-tag w3-small w3-theme-l2">Food</span>
-							<span class="w3-tag w3-small w3-theme-l3">Design</span>
-							<span class="w3-tag w3-small w3-theme-l4">Art</span>
-							<span class="w3-tag w3-small w3-theme-l5">Photos</span>
+							<span class="w3-tag w3-small w3-theme">Math</span>
+							<span class="w3-tag w3-small w3-theme-l1">Politics</span>
+							<span class="w3-tag w3-small w3-theme-l2">Commedy</span>
+							<span class="w3-tag w3-small w3-theme-l3">Tragedy</span>
+							<span class="w3-tag w3-small w3-theme-l4">Forum</span>
+							<span class="w3-tag w3-small w3-theme-l5">Love</span>
 						</p>
 					</div>
 				</div>
