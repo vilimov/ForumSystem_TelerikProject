@@ -1,4 +1,7 @@
 ﻿@model WebForum.Models.ViewModels.ProfileViewModel
+@{
+    string userImage = Context.Session.GetString("UserImage");
+}
 
 
 <div class="w3-row-padding">
@@ -7,7 +10,7 @@
             <div class="w3-container w3-padding">
                <h4 class="w3-center">My Profile</h4>
                <p class="w3-center">
-                  <img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
+                    <img src="@Url.Content("~/images/avatars/" + userImage)" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
                </p>
                <hr>
                <p class="w3-center"><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>@Model.Username</p>

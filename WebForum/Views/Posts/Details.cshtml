@@ -8,11 +8,13 @@
 	string username;
 	bool isAdmin = false;
 	int userId = 0;
+	string userImage = "defaultProfile.png";
 	if (isLogged)
 	{
 		username = Context.Session.GetString("LoggedUser");
 		isAdmin = Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
 		userId = int.Parse(Context.Session.GetString("UserId"));
+		userImage = Context.Session.GetString("UserImage");
 	}
 }
 <div class="w3-row-padding">
@@ -20,7 +22,7 @@
 		<div class="w3-card w3-round w3-white">
 			<div class="w3-container w3-padding">
 					<br>
-					<img src="~/images/avatars/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+				<img src="@Url.Content("~/images/avatars/" + userImage)" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
 					<span class="w3-right w3-opacity">@this.ViewData["CreatedAtText"] <br>@this.Model.CreatedAt</span>
 					<h4>@this.Model.Autor.Username</h4><br>
 					<hr class="w3-clear">

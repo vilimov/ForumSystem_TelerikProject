@@ -79,6 +79,7 @@ namespace WebForum.Controllers.MVC
 				this.HttpContext.Session.SetString("UserFirstName", user.FirstName);
 				this.HttpContext.Session.SetString("UserLastName", user.LastName);
 				this.HttpContext.Session.SetString("UserEmail", user.Email);
+				this.HttpContext.Session.SetString("UserImage", user.UserImage);
 
 				return RedirectToAction("Index", "Home");
 			}

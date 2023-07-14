@@ -10,7 +10,7 @@
                 {
                     <div class="w3-container w3-card w3-white w3-round w3-margin">
                         <br>
-                        <span class="w3-right w3-opacity">@user.IsAdmin</span>
+                        <span class="w3-right w3-opacity">@(user.IsAdmin ? "Admin" : "User")</span>
                         <h4><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>@user.Username</h4><br>
                         <hr class="w3-clear">
                         <p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i>@user.Email</p>

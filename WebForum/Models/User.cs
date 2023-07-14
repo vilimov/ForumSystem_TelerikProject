@@ -48,5 +48,7 @@ namespace WebForum.Models
 		[JsonIgnore]
 		public List<CommentLike> CommentLikes { get; set; } = new List<CommentLike>();
 
-    }
+        public string UserImage { get; set; } = "defaultProfile.png";
+
+	}
 }
