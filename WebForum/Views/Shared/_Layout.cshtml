@@ -1,19 +1,32 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using WebForum.Helpers.Authentication
 @using System.Security.Claims
+@{
+	var userProfile = ViewBag.UserProfile as WebForum.Models.ViewModels.UserViewModel;
+}
 
 @{
+
 	var isLogged = Context.Session.Keys.Contains("LoggedUser");
 	string username = "";
+	string userFirstName = "";
+	string userLastName = "";
+	string userEmail = "";
 	bool isAdmin = false;
 	int userId = 0;
+	string userImage = "defaultProfile.png";
 	if (isLogged)
 	{
+		userProfile = ViewBag.UserProfile as WebForum.Models.ViewModels.UserViewModel;
 		username = Context.Session.GetString("LoggedUser");
 		isAdmin = Convert.ToBoolean(Context.Session.GetString("IsAdmin"));
 		userId = int.Parse(Context.Session.GetString("UserId"));
+		userFirstName = Context.Session.GetString("UserFirstName");
+		userLastName = Context.Session.GetString("UserLastName");
+		userEmail = Context.Session.GetString("UserEmail");
 	}
-	
+
+
 	this.ViewData["PageTitle"] = "";
 	this.ViewData["Avatar"] = "~/images/avatars/avatar9.png";
 }
@@ -122,7 +135,7 @@
             @if (isLogged && isAdmin)
             {
                 <a asp-controller="Profiles" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
-					<img src= "~/images/avatars/avatar9.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+					<img src="@Url.Content("~/images/avatars/" + userImage)" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
                 </a>
 				<a asp-controller="Admins" asp-action="AllUsers" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-blue" title="Admin Dashboard"><i></i>Admin Dashboard</a>
                 <a asp-controller="Users" asp-action="Logout" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-red" title="Logout"><i></i>Logout</a>
@@ -130,7 +143,7 @@
             else if (isLogged)
             {
                 <a asp-controller="Profiles" asp-action="Profile" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" title="My Profile">
-					<img src="~/images/avatars/avatar9.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+					<img src="@Url.Content("~/images/avatars/" + userImage)" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
                 </a>
                 <a asp-controller="Users" asp-action="Logout" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-red" title="Logout"><i></i>Logout</a>
             }
@@ -168,12 +181,18 @@
 					<div class="w3-container">
 						@if (isLogged)
 						{
-							<h4 class="w3-center">Hello @username</h4>
-							<p class="w3-center"><img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+
+							<h4 class="w3-center">Hello @userFirstName </h4>
+							<!--<p class="w3-center"><img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>-->
+							<p class="w3-center">
+								<img src="@Url.Content("~/images/avatars/" + userImage)" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
+							</p>
+
 							<hr>
 							<p><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>@username</p>
-							<p><i class="fa fa-id-card fa-fw w3-margin-right w3-text-theme"></i> @username</p>
-							<p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i>@username</p>
+							<p><i class="fa fa-id-card fa-fw w3-margin-right w3-text-theme"></i>@userFirstName @userLastName</p>
+							<p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i>@userEmail</p>
+							
 						}
 						else
 						{
