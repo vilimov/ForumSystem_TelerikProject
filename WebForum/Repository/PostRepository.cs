@@ -59,6 +59,7 @@ namespace WebForum.Repository
                                         .ThenInclude(tag=>tag.Tag)
 									.Include(cl => cl.Comments)
                                     .ThenInclude(dd=>dd.CommentLikes)
+                                    .ThenInclude(ul=>ul.User)
 									.ToList();
         }
 
