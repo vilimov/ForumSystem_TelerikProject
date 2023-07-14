@@ -38,6 +38,16 @@
 						<input type="submit" value="Edit Profile" class="w3-button w3-theme w3-margin-top w3-round" />
 					</div>
 				</form>
+				<!--Change Profile Image-->
+				<br />
+				<form asp-action="EditProfile" enctype="multipart/form-data" method="post">
+					<div class="form-group">
+						<label for="avatarImage">Change Profile Image</label><br>
+						<input type="file" class="form-control-file" id="avatarImage" name="AvatarImage">
+					</div>
+					<!-- other form fields -->
+					<button type="submit" class="btn btn-primary">Save Changes</button>
+				</form>
 			</div>
 		</div>
 	</div>

@@ -79,10 +79,34 @@ namespace WebForum.Controllers.MVC
                 user.LastName = model.LastName;
             }
 
-            try
+			/*Upload image*/
+
+			if (model.AvatarImage != null && model.AvatarImage.Length > 0)
+			{
+				// Generate a unique filename for the uploaded image
+				string uniqueFileName = Guid.NewGuid().ToString() + "_" + model.AvatarImage.FileName;
+
+				// Define the relative path to the avatar images folder
+				string uploadsFolder = Path.Combine("wwwroot", "images", "avatars");
+
+				// Combine the folder path and unique filename to get the full file path
+				string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+				// Save the uploaded image to the specified path
+				using (var fileStream = new FileStream(filePath, FileMode.Create))
+				{
+					model.AvatarImage.CopyTo(fileStream);
+				}
+
+				// Update the user's image name with the new filename
+				user.UserImage = uniqueFileName;
+			}
+
+			try
             {
-                userService.UpdateProfile(user);
-            }
+				this.HttpContext.Session.SetString("UserImage", user.UserImage);
+				userService.UpdateProfile(user);
+			}
             catch (EntityNotFoundException ex)
             {
                 ModelState.AddModelError("", "An error occurred while updating the profile");
@@ -120,5 +144,5 @@ namespace WebForum.Controllers.MVC
                 return View("Error");
             }
         }
-    }
+	}
 }

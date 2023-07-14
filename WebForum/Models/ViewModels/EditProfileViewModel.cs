@@ -20,5 +20,7 @@ namespace WebForum.Models.ViewModels
 		[MaxLength(20, ErrorMessage = "The {0} field must be less than {1} characters.")]
 		public string Password { get; set; }
 
-    }
+		public IFormFile AvatarImage { get; set; }
+
+	}
 }
