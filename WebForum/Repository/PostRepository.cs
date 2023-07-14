@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using WebForum.Data;
@@ -72,7 +73,11 @@ namespace WebForum.Repository
             {
                 posts = posts.FindAll(p => p.Autor.Username.Contains(filterQueryParameters.UserName, StringComparison.InvariantCultureIgnoreCase));
             }
-            if (!string.IsNullOrEmpty(filterQueryParameters.OrderByComments))
+			if (!string.IsNullOrEmpty(filterQueryParameters.Tag))
+			{
+				posts = posts.FindAll(p => p.PostTags.Any(t => t.Tag.Name.Contains(filterQueryParameters.Tag, StringComparison.InvariantCultureIgnoreCase)));
+			}
+			if (!string.IsNullOrEmpty(filterQueryParameters.OrderByComments))
             {
                 posts = posts.OrderBy(p => p.Comments.Count).ToList();
                 posts.Reverse();

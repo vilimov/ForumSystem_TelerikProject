@@ -194,18 +194,46 @@
 				<!-- Accordion -->
 				<div class="w3-card w3-round">
 					<div class="w3-white">
-						<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> Search by post title</button>
+						<button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> Search post by title</button>
 						<div id="Demo1" class="w3-hide w3-container">
-							<partial name="_Search" />
+							<div class="search-container w3-padding">
+								<form asp-controller="Posts" asp-action="Searches" method="get">
+									<input type="text" placeholder="Search..." name="Title">
+									<button type="submit"><i class="fa fa-search"></i></button>
+								</form>
+							</div>
 						</div>
-						<button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> Search by tag</button>
+						<button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> Search post by tag</button>
 						<div id="Demo2" class="w3-hide w3-container">
-							<partial name="_Search" />
+							<div class="search-container w3-padding">
+							<form asp-controller="Posts" asp-action="Searches" method="get">
+								<input type="text" placeholder="Search..." name="Tag">
+								<button type="submit"><i class="fa fa-search"></i></button>
+							</form>
+							</div>
 						</div>
-						<button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> Search by Username</button>
+						<button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> Search posts by Author</button>
 						<div id="Demo3" class="w3-hide w3-container">
-							<partial name="_Search" />
+							<div class="search-container w3-padding">
+							<form asp-controller="Posts" asp-action="Searches" method="get">
+								<input type="text" placeholder="Search..." name="UserName">
+								<button type="submit"><i class="fa fa-search"></i></button>
+							</form>
 						</div>
+						</div>
+						<!-- Admin Search by Username-->
+						 @if (isLogged && isAdmin)
+						{
+							<button onclick="myFunction('Demo4')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-user-circle-o fa-fw w3-margin-right"></i> Search user by Username</button>
+							<div id="Demo4" class="w3-hide w3-container">
+								<div class="search-container w3-padding">
+									<form asp-controller="Posts" asp-action="Searches" method="get">
+										<input type="text" placeholder="Search..." name="UserName">
+										<button type="submit"><i class="fa fa-search"></i></button>
+									</form>
+								</div>
+							</div>
+						}
 					</div>
 				</div>
 				<br>

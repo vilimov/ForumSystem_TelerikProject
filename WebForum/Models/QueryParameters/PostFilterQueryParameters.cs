@@ -7,5 +7,6 @@
         public string OrderByComments { get; set; }
         public string OrderByDate { get; set; }
         public string OrderByLikes { get; set; }
-    }
+		public string Tag { get; set; }
+	}
 }
