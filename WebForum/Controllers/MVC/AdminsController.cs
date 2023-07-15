@@ -65,5 +65,19 @@ namespace WebForum.Controllers.MVC
                 return View("Error");
             }
         }
+        [HttpPost]
+        public IActionResult DeleteUser(int id)
+        {
+            try
+            {
+                User currentUser = userServices.GetUserById(id);
+                userServices.DeleteUser(id);
+                return RedirectToAction("AllUsers");
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
+        }
     }
 }

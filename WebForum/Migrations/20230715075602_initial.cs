@@ -193,17 +193,17 @@ namespace WebForum.Migrations
                 columns: new[] { "Id", "Email", "FirstName", "IsAdmin", "IsBlocked", "LastName", "Password", "Salt", "UserImage", "Username" },
                 values: new object[,]
                 {
-                    { 1, "JC@roman.im", "Julius", true, false, "Caesar", "ZqsuXwkE/j+iOdh2TwDL1S+MKZOBh3vhc5hD/wTcwmA=", "Ae6s4xNifBi7AqmBEZvNJg==", "avatar9.png", "JuliusCaesar" },
-                    { 2, "MA@roman.im", "Marcus", true, false, "Aurelius", "J/wluV08eyr07u1OgEtn92gXaAbEQ2uHHZN+gRl4Gpk=", "Ae6s4xNifBi7AqmBEZvNJg==", "avatar4.png", "MarcusAurelius" },
-                    { 3, "MTC@roman.im", "MarcusTullius", false, false, "Cicero", "91K1LO9GHFDWm53Gt9UJtA6cOAxu7nWDOokMxnjG8Y0=", "Ae6s4xNifBi7AqmBEZvNJg==", "avatar5.png", "MarcusTulliusCicero" },
-                    { 4, "Hipo@roman.im", "Hippocrates", false, false, "ofKos", "7S1mnQ4PRwbPoweAJIDB+H/agPUyK9sFxrbx8RM64FQ=", "Ae6s4xNifBi7AqmBEZvNJg==", "avatar1.png", "Hippocrates" },
-                    { 5, "CA@roman.im", "Caesar", false, false, "Augustus", "jRkstvERMqqp/S1likZn3BE/wnHeUlyhKZV2pFe8Ipo=", "Ae6s4xNifBi7AqmBEZvNJg==", "defaultProfile.png", "CaesarAugustus" },
-                    { 6, "BrutusIAm@roman.im", "MarcusJunius", false, true, "Brutus", "dbNsbNTkO49zZR2A/1tJIw1i4QoYpUlOCxf06pfNy2o=", "Ae6s4xNifBi7AqmBEZvNJg==", "avatar2.png", "MarcusJuniusBrutus" },
-                    { 7, "Ovid@roman.im", "PubliusOvidius", false, false, "Naso", "4VJCYJeFvMVeh3NhZl4mvQsN0EW+OIy/QrWN2S/KOts=", "Ae6s4xNifBi7AqmBEZvNJg==", "defaultProfile.png", "PubliusOvidiusNaso" },
-                    { 8, "Seneca@roman.im", "LuciusAnnaeus", false, false, "Seneca", "+WQlrnnjqV8R3daoIixk2UYXREeOaW3Oj+h6n9OX6pI=", "Ae6s4xNifBi7AqmBEZvNJg==", "defaultProfile.png", "LuciusAnnaeusSeneca" },
-                    { 9, "admin@adm.in", "Ad", true, false, "Min", "hgNf1kIPll1p/OAECzA26ZXwQSwI6kijxzkBHuzyFQs=", "Ae6s4xNifBi7AqmBEZvNJg==", "defaultProfile.png", "Admin" },
-                    { 10, "CleoQueen@greek.myth", "Cleopatra", true, false, "Philopator", "tEyWW1Z4Dsxx87RNUuFS2VTw8W6Zmoid3LLl87lg/ww=", "Ae6s4xNifBi7AqmBEZvNJg==", "avatar11.png", "CleoQueen" },
-                    { 11, "CaesarWify@roman.im", "Calpurnia", false, false, "Caesar", "qFLkYnf7qb4PxyvyUs5T6RBOIsUsINKHzA9xl8J1Ic8=", "Ae6s4xNifBi7AqmBEZvNJg==", "avatar10.png", "CalpurniaJC" }
+                    { 1, "JC@roman.im", "Julius", true, false, "Caesar", "TN92FB8RaEOIIpl0KuIZnKctG8rZnDpQJPLI39QmFd4=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "avatar9.png", "JuliusCaesar" },
+                    { 2, "MA@roman.im", "Marcus", true, false, "Aurelius", "baeAt1uoMpHNbonDbpbT1HGHDIPj23M2euFFQjnKduU=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "avatar4.png", "MarcusAurelius" },
+                    { 3, "MTC@roman.im", "MarcusTullius", false, false, "Cicero", "dvs+jRh8K7KVEb1Z+yH494KbJgqEUON7jvFm03wd6tI=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "avatar5.png", "MarcusTulliusCicero" },
+                    { 4, "Hipo@roman.im", "Hippocrates", false, false, "ofKos", "s244Ah9Yn6zfCRp6RmV8r8A6dYWKE5/uu2UxaPfQRA8=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "avatar1.png", "Hippocrates" },
+                    { 5, "CA@roman.im", "Caesar", false, false, "Augustus", "XsPfax47c174U2EV72O6ud9XXk6pghEVoUCajfne/Ew=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "defaultProfile.png", "CaesarAugustus" },
+                    { 6, "BrutusIAm@roman.im", "MarcusJunius", false, true, "Brutus", "BNcG3ehWOhKj3FOfwJgBL1m6H8gxZnUcRcPMKJAvem4=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "avatar2.png", "MarcusJuniusBrutus" },
+                    { 7, "Ovid@roman.im", "PubliusOvidius", false, false, "Naso", "hRlMdgjxgf9IH2lLR+5hRlTuaRyHxAntSasO97aDjtM=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "defaultProfile.png", "PubliusOvidiusNaso" },
+                    { 8, "Seneca@roman.im", "LuciusAnnaeus", false, false, "Seneca", "AIIS5YztZzHQl84dkkIpSuX+fbNd/dSb2ytilHpYDvs=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "defaultProfile.png", "LuciusAnnaeusSeneca" },
+                    { 9, "admin@adm.in", "Ad", true, false, "Min", "w2h8b2yyd9aSUvYpmjFIhLojnLknzb0mU8nvHQMa2NI=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "defaultProfile.png", "Admin" },
+                    { 10, "CleoQueen@greek.myth", "Cleopatra", true, false, "Philopator", "oerTRp5QHmXicuc5zT41HJHMDPoGD3R+izADPldF9Gw=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "avatar11.png", "CleoQueen" },
+                    { 11, "CaesarWify@roman.im", "Calpurnia", false, false, "Caesar", "bEs2z2AKSIPWz3sqhLBjDgDpajO6jOVmaLZMW8c6Cnw=", "YHuKssVLs9Ec6fg8Bs1cpQ==", "avatar10.png", "CalpurniaJC" }
                 });
 
             migrationBuilder.InsertData(
@@ -211,16 +211,16 @@ namespace WebForum.Migrations
                 columns: new[] { "Id", "AutorId", "Content", "CreatedAt", "Title" },
                 values: new object[,]
                 {
-                    { 1, 3, "The beginnings of all things are small.", new DateTime(2023, 7, 13, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3185), "Omnium Rerum Principia Parva Sunt" },
-                    { 2, 3, "Always the same.", new DateTime(2023, 7, 12, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3225), "Semper Idem" },
-                    { 3, 4, "Art is long, life is short.", new DateTime(2023, 7, 11, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3228), "Ars Longa, Vita Brevis" },
-                    { 4, 5, "The play is over, applaud!", new DateTime(2023, 7, 10, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3229), "Acta est Fabula, Plaudite!" },
-                    { 5, 1, "The die is cast.", new DateTime(2023, 7, 9, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3230), "Alea Jacta Est" },
-                    { 6, 10, "Etiam justo sem, porttitor posuere dignissim finibus, euismod lobortis tellus. Praesent bibendum, mauris vitae varius fermentum, nulla risus semper odio, sed tempus augue risus ut est. Vestibulum laoreet blandit pretium. Vivamus mi enim, luctus mollis blandit nec, scelerisque et leo.", new DateTime(2023, 7, 13, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3232), "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-                    { 7, 11, "Quisque eu gravida nulla. Phasellus laoreet quam turpis, at condimentum arcu feugiat at. Sed eu eros sit amet quam laoreet tempor. Donec placerat est quis mauris commodo, id sagittis risus fermentum. Morbi quis est vel est efficitur ullamcorper.", new DateTime(2023, 7, 12, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3234), "Vestibulum suscipit metus urna, non pulvinar nunc faucibus eu" },
-                    { 8, 10, "Nullam varius condimentum aliquam. Morbi nec tellus semper erat sollicitudin malesuada. ", new DateTime(2023, 7, 11, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3235), "Quisque a dui rutrum, mollis eros a, blandit justo" },
-                    { 9, 5, "Phasellus aliquet pretium mattis :( ", new DateTime(2023, 7, 10, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3237), "Praesent malesuada accumsan!" },
-                    { 10, 11, "Duis sit amet placerat turpis. Mauris eleifend dolor et lectus dictum, ut semper velit gravida. Duis eget ipsum ac nisl pretium vestibulum. Cras auctor nulla bibendum nibh tempor auctor. Mauris quis ornare massa, vel lobortis dolor. Sed et nunc massa. Ut quis volutpat magna", new DateTime(2023, 7, 8, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3238), "Duis sit amet placerat turpis" }
+                    { 1, 3, "The beginnings of all things are small.", new DateTime(2023, 7, 14, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4875), "Omnium Rerum Principia Parva Sunt" },
+                    { 2, 3, "Always the same.", new DateTime(2023, 7, 13, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4910), "Semper Idem" },
+                    { 3, 4, "Art is long, life is short.", new DateTime(2023, 7, 12, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4914), "Ars Longa, Vita Brevis" },
+                    { 4, 5, "The play is over, applaud!", new DateTime(2023, 7, 11, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4915), "Acta est Fabula, Plaudite!" },
+                    { 5, 1, "The die is cast.", new DateTime(2023, 7, 10, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4916), "Alea Jacta Est" },
+                    { 6, 10, "Etiam justo sem, porttitor posuere dignissim finibus, euismod lobortis tellus. Praesent bibendum, mauris vitae varius fermentum, nulla risus semper odio, sed tempus augue risus ut est. Vestibulum laoreet blandit pretium. Vivamus mi enim, luctus mollis blandit nec, scelerisque et leo.", new DateTime(2023, 7, 14, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4918), "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+                    { 7, 11, "Quisque eu gravida nulla. Phasellus laoreet quam turpis, at condimentum arcu feugiat at. Sed eu eros sit amet quam laoreet tempor. Donec placerat est quis mauris commodo, id sagittis risus fermentum. Morbi quis est vel est efficitur ullamcorper.", new DateTime(2023, 7, 13, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4919), "Vestibulum suscipit metus urna, non pulvinar nunc faucibus eu" },
+                    { 8, 10, "Nullam varius condimentum aliquam. Morbi nec tellus semper erat sollicitudin malesuada. ", new DateTime(2023, 7, 12, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4921), "Quisque a dui rutrum, mollis eros a, blandit justo" },
+                    { 9, 5, "Phasellus aliquet pretium mattis :( ", new DateTime(2023, 7, 11, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4922), "Praesent malesuada accumsan!" },
+                    { 10, 11, "Duis sit amet placerat turpis. Mauris eleifend dolor et lectus dictum, ut semper velit gravida. Duis eget ipsum ac nisl pretium vestibulum. Cras auctor nulla bibendum nibh tempor auctor. Mauris quis ornare massa, vel lobortis dolor. Sed et nunc massa. Ut quis volutpat magna", new DateTime(2023, 7, 9, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4924), "Duis sit amet placerat turpis" }
                 });
 
             migrationBuilder.InsertData(
@@ -228,13 +228,13 @@ namespace WebForum.Migrations
                 columns: new[] { "Id", "AutorId", "Content", "CreatedAt", "PostId" },
                 values: new object[,]
                 {
-                    { 1, 7, "Exitus Acta Probat – The result justifies the deed", new DateTime(2023, 7, 13, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3282), 1 },
-                    { 2, 8, "Veritas Odit Moras – Truth hates delay", new DateTime(2023, 7, 12, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3285), 1 },
-                    { 3, 8, "Timendi Causa Est Nescire – The cause of fear is ignorance", new DateTime(2023, 7, 11, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3286), 1 },
-                    { 4, 8, "Vivamus, Moriendum Est – Let us live, since we must die", new DateTime(2023, 7, 10, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3290), 2 },
-                    { 5, 8, "Nemo Sine Vitio Est – No one is without fault", new DateTime(2023, 7, 9, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3291), 2 },
-                    { 6, 8, "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery", new DateTime(2023, 7, 8, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3293), 3 },
-                    { 7, 1, "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", new DateTime(2023, 7, 7, 16, 0, 23, 841, DateTimeKind.Local).AddTicks(3295), 3 }
+                    { 1, 7, "Exitus Acta Probat – The result justifies the deed", new DateTime(2023, 7, 14, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4952), 1 },
+                    { 2, 8, "Veritas Odit Moras – Truth hates delay", new DateTime(2023, 7, 13, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4957), 1 },
+                    { 3, 8, "Timendi Causa Est Nescire – The cause of fear is ignorance", new DateTime(2023, 7, 12, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4959), 1 },
+                    { 4, 8, "Vivamus, Moriendum Est – Let us live, since we must die", new DateTime(2023, 7, 11, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4960), 2 },
+                    { 5, 8, "Nemo Sine Vitio Est – No one is without fault", new DateTime(2023, 7, 10, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4962), 2 },
+                    { 6, 8, "Magna Servitus Est Magna Fortuna – A great fortune is a great slavery", new DateTime(2023, 7, 9, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4964), 3 },
+                    { 7, 1, "Ave Caesar morituri te salutant – Hail, Emperor, those who are about to die salute you!", new DateTime(2023, 7, 8, 10, 56, 2, 456, DateTimeKind.Local).AddTicks(4965), 3 }
                 });
 
             migrationBuilder.InsertData(

@@ -58,33 +58,51 @@ namespace WebForum.Repository
                                .Include(u => u.Posts)
                                .ThenInclude(p => p.Comments)
                                .Include(c => c.Comments)
-                               //.ThenInclude(c => c.Likes)
+                               .ThenInclude(c => c.CommentLikes)
                                .Include(u => u.Posts)
-                               //.ThenInclude(p => p.Likes)
+                               .ThenInclude(p => p.LikePosts)
+                               .Include(u => u.LikePosts)
                                .SingleOrDefault(u => u.Id == id);
 
             if (userToDelete == null)
             {
                 throw new EntityNotFoundException($"User with id {id} does not exist");
             }
-            var listOfPosts = userToDelete.Posts;
-            int i = listOfPosts.Count-1;
-            while (listOfPosts.Count > 0)
+            var userLikes = context.LikePosts.Where(lp => lp.UserId == id);
+            context.LikePosts.RemoveRange(userLikes);
+
+            var userCommentLikes = context.CommentLikes.Where(cl => cl.UserId == id);
+            context.CommentLikes.RemoveRange(userCommentLikes);
+
+            context.SaveChanges();
+            var postIdsToDelete = userToDelete.Posts.Select(p => p.Id).ToList();
+            foreach (var postId in postIdsToDelete)
             {
-                var post = listOfPosts[i];
-                postsRepository.DeletePost(post.Id);
-                i--;
+                postsRepository.DeletePost(postId);
+            }
+            //var listOfPosts = userToDelete.Posts;
+            //int i = listOfPosts.Count-1;
+            //while (listOfPosts.Count > 0)
+            //{
+            //    var post = listOfPosts[i];
+            //    postsRepository.DeletePost(post.Id);
+            //    i--;
+            //}
+            var commentIdsToDelete = userToDelete.Comments.Select(c => c.Id).ToList();
+            foreach (var commentId in commentIdsToDelete)
+            {
+                commentRepository.Delete(commentId);
             }
 
-            var listOfComments = userToDelete.Comments;
-            int iComments = listOfComments.Count - 1;
-            while (listOfComments.Count > 0)
-            {
-                var comment = listOfComments[iComments];
-                commentRepository.Delete(comment.Id);
-                iComments--;
-            }
-            
+            //var listOfComments = userToDelete.Comments;
+            //int iComments = listOfComments.Count - 1;
+            //while (listOfComments.Count > 0)
+            //{
+            //    var comment = listOfComments[iComments];
+            //    commentRepository.Delete(comment.Id);
+            //    iComments--;
+            //}
+
             context.Users.Remove(userToDelete);
             context.SaveChanges();
 
