@@ -50,8 +50,10 @@ namespace WebForum.Data
                 new User { Id = 8, FirstName = "LuciusAnnaeus", LastName = "Seneca", Username = "LuciusAnnaeusSeneca", Email = "Seneca@roman.im", Salt = salt, Password = AuthManager.HashPassword("EpistulaeMorales", salt), IsAdmin = false },
 				new User { Id = 9, FirstName = "Ad", LastName = "Min", Username = "Admin", Email = "admin@adm.in", Salt = salt, Password = AuthManager.HashPassword("123", salt), IsAdmin = true },
                 new User { Id = 10, FirstName = "Cleopatra", LastName = "Philopator", Username = "CleoQueen", Email = "CleoQueen@greek.myth", Salt = salt, Password = AuthManager.HashPassword("fAther-loving1", salt), IsAdmin = true, UserImage = "avatar11.png" },
-				new User { Id = 11, FirstName = "Calpurnia", LastName = "Caesar", Username = "CalpurniaJC", Email = "CaesarWify@roman.im", Salt = salt, Password = AuthManager.HashPassword("LuciusTheDad", salt), IsAdmin = false, UserImage = "avatar10.png" }
-
+				new User { Id = 11, FirstName = "Calpurnia", LastName = "Caesar", Username = "CalpurniaJC", Email = "CaesarWify@roman.im", Salt = salt, Password = AuthManager.HashPassword("LuciusTheDad", salt), IsAdmin = false, UserImage = "avatar10.png" },
+				new User { Id = 12, FirstName = "Tsvetomila", LastName = "Tsenkova", Username = "Mila", Email = "mila.mitova@gmail.com", Salt = salt, Password = AuthManager.HashPassword("123", salt), IsAdmin = true, UserImage = "Mila.jpg" },
+				new User { Id = 13, FirstName = "Kostadin", LastName = "Palchev", Username = "Koce", Email = "kostadin.palchev.a47@learn.telerikacademy.com", Salt = salt, Password = AuthManager.HashPassword("123", salt), IsAdmin = true, UserImage = "Koce.jpg"},
+				new User { Id = 14, FirstName = "Milko", LastName = "Tomov", Username = "Milko", Email = "vilimov@gmail.com", Salt = salt, Password = AuthManager.HashPassword("123", salt), IsAdmin = true, UserImage = "Milko.png" }
 			};
             modelBuilder.Entity<User>().HasData(users);
 
