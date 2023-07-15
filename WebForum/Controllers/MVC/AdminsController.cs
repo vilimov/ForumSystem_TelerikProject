@@ -17,18 +17,24 @@ namespace WebForum.Controllers.MVC
         }
         public IActionResult Index()
         {
-            var users = userServices.GetAllUserViewModels();
+			var users = userServices.GetAllUserViewModels();
             ViewBag.CurrentUserRole = User.IsInRole("Admin") ? "Admin" : "User";
             return View(users);
         }
-        [HttpGet]
-        public IActionResult AllUsers()
-        {
-            var userViewModels = userServices.GetAllUserViewModels();
-            return View(userViewModels);
-        }
+		[HttpGet]
+		public IActionResult AllUsers([FromQuery] string username)
+		{
+			var users = userServices.GetAllUserViewModels();
+			var userViewModels = userServices.GetAllUserViewModels();
+			if (!string.IsNullOrEmpty(username))
+			{
+				userViewModels = users.Where(u => u.Username.Contains(username)).ToList();
+			}
+			return View(userViewModels);
+		}
 
-        [HttpPost]
+
+		[HttpPost]
         public IActionResult PromoteUser(int id)
         {
             try

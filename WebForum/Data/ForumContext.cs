@@ -61,14 +61,13 @@ namespace WebForum.Data
             {
                 new Post { Id = 1, Title = "Omnium Rerum Principia Parva Sunt", Content = "The beginnings of all things are small.", AutorId = 3, CreatedAt = DateTime.Now.AddDays(-1) },
                 new Post { Id = 2, Title = "Semper Idem", Content = "Always the same.", AutorId = 3, CreatedAt = DateTime.Now.AddDays(-2)},
-                new Post { Id = 3, Title = "Ars Longa, Vita Brevis", Content = "Art is long, life is short.", AutorId = 4, CreatedAt = DateTime.Now.AddDays(-3)},
-                new Post { Id = 4, Title = "Acta est Fabula, Plaudite!", Content = "The play is over, applaud!", AutorId = 5, CreatedAt = DateTime.Now.AddDays(-4)},
-                new Post { Id = 5, Title = "Alea Jacta Est", Content = "The die is cast.", AutorId = 1, CreatedAt = DateTime.Now.AddDays(-5)},
-				
-                new Post { Id = 6, Title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", Content = "Etiam justo sem, porttitor posuere dignissim finibus, euismod lobortis tellus. Praesent bibendum, mauris vitae varius fermentum, nulla risus semper odio, sed tempus augue risus ut est. Vestibulum laoreet blandit pretium. Vivamus mi enim, luctus mollis blandit nec, scelerisque et leo.", AutorId = 10, CreatedAt = DateTime.Now.AddDays(-1) },
-				new Post { Id = 7, Title = "Vestibulum suscipit metus urna, non pulvinar nunc faucibus eu", Content = "Quisque eu gravida nulla. Phasellus laoreet quam turpis, at condimentum arcu feugiat at. Sed eu eros sit amet quam laoreet tempor. Donec placerat est quis mauris commodo, id sagittis risus fermentum. Morbi quis est vel est efficitur ullamcorper.", AutorId = 11, CreatedAt = DateTime.Now.AddDays(-2)},
-				new Post { Id = 8, Title = "Quisque a dui rutrum, mollis eros a, blandit justo", Content = "Nullam varius condimentum aliquam. Morbi nec tellus semper erat sollicitudin malesuada. ", AutorId = 10, CreatedAt = DateTime.Now.AddDays(-3)},
-				new Post { Id = 9, Title = "Praesent malesuada accumsan!", Content = "Phasellus aliquet pretium mattis :( ", AutorId = 5, CreatedAt = DateTime.Now.AddDays(-4)},
+                new Post { Id = 3, Title = "Ars Longa, Vita Brevis", Content = "Art is long, life is short.", AutorId = 4, CreatedAt = DateTime.Now.AddDays(-2)},
+                new Post { Id = 4, Title = "Acta est Fabula, Plaudite!", Content = "The play is over, applaud!", AutorId = 5, CreatedAt = DateTime.Now.AddDays(-2)},
+                new Post { Id = 5, Title = "Alea Jacta Est", Content = "The die is cast.", AutorId = 1, CreatedAt = DateTime.Now.AddDays(-3)},
+                new Post { Id = 6, Title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", Content = "Etiam justo sem, porttitor posuere dignissim finibus, euismod lobortis tellus. Praesent bibendum, mauris vitae varius fermentum, nulla risus semper odio, sed tempus augue risus ut est. Vestibulum laoreet blandit pretium. Vivamus mi enim, luctus mollis blandit nec, scelerisque et leo.", AutorId = 10, CreatedAt = DateTime.Now.AddDays(-3) },
+				new Post { Id = 7, Title = "Vestibulum suscipit metus urna, non pulvinar nunc faucibus eu", Content = "Quisque eu gravida nulla. Phasellus laoreet quam turpis, at condimentum arcu feugiat at. Sed eu eros sit amet quam laoreet tempor. Donec placerat est quis mauris commodo, id sagittis risus fermentum. Morbi quis est vel est efficitur ullamcorper.", AutorId = 11, CreatedAt = DateTime.Now.AddDays(-4)},
+				new Post { Id = 8, Title = "Quisque a dui rutrum, mollis eros a, blandit justo", Content = "Nullam varius condimentum aliquam. Morbi nec tellus semper erat sollicitudin malesuada. ", AutorId = 10, CreatedAt = DateTime.Now.AddDays(-4)},
+				new Post { Id = 9, Title = "Praesent malesuada accumsan!", Content = "Phasellus aliquet pretium mattis :( ", AutorId = 5, CreatedAt = DateTime.Now.AddDays(-5)},
 				new Post { Id = 10, Title = "Duis sit amet placerat turpis", Content = "Duis sit amet placerat turpis. Mauris eleifend dolor et lectus dictum, ut semper velit gravida. Duis eget ipsum ac nisl pretium vestibulum. Cras auctor nulla bibendum nibh tempor auctor. Mauris quis ornare massa, vel lobortis dolor. Sed et nunc massa. Ut quis volutpat magna", AutorId = 11, CreatedAt = DateTime.Now.AddDays(-6)},
 			};
             modelBuilder.Entity<Post>().HasData(posts);
