@@ -111,6 +111,7 @@ namespace WebForum.Repository
                     .ThenInclude(lp => lp.User)
 				.Include(cl => cl.Comments)
 					.ThenInclude(dd => dd.CommentLikes)
+					.ThenInclude(uu => uu.User)
 				.Include(p => p.PostTags) // Include the PostTags
                     .ThenInclude(pt => pt.Tag) // Include the related Tag for each PostTag
                 .FirstOrDefault(p => p.Id == id);
