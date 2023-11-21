@@ -1,0 +1,24 @@
+﻿.spqr {
+    background-image: url(/images/SPQR_4_GrSc.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.transparent-button {
+    background-color: transparent; /* Set button background to transparent */
+    border: 3px solid #000; /* Add a 1px solid border with a light gray color */
+    border-radius: 10px;
+    font-weight: bold;
+    color: #000; /* Set button text color */
+    padding: 5px 10px; /* Adjust padding as needed */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Add smooth transition effects */
+}
+
+    .transparent-button:hover {
+        background-color: #607d8b; /* Change background color on hover */
+        border-color: #999; /* Change border color on hover */
+        color: #333; /* Change text color on hover */
+    }

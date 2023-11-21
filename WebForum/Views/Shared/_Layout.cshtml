@@ -43,6 +43,7 @@
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="~/css/passingText.css">
+	<link rel="stylesheet" href="~/css/LoginForm.css">
 	<style>
 		html, body, h1, h2, h3, h4, h5 {
 			font-family: "Open Sans", sans-serif
@@ -186,7 +187,7 @@
 					<div class="w3-container" style="overflow-wrap: break-word">
 						@if (isLogged)
 						{
-
+							<div >
 							<h4 class="w3-center">Hello @userFirstName </h4>
 							<!--<p class="w3-center"><img src="~/images/avatars/avatar2.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>-->
 							<p class="w3-center">
@@ -196,17 +197,17 @@
 							<hr>
 							<p><i class="fa fa-user fa-fw w3-margin-right w3-text-theme"></i>@username</p>
 							<p><i class="fa fa-id-card fa-fw w3-margin-right w3-text-theme"></i>@userFirstName @userLastName</p>
-							<p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i>@userEmail</p>							
+							<p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i>@userEmail</p>	
+							</div>
 						}
 						else
-						{
-							
-							<h4 class="h4shadow">
+						{							
+							<h4 class="spqr">
 								WELCOME TO THE ROMAN FORUM
 								<hr class="w3-clear">
-								PLEASE <a asp-controller="Users" asp-action="Login" class="w3-button w3-light-grey w3-card" title="Login"><i></i>LOGIN</a> TO ACCESS ALL POSTS AND ACTIVITIES
+								PLEASE <a asp-controller="Users" asp-action="Login" class="transparent-button" title="Login"><i></i>LOGIN</a> TO ACCESS ALL POSTS AND ACTIVITIES
 								<hr class="w3-clear">
-								DON'T HAVE AN ACCOUNT YET? <a asp-controller="Users" asp-action="Register" class="w3-button w3-light-grey w3-card" title="Register"><i></i>REGISTER</a> NOW
+								DON'T HAVE AN ACCOUNT YET? <a asp-controller="Users" asp-action="Register" class="transparent-button" title="Register"><i></i>REGISTER</a> NOW
 							</h4>
 						}
 						
